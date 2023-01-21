@@ -1,9 +1,10 @@
 import React from "react";
 import { FcLike } from "react-icons/fc";
+import styled from "styled-components";
 
 function VideoBox({ style, bottomBar, iconSize, title }) {
   return (
-    <div style={videoStyle}>
+    <StyledVideo>
       {/* 메인동영상 */}
       <div style={style}></div>
       {/* 비디오 밑에 흰색바 */}
@@ -27,14 +28,14 @@ function VideoBox({ style, bottomBar, iconSize, title }) {
           </div>
         </div>
       </div>
-    </div>
+    </StyledVideo>
   );
 }
 
 //전체 비디오 속성
-const videoStyle = {
-  boxShadow: " 10px 15px 15px #888",
-  marginBottom: "40px",
-};
+const StyledVideo = styled.div`
+  box-shadow: 10px 15px 15px #888;
+  margin-bottom: 40px;
+`;
 
 export default VideoBox;
