@@ -22,10 +22,13 @@ export default function DetailPage() {
       </DetailPageTextTitlediv>
 
       <DetailPageTextNamediv>
+        {/* 닉네임 */}
         <DetailPageNamediv>name</DetailPageNamediv>
+        {/* 날짜 */}
         <DetailPageDatediv>2023.01.21</DetailPageDatediv>
       </DetailPageTextNamediv>
 
+      {/* 내용 */}
       <DetailPageContentdiv>
         내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
         내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
@@ -43,7 +46,9 @@ export default function DetailPage() {
       </DetailPageContentdiv>
 
       <DetailPageButtondiv>
+        {/* 수정버튼 */}
         <DetailPageEditButton>수정</DetailPageEditButton>
+        {/* 삭제버튼 */}
         <DetailPageDeleteButton>삭제</DetailPageDeleteButton>
       </DetailPageButtondiv>
     </DetailPageWrapdiv>
@@ -97,7 +102,7 @@ const DetailPageTextNamediv = styled.div`
   justify-content: space-between;
   margin-top: 25px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #727272;
 `;
 const DetailPageNamediv = styled.div`
   font-size: 20px;
@@ -124,6 +129,7 @@ const DetailPageEditButton = styled.button`
   height: 30px;
   border-radius: 15px;
   cursor: pointer;
+  border: 0;
 `;
 const DetailPageDeleteButton = styled.button`
   margin-left: 10px;
@@ -132,4 +138,6 @@ const DetailPageDeleteButton = styled.button`
   width: 80px;
   height: 30px;
   border-radius: 15px;
+  cursor: pointer;
+  border: 0;
 `;
