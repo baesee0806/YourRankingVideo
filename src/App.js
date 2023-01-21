@@ -1,8 +1,10 @@
-
+import DetailPage from "./page/DetailPage";
 
 function App() {
   return (
-    <></>
+    <>
+      <DetailPage />
+    </>
   );
 }
 
