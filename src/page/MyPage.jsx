@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-
+import YouTube from "react-youtube";
 export default function MyPage() {
+  // 내가쓴글 좋아요 누른글 리스트 change
+  const [userList, setUserList] = useState(false);
+
+  const changeMyLike = () => {
+    setUserList(true);
+  };
+  const changeMywrite = () => {
+    setUserList(false);
+  };
   return (
     <MypageLayoutDiv>
       {/* 마이페이지 유저 정보 area */}
@@ -29,16 +38,109 @@ export default function MyPage() {
         {/* 1. 게시글 상태 관리 해야함 */}
         {/* 메뉴 area */}
         <UserLikeWriteBtnDiv>
-          <UserLikeBtn>좋아요한 글</UserLikeBtn>
-          <UserWriteBtn>게시한 글</UserWriteBtn>
+          <UserLikeBtn onClick={changeMyLike}>좋아요한 글</UserLikeBtn>
+          <UserWriteBtn onClick={changeMywrite}>게시한 글</UserWriteBtn>
         </UserLikeWriteBtnDiv>
         {/* video box area */}
-        <div>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-        </div>
+        {userList ? (
+          <div>
+            <div>
+              <YouTube
+                videoId="LlnlpVf7Rpk"
+                opts={{
+                  width: "100%",
+                  height: "auto",
+                  playerVars: {
+                    autoplay: 0,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+                //이벤트 리스너
+                onEnd={(e) => {
+                  e.target.stopVideo(0);
+                }}
+              />
+              <div>
+                <h3>제목</h3>
+                <div>❤️20</div>
+              </div>
+            </div>
+            <div>
+              <YouTube
+                videoId="LlnlpVf7Rpk"
+                opts={{
+                  width: "100%",
+                  height: "300px",
+                  playerVars: {
+                    autoplay: 0,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+                //이벤트 리스너
+                onEnd={(e) => {
+                  e.target.stopVideo(0);
+                }}
+              />
+              <div>
+                <h3>제목</h3>
+                <div>❤️20</div>
+              </div>
+            </div>
+            <div>
+              <YouTube
+                videoId="LlnlpVf7Rpk"
+                opts={{
+                  width: "100%",
+                  height: "300px",
+                  playerVars: {
+                    autoplay: 0,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+                //이벤트 리스너
+                onEnd={(e) => {
+                  e.target.stopVideo(0);
+                }}
+              />
+              <div>
+                <h3>제목</h3>
+                <div>❤️20</div>
+              </div>
+            </div>
+            <div>
+              <YouTube
+                videoId="LlnlpVf7Rpk"
+                opts={{
+                  width: "100%",
+                  height: "300px",
+                  playerVars: {
+                    autoplay: 0,
+                    rel: 0,
+                    modestbranding: 1,
+                  },
+                }}
+                //이벤트 리스너
+                onEnd={(e) => {
+                  e.target.stopVideo(0);
+                }}
+              />
+              <div>
+                <h3>제목</h3>
+                <div>❤️20</div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div>내가 쓴글</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+          </div>
+        )}
       </UserLikeWriteAreaDiv>
     </MypageLayoutDiv>
   );
