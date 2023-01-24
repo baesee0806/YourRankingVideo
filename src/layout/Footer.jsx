@@ -15,7 +15,6 @@ const Footer = () => {
 
 export const Logo = styled.img`
   height: 50px;
-  cursor: pointer;
 `;
 
 export const StyledFooter = styled.div`
