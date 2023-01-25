@@ -57,11 +57,29 @@ export default function DetailPage() {
 
 const DetailPageWrapdiv = styled.div`
   width: 1600px;
-  height: 700px;
+  max-height: 700px;
   margin: 0 auto;
+  @media screen and (max-width: 1700px) {
+    width: 1400px;
+  }
+  @media screen and (max-width: 1600px) {
+    width: 1300px;
+  }
+  @media screen and (max-width: 1440px) {
+    width: 1200px;
+  }
+  @media screen and (max-width: 1350px) {
+    width: 1100px;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 900px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 800px;
+  }
 `;
 const DetailPageVideodiv = styled.div`
-  width: 1600px;
+  width: 100%;
   height: 700px;
   background: #ccc;
   font-size: 24px;
@@ -80,6 +98,9 @@ const DetailPageTItleh1 = styled.h1`
   margin: 0;
   letter-spacing: -1px;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 28px;
+  }
 `;
 const DetailPageLikediv = styled.div`
   display: flex;
@@ -95,6 +116,9 @@ const DetailPageLikep = styled.p`
   font-size: 20px;
   font-weight: 400;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 const DetailPageTextNamediv = styled.div`
   display: flex;
@@ -107,17 +131,27 @@ const DetailPageTextNamediv = styled.div`
 const DetailPageNamediv = styled.div`
   font-size: 20px;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 18px;
+  }
 `;
 const DetailPageDatediv = styled.div`
   font-size: 20px;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 18px;
+  }
 `;
 const DetailPageContentdiv = styled.div`
   margin-top: 40px;
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 const DetailPageButtondiv = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 40px;
   padding-bottom: 100px;
 `;
@@ -130,6 +164,13 @@ const DetailPageEditButton = styled.button`
   border-radius: 15px;
   cursor: pointer;
   border: 0;
+  line-height: 30px;
+  @media screen and (max-width: 1024px) {
+    width: 70px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;
 const DetailPageDeleteButton = styled.button`
   margin-left: 10px;
@@ -140,4 +181,11 @@ const DetailPageDeleteButton = styled.button`
   border-radius: 15px;
   cursor: pointer;
   border: 0;
+  line-height: 30px;
+  @media screen and (max-width: 1024px) {
+    width: 70px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;

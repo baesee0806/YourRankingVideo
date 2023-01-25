@@ -1,7 +1,11 @@
+import DetailPage from "./page/DetailPage";
+
 function App() {
-
-  return <></>;
-
+  return (
+    <>
+      <DetailPage />
+    </>
+  );
 }
 
 export default App;
