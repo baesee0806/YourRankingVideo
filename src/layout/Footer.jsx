@@ -19,7 +19,7 @@ export const Logo = styled.img`
 
 export const StyledFooter = styled.div`
   height: 110px;
-  width: 1600%;
+  width: 1600px;
   display: flex;
 
   background-color: grey;
