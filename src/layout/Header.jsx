@@ -18,14 +18,14 @@ const Header = () => {
 
 export const StyledHeader = styled.div`
   height: 80px;
-  width: 1600px;
+  width: 100%;
   display: flex;
   justify-content: center;
   background-color: #c4302b;
 `;
 
 export const HeaderContainer = styled.div`
-  width: 1500px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
