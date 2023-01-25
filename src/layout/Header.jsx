@@ -8,9 +8,10 @@ const Header = () => {
       <HeaderContainer>
         <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
         <HeaderBtnBox>
-          <HeaderBtn onClick={() => navigate("/my")}>마이페이지</HeaderBtn>
+          <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} />
+
           <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
-          <Tab src={require("../assets/tab.png")}></Tab>
+          <Tab src={require("../assets/tab.png")} />
         </HeaderBtnBox>
       </HeaderContainer>
     </StyledHeader>
@@ -45,7 +46,12 @@ export const Tab = styled.img`
   margin-top: 5px;
   margin-left: 5px;
 `;
-
+export const MyLogo = styled.img`
+  height: 30px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+`;
 export const HeaderBtnBox = styled.div`
   display: flex;
   flex-direction: row;
