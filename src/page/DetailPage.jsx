@@ -6,12 +6,13 @@ import axios from "axios";
 import { useQueryClient } from "react-query";
 import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
+import YouTube from "react-youtube";
 
 export default function DetailPage() {
   const queryClient = useQueryClient();
   // uuid생성
   const likeUUID = uuidv4();
-  //영상 ID
+  //영상ID
   const contentID = 2;
   //userID
   const userID = 4;
@@ -58,11 +59,11 @@ export default function DetailPage() {
 
   const { isLoading, isError, data, error } = useQuery("likes", getLikes);
   if (isLoading) {
-    return <p>로딩중임</p>;
+    return <p>Loading...</p>;
   }
   if (isError) {
     console.log("오류내용", error);
-    return <p>오류</p>;
+    return <p>Error..!</p>;
   }
 
   //userID와 contentID가 현재 페이지와 같은 것만 반환
@@ -74,7 +75,26 @@ export default function DetailPage() {
   return (
     <DetailPageWrapdiv>
       {/* 영상 */}
-      <DetailPageVideodiv>영상</DetailPageVideodiv>
+      <DetailPageVideodiv>
+        <YouTube
+          videoId="LlnlpVf7Rpk"
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+          }}
+          opts={{
+            width: "100%",
+            height: "100%",
+            playerVars: {
+              autoplay: 0,
+              rel: 0,
+              modestbranding: 1,
+            },
+          }}
+        />
+      </DetailPageVideodiv>
 
       <DetailPageTextTitlediv>
         {/* 제목 */}
@@ -162,42 +182,16 @@ const DetailPageWrapdiv = styled.div`
   @media screen and (max-width: 580px) {
     width: 95%;
   }
-
-  /* @media screen and (max-width: 830px) {
-    width: 700px;
-  }
-  @media screen and (max-width: 667px) {
-    width: 600px;
-  }
-  @media screen and (max-width: 580px) {
-    width: 520px;
-  }
-  @media screen and (max-width: 480px) {
-    width: 420px;
-  }
-  @media screen and (max-width: 430px) {
-    width: 380px;
-  }
-  @media screen and (max-width: 395px) {
-    width: 350px;
-  }
-  @media screen and (max-width: 375px) {
-    width: 330px;
-  }
-  @media screen and (max-width: 365px) {
-    width: 320px;
-  }
-  @media screen and (max-width: 320px) {
-    width: 290px;
-  } */
 `;
 const DetailPageVideodiv = styled.div`
+  position: relative;
   width: 100%;
-  height: 700px;
+  height: 0;
+  padding-top: 56.25%;
   background: #ccc;
   font-size: 24px;
   text-align: center;
-  line-height: 700px;
+  margin-top: 20px;
 `;
 const DetailPageTextTitlediv = styled.div`
   margin-top: 50px;
