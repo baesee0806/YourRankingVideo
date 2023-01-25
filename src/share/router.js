@@ -8,6 +8,7 @@ import Header from "../layout/Header";
 import Footer from "../layout/Footer";
 import Login from "../page/Login";
 import SignUp from "../page/SignUp";
+import NewVideo from "../page/NewVideo";
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path="/postpage" element={<PostPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/newvideo" element={<NewVideo />} />
       </Routes>
       <Footer />
     </BrowserRouter>
