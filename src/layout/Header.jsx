@@ -8,8 +8,10 @@ const Header = () => {
       <HeaderContainer>
         <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
         <HeaderBtnBox>
-          <HeaderBtn onClick={() => navigate("/my")}>마이페이지</HeaderBtn>
+          <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} />
+
           <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
+          <Tab src={require("../assets/tab.png")} />
         </HeaderBtnBox>
       </HeaderContainer>
     </StyledHeader>
@@ -18,14 +20,14 @@ const Header = () => {
 
 export const StyledHeader = styled.div`
   height: 80px;
-  width: 1600px;
+  width: 100%;
   display: flex;
   justify-content: center;
   background-color: #c4302b;
 `;
 
 export const HeaderContainer = styled.div`
-  width: 1500px;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,6 +40,18 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
+export const Tab = styled.img`
+  height: 30px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+`;
+export const MyLogo = styled.img`
+  height: 30px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
+`;
 export const HeaderBtnBox = styled.div`
   display: flex;
   flex-direction: row;
