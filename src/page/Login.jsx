@@ -25,8 +25,7 @@ const Login = () => {
 };
 
 export const LoginContainer = styled.div`
-  padding: 50px;
-
+  padding: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,7 +34,7 @@ export const LoginContainer = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 75px;
+  width: 90px;
   height: 50px;
 `;
 export const Form = styled.form`
