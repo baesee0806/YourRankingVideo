@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Footer = () => {
+function Footer() {
   return (
     <StyledFooter>
       <FtrContainer>
@@ -11,7 +11,7 @@ const Footer = () => {
       </FtrContainer>
     </StyledFooter>
   );
-};
+}
 
 export const Logo = styled.img`
   height: 50px;
@@ -21,16 +21,17 @@ export const StyledFooter = styled.div`
   height: 110px;
   width: 100%;
   display: flex;
-  margin-bottom: 20px;
+
   background-color: grey;
 `;
 
 export const FtrContainer = styled.div`
   margin-top: 10px;
-  width: 2000px;
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 2.5rem;
 `;
 
 export const Ftrtext = styled.div``;
