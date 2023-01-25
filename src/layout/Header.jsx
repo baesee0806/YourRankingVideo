@@ -10,6 +10,7 @@ const Header = () => {
         <HeaderBtnBox>
           <HeaderBtn onClick={() => navigate("/my")}>마이페이지</HeaderBtn>
           <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
+          <Tab src={require("../assets/tab.png")}></Tab>
         </HeaderBtnBox>
       </HeaderContainer>
     </StyledHeader>
@@ -25,7 +26,7 @@ export const StyledHeader = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,6 +37,13 @@ export const HeaderContainer = styled.div`
 export const Logo = styled.img`
   height: 50px;
   cursor: pointer;
+`;
+
+export const Tab = styled.img`
+  height: 30px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 5px;
 `;
 
 export const HeaderBtnBox = styled.div`
