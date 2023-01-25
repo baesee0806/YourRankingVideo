@@ -57,7 +57,6 @@ export default function DetailPage() {
 
 const DetailPageWrapdiv = styled.div`
   width: 1600px;
-  max-height: 700px;
   margin: 0 auto;
   @media screen and (max-width: 1700px) {
     width: 1400px;
@@ -75,8 +74,39 @@ const DetailPageWrapdiv = styled.div`
     width: 900px;
   }
   @media screen and (max-width: 1024px) {
-    width: 800px;
+    width: 90%;
   }
+  @media screen and (max-width: 580px) {
+    width: 95%;
+  }
+
+  /* @media screen and (max-width: 830px) {
+    width: 700px;
+  }
+  @media screen and (max-width: 667px) {
+    width: 600px;
+  }
+  @media screen and (max-width: 580px) {
+    width: 520px;
+  }
+  @media screen and (max-width: 480px) {
+    width: 420px;
+  }
+  @media screen and (max-width: 430px) {
+    width: 380px;
+  }
+  @media screen and (max-width: 395px) {
+    width: 350px;
+  }
+  @media screen and (max-width: 375px) {
+    width: 330px;
+  }
+  @media screen and (max-width: 365px) {
+    width: 320px;
+  }
+  @media screen and (max-width: 320px) {
+    width: 290px;
+  } */
 `;
 const DetailPageVideodiv = styled.div`
   width: 100%;
@@ -101,6 +131,9 @@ const DetailPageTItleh1 = styled.h1`
   @media screen and (max-width: 1024px) {
     font-size: 28px;
   }
+  @media screen and (max-width: 667px) {
+    font-size: 24px;
+  }
 `;
 const DetailPageLikediv = styled.div`
   display: flex;
@@ -119,6 +152,9 @@ const DetailPageLikep = styled.p`
   @media screen and (max-width: 1024px) {
     font-size: 16px;
   }
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
 `;
 const DetailPageTextNamediv = styled.div`
   display: flex;
@@ -134,6 +170,9 @@ const DetailPageNamediv = styled.div`
   @media screen and (max-width: 1024px) {
     font-size: 18px;
   }
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 const DetailPageDatediv = styled.div`
   font-size: 20px;
@@ -141,11 +180,17 @@ const DetailPageDatediv = styled.div`
   @media screen and (max-width: 1024px) {
     font-size: 18px;
   }
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 const DetailPageContentdiv = styled.div`
   margin-top: 40px;
   @media screen and (max-width: 1024px) {
     font-size: 16px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
   }
 `;
 const DetailPageButtondiv = styled.div`
@@ -170,6 +215,9 @@ const DetailPageEditButton = styled.button`
     height: 20px;
     font-size: 12px;
     line-height: 20px;
+  }
+  @media screen and (max-width: 580px) {
+    margin-left: 0;
   }
 `;
 const DetailPageDeleteButton = styled.button`
