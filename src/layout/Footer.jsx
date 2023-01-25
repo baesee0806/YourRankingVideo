@@ -19,7 +19,7 @@ export const Logo = styled.img`
 
 export const StyledFooter = styled.div`
   height: 110px;
-  width: 100%;
+  width: 1600%;
   display: flex;
 
   background-color: grey;
@@ -27,7 +27,7 @@ export const StyledFooter = styled.div`
 
 export const FtrContainer = styled.div`
   margin-top: 10px;
-  width: 100%;
+  width: 1500px;
   display: flex;
   align-items: center;
   flex-direction: column;
