@@ -1,17 +1,31 @@
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { ModalBtnState } from "../recoil/menuAtoms";
+
 const Header = () => {
   const navigate = useNavigate();
-
+  const modalSetHandlering = useSetRecoilState(ModalBtnState);
   return (
     <StyledHeader>
       <HeaderContainer>
-        <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
+        <Logo
+          onClick={() => navigate("/")}
+          src={require("../assets/Logo.png")}
+        />
         <HeaderBtnBox>
-          <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} />
+          <MyLogo
+            onClick={() => navigate("/my")}
+            src={require("../assets/mylogo.png")}
+          />
 
           <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
-          <Tab src={require("../assets/tab.png")} />
+          <Tab
+            onClick={() => {
+              modalSetHandlering(true);
+            }}
+            src={require("../assets/tab.png")}
+          />
         </HeaderBtnBox>
       </HeaderContainer>
     </StyledHeader>
