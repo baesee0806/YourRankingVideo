@@ -1,8 +1,9 @@
 
-function App() {
+import React from "react";
+import Router from "./share/router";
 
-  return <></>;
-
-}
+const App = () => {
+  return <Router />;
+};
 
 export default App;
