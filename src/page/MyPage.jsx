@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import YouTube from "react-youtube";
+
 export default function MyPage() {
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useState(false);
@@ -11,6 +12,7 @@ export default function MyPage() {
   const changeMywrite = () => {
     setUserList(false);
   };
+
   return (
     <MypageLayoutDiv>
       {/* 마이페이지 유저 정보 area */}
@@ -46,10 +48,10 @@ export default function MyPage() {
           <div>
             <div>
               <YouTube
-                videoId="LlnlpVf7Rpk"
+                videoId="LgbkUZC6P8I"
                 opts={{
                   width: "100%",
-                  height: "auto",
+                  height: "300px",
                   playerVars: {
                     autoplay: 0,
                     rel: 0,
