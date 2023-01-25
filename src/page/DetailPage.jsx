@@ -1,8 +1,76 @@
 import React from "react";
 import styled from "styled-components";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { useQueryClient } from "react-query";
+import { useQuery } from "react-query";
+import { v4 as uuidv4 } from "uuid";
 
 export default function DetailPage() {
+  const queryClient = useQueryClient();
+  // uuid생성
+  const likeUUID = uuidv4();
+  //영상 ID
+  const contentID = 2;
+  //userID
+  const userID = 4;
+
+  // like create
+  const postMutation = useMutation(
+    (newLike) => axios.post("http://localhost:3001/likes", newLike),
+    {
+      onSuccess: () => {
+        // 쿼리 무효화
+        queryClient.invalidateQueries("likes");
+      },
+    }
+  );
+
+  // like delete
+  const DeleteMutation = useMutation(
+    //넘겨받은 id를 삭제
+    (id) => axios.delete(`http://localhost:3001/likes/${id}`),
+    {
+      onSuccess: () => {
+        // 쿼리 무효화
+        queryClient.invalidateQueries("likes");
+      },
+    }
+  );
+
+  //dbjson생성
+  const likeCreate = () => {
+    const newLike = {
+      contentID,
+      userID,
+      id: likeUUID,
+    };
+
+    postMutation.mutate(newLike);
+  };
+
+  //get likes
+  const getLikes = async () => {
+    const response = await axios.get("http://localhost:3001/likes");
+    return response;
+  };
+
+  const { isLoading, isError, data, error } = useQuery("likes", getLikes);
+  if (isLoading) {
+    return <p>로딩중임</p>;
+  }
+  if (isError) {
+    console.log("오류내용", error);
+    return <p>오류</p>;
+  }
+
+  //userID와 contentID가 현재 페이지와 같은 것만 반환
+  const likesData = data.data.filter((i) => {
+    return i.contentID === contentID && i.userID === userID;
+  });
+  console.log(data.data.length);
+
   return (
     <DetailPageWrapdiv>
       {/* 영상 */}
@@ -15,9 +83,24 @@ export default function DetailPage() {
         {/* 좋아요 */}
         <DetailPageLikediv>
           <AiFillHeartdiv>
-            <AiFillHeart style={{ fontSize: 20, color: "red" }} />
+            {/* likesData가 존재할때만 true */}
+            {likesData[0] ? (
+              <AiFillHeart
+                style={{ fontSize: 20, color: "red" }}
+                onClick={() => {
+                  // 현재 페이지 likes의 id를 넘겨줌
+                  DeleteMutation.mutate(likesData[0].id);
+                }}
+              />
+            ) : (
+              <AiOutlineHeart
+                style={{ fontSize: 20, color: "red" }}
+                onClick={likeCreate}
+              />
+            )}
           </AiFillHeartdiv>
-          <DetailPageLikep>9999</DetailPageLikep>
+          {/* likes의 수 */}
+          <DetailPageLikep>{data.data.length}</DetailPageLikep>
         </DetailPageLikediv>
       </DetailPageTextTitlediv>
 
