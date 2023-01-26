@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { login } from "../API/logInAndOut";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,14 +10,15 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    const res = await login(email, password);
+    if (!res) {
+      alert("로그인 실패");
+      return;
+    }
 
-    axios.get("http://localhost:3001/user", { email, password }).then((response) => {
-      console.log(response);
-      alert("로그인성공");
-      navigate("/");
-    });
+    alert("로그인 성공");
+    navigate("/");
   };
   return (
     <LoginContainer>

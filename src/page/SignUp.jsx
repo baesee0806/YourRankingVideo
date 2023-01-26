@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../API/logInAndOut";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -10,14 +11,15 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const SignUpSubmit = (e) => {
-    e.preventDefault();
+  const SignUpSubmit = async () => {
+    const res = await signup(email, password, nickName);
+    if (!res) {
+      alert("회원가입 실패");
+      return;
+    }
 
-    axios.post("http://localhost:3001/user", { email, password, nickName }).then((response) => {
-      console.log(response);
-      alert("회원가입 성공!");
-      navigate("/login");
-    });
+    alert("회원가입 성공");
+    navigate("/login");
   };
   return (
     <LoginContainer>
