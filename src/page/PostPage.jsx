@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { createVideo } from '../API/postApi';
+import { authService } from '../common/firebase';
 
 export default function PostPage() {
   const queryClient = useQueryClient();
@@ -21,9 +21,10 @@ export default function PostPage() {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const onSubmit = (data) => {
     const Video = {
-      userId: '1',
+      contetnId: '1',
       createAt: Date(),
-      // nickName:  
+      userId: authService.currentUser.uid,
+      nickName: authService.currentUser.displayName ?? '닉네임없음'  
     };
     const newVideo = Object.assign(Video, data);
     addVideo.mutate(newVideo);
