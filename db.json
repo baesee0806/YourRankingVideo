@@ -15,5 +15,14 @@
       "userID": 4,
       "id": "7fe773c3-84e5-4758-99e6-5cfb32e3cec6"
     }
+  ],
+  "User": [
+    {
+      "id": "1",
+      "email": "test.test.com",
+      "password": "123",
+      "nickName": "baesee",
+      "imgurl": ""
+    }
   ]
 }
