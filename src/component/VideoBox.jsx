@@ -1,8 +1,16 @@
 import React from "react";
 import YouTube from "react-youtube";
 import { FcLike } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 function VideoBox({ iconSize, style, videoId, item }) {
+  //상세페이지로 이동하는 네비게이터
+  const navigate = useNavigate();
+
+  const detailNavigate = () => {
+    navigate(`/${videoId}`);
+  };
+
   return (
     <div
       style={{
@@ -38,7 +46,10 @@ function VideoBox({ iconSize, style, videoId, item }) {
           width: "100%",
           padding: "2%",
           boxSizing: "border-box",
+          //신정근 수정
+          cursor: "pointer",
         }}
+        onClick={detailNavigate}
       >
         <div style={{ boxSizing: "border-box" }}>
           <span>

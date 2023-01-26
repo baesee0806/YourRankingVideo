@@ -7,9 +7,13 @@ import { useQueryClient } from "react-query";
 import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import YouTube from "react-youtube";
+import { useParams } from "react-router-dom";
 
 export default function DetailPage() {
   const queryClient = useQueryClient();
+  //useParams로 정보 받아오기
+  const { id } = useParams();
+  console.log(id);
   // uuid생성
   const likeUUID = uuidv4();
   //영상ID
@@ -77,7 +81,7 @@ export default function DetailPage() {
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
-          videoId="LlnlpVf7Rpk"
+          videoId={id}
           style={{
             width: "100%",
             height: "100%",
