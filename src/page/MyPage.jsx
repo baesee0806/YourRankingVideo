@@ -43,7 +43,7 @@ export default function MyPage() {
         <UserEditNicknameAreaDiv>
           <UserEditNicknameInput
             type="text"
-            // value={text}
+            value={text}
             onChange={(e) => {
               setText(e.target.vlaue);
             }}

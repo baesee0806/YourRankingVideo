@@ -6,6 +6,10 @@ import { UserImgModalState } from "../recoil/userImgModalAtom";
 export const UserImgModal = () => {
   const setUserImgModalState = useSetRecoilState(UserImgModalState);
   const [imgUrl, setImgUrl] = useState("");
+
+  // img url 변경 json server
+  // 취소 완료 버튼 색
+
   return (
     <>
       <UserImgModalOutsideBackgroudDiv></UserImgModalOutsideBackgroudDiv>
