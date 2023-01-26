@@ -1,0 +1,53 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": [
+    {
+      "name": "typicode"
+    }
+  ],
+  "User": [
+    {
+      "id": "uuid4()",
+      "email": "email",
+      "password": "password",
+      "nickName": "hello",
+      "imgurl": "imgurl"
+    },
+    {
+      "email": "zoyo95@daum.net",
+      "password": "1124@@",
+      "nickName": "zoyo",
+      "id": "HwfDh5A"
+    }
+  ],
+  "likes": [
+    {
+      "contentID": 2,
+      "userID": 1,
+      "id": "685e6f96-9403-4637-b7e9-6cf3f237aef4"
+    },
+    {
+      "contentID": 2,
+      "userID": 324,
+      "id": "242110bc-304e-440e-8df0-37ec8d6c716a"
+    },
+    {
+      "contentID": 2,
+      "userID": 4,
+      "id": "619192af-5697-4750-aec4-b44a32d40328"
+    }
+  ]
+}
