@@ -1,0 +1,19 @@
+{
+  "likes": [
+    {
+      "contentID": 2,
+      "userID": 1,
+      "id": "685e6f96-9403-4637-b7e9-6cf3f237aef4"
+    },
+    {
+      "contentID": 2,
+      "userID": 324,
+      "id": "242110bc-304e-440e-8df0-37ec8d6c716a"
+    },
+    {
+      "contentID": 2,
+      "userID": 4,
+      "id": "7fe773c3-84e5-4758-99e6-5cfb32e3cec6"
+    }
+  ]
+}
