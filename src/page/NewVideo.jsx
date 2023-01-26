@@ -3,6 +3,7 @@ import VideoBox from "../component/VideoBox";
 import styled from "styled-components";
 import { fetchLists } from "../API/youtube";
 import { useQuery } from "react-query";
+import ScrollTopBtn from "../component/ScrollTopBtn";
 
 export default function NewVideo() {
   //여기 최신 순 제이슨데이터 가져오기
@@ -44,6 +45,7 @@ export default function NewVideo() {
           </div>
         </div>
       </StyledMainContainer>
+      <ScrollTopBtn />
     </>
   );
 }
@@ -54,7 +56,7 @@ const StyledMainContainer = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px; ;
+  margin-bottom: 10px;
 `;
 
 const videoListDiv = {

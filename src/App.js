@@ -1,5 +1,6 @@
+
 import React from "react";
-import { MenuModal } from "./component/MenuModal";
+import ScrollTopBtn from "./component/ScrollTopBtn";
 import Router from "./share/router";
 import DetailPage from "./page/DetailPage";
 import PopularVideo from "./page/PopularVideo";

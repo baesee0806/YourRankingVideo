@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ScrollTopBtn from "../component/ScrollTopBtn";
 import VideoBox from "../component/VideoBox";
 import styled from "styled-components";
 import { fetchLists } from "../API/youtube";
@@ -43,6 +44,7 @@ export default function PopularVideo() {
           </div>
         </div>
       </StyledMainContainer>
+      <ScrollTopBtn />
     </>
   );
 }
