@@ -6,14 +6,10 @@ import { emailRegex, pwRegex } from "../API/util";
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const emailRef = useRef(null);
   const pwRef = useRef(null);
-
-  const matchedEmail = email.match(emailRegex);
-  const matchedPw = password.match(pwRegex);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const validateInputs = () => {
     if (!email) {
@@ -26,6 +22,9 @@ const Login = () => {
       pwRef.current.focus();
       return true;
     }
+    const matchedEmail = email.match(emailRegex);
+    const matchedPw = password.match(pwRegex);
+
     if (matchedEmail === null) {
       alert("이메일 형식에 맞게 입력해 주세요.");
       emailRef.current.focus();
@@ -51,6 +50,8 @@ const Login = () => {
     }
 
     alert("로그인 성공");
+    setEmail("");
+    setPassword("");
     navigate("/");
   };
   return (
@@ -158,12 +159,4 @@ export const RedButton = styled.button`
   cursor: pointer;
 `;
 
-export const Button = styled.button`
-  background-color: white;
-  width: 250px;
-  height: 40px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  border-radius: 5px;
-`;
 export default Login;

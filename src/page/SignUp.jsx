@@ -6,15 +6,13 @@ import { emailRegex, pwRegex } from "../API/util";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const emailRef = useRef(null);
+  const pwRef = useRef(null);
+
   //user정보
   const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
-  const emailRef = useRef(null);
-  const pwRef = useRef(null);
   const [password, setPassword] = useState("");
-  const matchedEmail = email.match(emailRegex);
-  const matchedPw = password.match(pwRegex);
-
   const validateInputs = () => {
     if (!email) {
       alert("email을 입력해주세요.");
@@ -26,6 +24,9 @@ const SignUp = () => {
       pwRef.current.focus();
       return true;
     }
+    const matchedEmail = email.match(emailRegex);
+    const matchedPw = password.match(pwRegex);
+
     if (matchedEmail === null) {
       alert("이메일 형식에 맞게 입력해 주세요.");
       emailRef.current.focus();
@@ -40,7 +41,7 @@ const SignUp = () => {
 
   const SignUpSubmit = async () => {
     const res = await signup(email, password, nickName);
-    // 유효성 검사
+
     if (validateInputs()) {
       return;
     }
@@ -50,6 +51,8 @@ const SignUp = () => {
     }
 
     alert("회원가입 성공");
+    setEmail("");
+    setPassword("");
     navigate("/login");
   };
   return (

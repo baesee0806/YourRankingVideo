@@ -18,31 +18,16 @@
       "name": "typicode"
     }
   ],
-  "User": [
+  "user": [
     {
       "id": "uuid4()",
       "email": "email",
       "password": "password",
-      "nickName": "hello",
+      "nickName": "nickName",
       "imgurl": "imgurl"
     },
     {
-      "email": "zoyo95@daum.net",
-      "password": "1124@@",
-      "nickName": "zoyo",
-      "id": "HwfDh5A"
-    },
-    {
-      "email": "bigiron67@naver.com",
-      "password": "1124@@",
-      "nickName": "bigiron",
-      "id": "ZAgXmdH"
-    },
-    {
-      "email": "hello@naver.com",
-      "password": "hellow",
-      "nickName": "hellow",
-      "id": "-ZhPQ6O"
+      "id": "UBvSkuK"
     }
   ],
   "likes": [
