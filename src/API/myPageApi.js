@@ -1,7 +1,9 @@
-import React from 'react'
+import axios from "axios"
 
-export default function myPageApi() {
-  return (
-    <div>myPageApi</div>
-  )
+const fetchUser = async() => {
+  const {data} = await axios.get(`http://localhost:3001/User`)
+  return data
 }
+
+
+export {fetchUser}

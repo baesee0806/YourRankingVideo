@@ -6,7 +6,7 @@ const MY_Key = 'AIzaSyDC2j0XqxERFfjHRWO8YOVj368kFoZ10SY'
 // https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=10&regionCode=kr&key=AIzaSyDC2j0XqxERFfjHRWO8YOVj368kFoZ10SY
 
 const fetchLists = async() => {
-  const {data} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=10&regionCode=kr&key=${MY_Key}`)
+  const {data} = await axios.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=12&regionCode=kr&key=${MY_Key}`)
   return data
 }
 
