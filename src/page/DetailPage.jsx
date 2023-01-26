@@ -163,17 +163,8 @@ export default function DetailPage() {
 }
 
 const DetailPageWrapdiv = styled.div`
-  width: 1600px;
+  width: 1200px;
   margin: 0 auto;
-  @media screen and (max-width: 1700px) {
-    width: 1400px;
-  }
-  @media screen and (max-width: 1600px) {
-    width: 1300px;
-  }
-  @media screen and (max-width: 1440px) {
-    width: 1200px;
-  }
   @media screen and (max-width: 1350px) {
     width: 1100px;
   }
@@ -195,7 +186,9 @@ const DetailPageVideodiv = styled.div`
   background: #ccc;
   font-size: 24px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
+  border-radius: 15px;
+  overflow: hidden;
 `;
 const DetailPageTextTitlediv = styled.div`
   margin-top: 50px;
