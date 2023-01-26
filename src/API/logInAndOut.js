@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+
 export const SERVER_ADDRESS = "http://localhost:3001/user";
 
 export const login = async () => {

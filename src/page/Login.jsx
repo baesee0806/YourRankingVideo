@@ -1,16 +1,49 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 import { login } from "../API/logInAndOut";
+import { emailRegex, pwRegex } from "../API/util";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const emailRef = useRef(null);
+  const pwRef = useRef(null);
+
+  const matchedEmail = email.match(emailRegex);
+  const matchedPw = password.match(pwRegex);
+
+  const validateInputs = () => {
+    if (!email) {
+      alert("email을 입력해주세요.");
+      emailRef.current.focus();
+      return true;
+    }
+    if (!password) {
+      alert("password를 입력해주세요.");
+      pwRef.current.focus();
+      return true;
+    }
+    if (matchedEmail === null) {
+      alert("이메일 형식에 맞게 입력해 주세요.");
+      emailRef.current.focus();
+      return true;
+    }
+    if (matchedPw === null) {
+      alert("비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.");
+      pwRef.current.focus();
+      return true;
+    }
+  };
 
   const handleSubmit = async () => {
+    // 유효성 검사
+    if (validateInputs()) {
+      return;
+    }
+
     const res = await login(email, password);
     if (!res) {
       alert("로그인 실패");
