@@ -1,14 +1,17 @@
-import DetailPage from "./page/DetailPage";
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
 
-function App() {
+import React from "react";
+import { MenuModal } from "./component/MenuModal";
+import Router from "./share/router";
+
+const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <DetailPage />
-    </QueryClientProvider>
+  <>
+  <Router />
+  <MenuModal/>
+  </>
   );
-}
+};
+
 
 export default App;
