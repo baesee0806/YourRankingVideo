@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../../common/firebase";
+import { authService } from "../common/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { emailRegex, pwRegex } from "../API/util";
 import { updateProfile } from "firebase/auth";
