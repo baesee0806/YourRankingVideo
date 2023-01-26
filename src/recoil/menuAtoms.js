@@ -1,7 +1,8 @@
-import React from 'react'
+import { atom } from "recoil";
 
-export default function atoms() {
-  return (
-    <div>atoms</div>
-  )
-}
+const ModalBtnState = atom({
+  key: 'ModalBtnState',
+  default:false
+})
+
+export {ModalBtnState}
