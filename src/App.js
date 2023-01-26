@@ -1,14 +1,12 @@
-
 import React from "react";
-import { MenuModal } from "./component/MenuModal";
+import ScrollTopBtn from "./component/ScrollTopBtn";
 import Router from "./share/router";
 
 const App = () => {
   return (
-  <>
-  <Router />
-  <MenuModal/>
-  </>
+    <>
+      <Router />
+    </>
   );
 };
 

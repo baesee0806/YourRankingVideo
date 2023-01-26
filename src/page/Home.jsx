@@ -1,5 +1,6 @@
 import React from "react";
 import VideoBox from "../component/VideoBox";
+import ScrollTopBtn from "../component/ScrollTopBtn";
 
 function Home() {
   return (
@@ -37,6 +38,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <ScrollTopBtn />
     </div>
   );
 }
