@@ -1,18 +1,62 @@
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// import { createVideo } from '../API/postApi';
 
 export default function PostPage() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+  const addVideo = useMutation((video) => axios.post('http://localhost:3001/videos', video), {
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries(['videos']);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm();
+  const onSubmit = (data) => {
+    const Video = {
+      userId: '1',
+      createAt: Date(),
+      // nickName:  
+    };
+    const newVideo = Object.assign(Video, data);
+    addVideo.mutate(newVideo);
+    alert('작성 완료')
+    navigate('/')
+  }
+  const onError = (error) => {
+    console.log(error);
+  }
+  
   return (
     <Container>
       <Text>게시물 작성</Text>
-      <Form>
-      <Input type={'url'} placeholder='url' maxLength={'120'} />
-      <Input type={'text'} placeholder='제목' maxLength={'120'} />
-      <Textarea type={'text'} placeholder='내용'></Textarea>
-      </Form>
-      <BtnBox style={{float: 'right', marginRight: '125px'}}>
-      <Button className='button' style={{marginRight:'20px'}}>완료</Button>
-      <Button className='button'>취소</Button>
+      <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Input type={'url'} 
+        maxLength={'120'} 
+        placeholder='url'
+        required
+        {...register('videoUrl')} />
+      <Input type={'text'} 
+        maxLength={'120'} 
+        placeholder='제목'
+        required
+        {...register('title')} />
+      <Textarea type={'text'} 
+        placeholder='내용' 
+        required
+        {...register('content')} ></Textarea>
+      <BtnBox>
+      <Button type='submit' style={{marginRight:'20px'}} disabled={isSubmitting}>완료</Button>
+      <Button type='button' onClick={()=>navigate(-1)}>취소</Button>
       </BtnBox>
+      </Form>
     </Container>
   )
 }
@@ -51,8 +95,10 @@ const Textarea = styled.textarea`
   outline: none;
 `
 const BtnBox = styled.div`
-  float: right;
+  display: flex;
+  justify-content: end;
   margin-right: 125px;
+  margin-bottom: 10px;
 `
 const Button = styled.button`
   width: 100px;
