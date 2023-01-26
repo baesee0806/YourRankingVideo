@@ -9,6 +9,7 @@ import Footer from "../layout/Footer";
 import Login from "../page/Login";
 import SignUp from "../page/SignUp";
 import NewVideo from "../page/NewVideo";
+import PopularVideo from "../page/PopularVideo";
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/newvideo" element={<NewVideo />} />
+        <Route path="/popularVideo" element={<PopularVideo />} />
       </Routes>
       <Footer />
     </BrowserRouter>
