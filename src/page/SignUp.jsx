@@ -1,8 +1,10 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../API/logInAndOut";
+import { authService } from "../common/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { emailRegex, pwRegex } from "../API/util";
+import { updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -40,20 +42,25 @@ const SignUp = () => {
   };
 
   const SignUpSubmit = async () => {
-    const res = await signup(email, password, nickName);
-
     if (validateInputs()) {
       return;
     }
-    if (!res) {
-      alert("회원가입 실패");
-      return;
-    }
-
-    alert("회원가입 성공");
-    setEmail("");
-    setPassword("");
-    navigate("/login");
+    createUserWithEmailAndPassword(authService, email, password, nickName).then(() => {
+      console.log("회원가입 성공!");
+      updateProfile(authService.currentUser, {
+        displayName: nickName,
+      })
+        .then(() => {
+          alert("회원가입 성공!");
+          setEmail("");
+          setNickName("");
+          setPassword("");
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    });
   };
   return (
     <LoginContainer>
