@@ -7,9 +7,13 @@ import { useQueryClient } from "react-query";
 import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import YouTube from "react-youtube";
+import { useParams } from "react-router-dom";
 
 export default function DetailPage() {
   const queryClient = useQueryClient();
+  //useParams로 정보 받아오기
+  const { id } = useParams();
+  console.log(id);
   // uuid생성
   const likeUUID = uuidv4();
   //영상ID
@@ -77,7 +81,7 @@ export default function DetailPage() {
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
-          videoId="LlnlpVf7Rpk"
+          videoId={id}
           style={{
             width: "100%",
             height: "100%",
@@ -159,17 +163,8 @@ export default function DetailPage() {
 }
 
 const DetailPageWrapdiv = styled.div`
-  width: 1600px;
+  width: 1200px;
   margin: 0 auto;
-  @media screen and (max-width: 1700px) {
-    width: 1400px;
-  }
-  @media screen and (max-width: 1600px) {
-    width: 1300px;
-  }
-  @media screen and (max-width: 1440px) {
-    width: 1200px;
-  }
   @media screen and (max-width: 1350px) {
     width: 1100px;
   }
@@ -191,7 +186,9 @@ const DetailPageVideodiv = styled.div`
   background: #ccc;
   font-size: 24px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 40px;
+  border-radius: 15px;
+  overflow: hidden;
 `;
 const DetailPageTextTitlediv = styled.div`
   margin-top: 50px;
