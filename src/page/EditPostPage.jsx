@@ -7,11 +7,11 @@ export default function EditPostPage() {
       <Form>
       <Input type={'text'} placeholder='제목' maxLength={'120'} />
       <Textarea type={'text'} placeholder='내용'></Textarea>
-      </Form>
-      <BtnBox style={{float: 'right', marginRight: '125px'}}>
-      <Button className='button' style={{marginRight:'20px'}}>수정</Button>
-      <Button className='button'>취소</Button>
+      <BtnBox>
+      <Button style={{marginRight:'20px'}}>수정</Button>
+      <Button>취소</Button>
       </BtnBox>
+      </Form>
     </Container>
   )
 }
@@ -49,8 +49,10 @@ const Textarea = styled.textarea`
   outline: none;
 `
 const BtnBox = styled.div`
-  float: right;
+  display: flex;
+  justify-content: end;
   margin-right: 125px;
+  margin-bottom: 10px;
 `
 const Button = styled.button`
   width: 100px;
