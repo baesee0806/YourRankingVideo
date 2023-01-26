@@ -1,25 +1,91 @@
-import React from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { login } from "../API/logInAndOut";
+import { emailRegex, pwRegex } from "../API/util";
 
 const Login = () => {
   const navigate = useNavigate();
+  const emailRef = useRef(null);
+  const pwRef = useRef(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const validateInputs = () => {
+    if (!email) {
+      alert("email을 입력해주세요.");
+      emailRef.current.focus();
+      return true;
+    }
+    if (!password) {
+      alert("password를 입력해주세요.");
+      pwRef.current.focus();
+      return true;
+    }
+    const matchedEmail = email.match(emailRegex);
+    const matchedPw = password.match(pwRegex);
+
+    if (matchedEmail === null) {
+      alert("이메일 형식에 맞게 입력해 주세요.");
+      emailRef.current.focus();
+      return true;
+    }
+    if (matchedPw === null) {
+      alert("비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.");
+      pwRef.current.focus();
+      return true;
+    }
+  };
+
+  const handleSubmit = async () => {
+    // 유효성 검사
+    if (validateInputs()) {
+      return;
+    }
+
+    const res = await login(email, password);
+    if (!res) {
+      alert("로그인 실패");
+      return;
+    }
+
+    alert("로그인 성공");
+    setEmail("");
+    setPassword("");
+    navigate("/");
+  };
   return (
     <LoginContainer>
       <Logo src={require("../assets/Logo.png")} />
-      <Form>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <Id>
-          <Input placeholder={"Email"} />
+          <Input
+            placeholder={"Email"}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
         </Id>
         <PassWord>
-          <Input placeholder={"Password"} />
+          <Input
+            placeholder={"Password"}
+            value={password}
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
         </PassWord>
+
+        <ToSignUp onClick={() => navigate("/signUp")}>new Member?</ToSignUp>
+
+        <RedButton onClick={handleSubmit}>로그인</RedButton>
       </Form>
-
-      <ToSignUp onClick={() => navigate("/signUp")}>new Member?</ToSignUp>
-
-      <RedButton>로그인</RedButton>
     </LoginContainer>
   );
 };
@@ -93,12 +159,4 @@ export const RedButton = styled.button`
   cursor: pointer;
 `;
 
-export const Button = styled.button`
-  background-color: white;
-  width: 250px;
-  height: 40px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  border-radius: 5px;
-`;
 export default Login;

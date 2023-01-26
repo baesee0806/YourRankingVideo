@@ -1,24 +1,100 @@
-import React from "react";
-
+import { useState, useRef } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { signup } from "../API/logInAndOut";
+import { emailRegex, pwRegex } from "../API/util";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const emailRef = useRef(null);
+  const pwRef = useRef(null);
+
+  //user정보
+  const [nickName, setNickName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const validateInputs = () => {
+    if (!email) {
+      alert("email을 입력해주세요.");
+      emailRef.current.focus();
+      return true;
+    }
+    if (!password) {
+      alert("password를 입력해주세요.");
+      pwRef.current.focus();
+      return true;
+    }
+    const matchedEmail = email.match(emailRegex);
+    const matchedPw = password.match(pwRegex);
+
+    if (matchedEmail === null) {
+      alert("이메일 형식에 맞게 입력해 주세요.");
+      emailRef.current.focus();
+      return true;
+    }
+    if (matchedPw === null) {
+      alert("비밀번호는 8자리 이상 영문자, 숫자, 특수문자 조합이어야 합니다.");
+      pwRef.current.focus();
+      return true;
+    }
+  };
+
+  const SignUpSubmit = async () => {
+    const res = await signup(email, password, nickName);
+
+    if (validateInputs()) {
+      return;
+    }
+    if (!res) {
+      alert("회원가입 실패");
+      return;
+    }
+
+    alert("회원가입 성공");
+    setEmail("");
+    setPassword("");
+    navigate("/login");
+  };
   return (
     <LoginContainer>
       <Logo src={require("../assets/Logo.png")} />
-      <Form>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <Id>
-          <Input placeholder={"Email"} />
+          <Input
+            placeholder={"Email"}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
         </Id>
         <PassWord>
-          <Input placeholder={"Password"} />
+          <Input
+            placeholder={"Password"}
+            value={password}
+            type="password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
         </PassWord>
         <NickName>
-          <Input placeholder={"Nickname"} />
+          <Input
+            placeholder={"Nickname"}
+            value={nickName}
+            type="nickName"
+            onChange={(e) => {
+              setNickName(e.target.value);
+            }}
+          />
         </NickName>
-      </Form>
 
-      <RedButton>회원가입</RedButton>
+        <RedButton onClick={SignUpSubmit}>회원가입</RedButton>
+      </Form>
     </LoginContainer>
   );
 };
@@ -58,7 +134,7 @@ export const PassWord = styled.div`
 
 export const NickName = styled.div`
   display: flex;
-
+  padding-bottom: 20px;
   width: 300px;
 `;
 
