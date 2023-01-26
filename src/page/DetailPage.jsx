@@ -1,12 +1,104 @@
 import React from "react";
 import styled from "styled-components";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { useQueryClient } from "react-query";
+import { useQuery } from "react-query";
+import { v4 as uuidv4 } from "uuid";
+import YouTube from "react-youtube";
+import { useParams } from "react-router-dom";
 
 export default function DetailPage() {
+  const queryClient = useQueryClient();
+  //useParams로 정보 받아오기
+  const { id } = useParams();
+  console.log(id);
+  // uuid생성
+  const likeUUID = uuidv4();
+  //영상ID
+  const contentID = 2;
+  //userID
+  const userID = 4;
+
+  // like create
+  const postMutation = useMutation(
+    (newLike) => axios.post("http://localhost:3001/likes", newLike),
+    {
+      onSuccess: () => {
+        // 쿼리 무효화
+        queryClient.invalidateQueries("likes");
+      },
+    }
+  );
+
+  // like delete
+  const DeleteMutation = useMutation(
+    //넘겨받은 id를 삭제
+    (id) => axios.delete(`http://localhost:3001/likes/${id}`),
+    {
+      onSuccess: () => {
+        // 쿼리 무효화
+        queryClient.invalidateQueries("likes");
+      },
+    }
+  );
+
+  //dbjson생성
+  const likeCreate = () => {
+    const newLike = {
+      contentID,
+      userID,
+      id: likeUUID,
+    };
+
+    postMutation.mutate(newLike);
+  };
+
+  //get likes
+  const getLikes = async () => {
+    const response = await axios.get("http://localhost:3001/likes");
+    return response;
+  };
+
+  const { isLoading, isError, data, error } = useQuery("likes", getLikes);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (isError) {
+    console.log("오류내용", error);
+    return <p>Error..!</p>;
+  }
+
+  //userID와 contentID가 현재 페이지와 같은 것만 반환
+  const likesData = data.data.filter((i) => {
+    return i.contentID === contentID && i.userID === userID;
+  });
+  console.log(data.data.length);
+
   return (
     <DetailPageWrapdiv>
       {/* 영상 */}
-      <DetailPageVideodiv>영상</DetailPageVideodiv>
+      <DetailPageVideodiv>
+        <YouTube
+          videoId={id}
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+          }}
+          opts={{
+            width: "100%",
+            height: "100%",
+            playerVars: {
+              autoplay: 0,
+              rel: 0,
+              modestbranding: 1,
+            },
+          }}
+        />
+      </DetailPageVideodiv>
 
       <DetailPageTextTitlediv>
         {/* 제목 */}
@@ -15,9 +107,24 @@ export default function DetailPage() {
         {/* 좋아요 */}
         <DetailPageLikediv>
           <AiFillHeartdiv>
-            <AiFillHeart style={{ fontSize: 20, color: "red" }} />
+            {/* likesData가 존재할때만 true */}
+            {likesData[0] ? (
+              <AiFillHeart
+                style={{ fontSize: 20, color: "red" }}
+                onClick={() => {
+                  // 현재 페이지 likes의 id를 넘겨줌
+                  DeleteMutation.mutate(likesData[0].id);
+                }}
+              />
+            ) : (
+              <AiOutlineHeart
+                style={{ fontSize: 20, color: "red" }}
+                onClick={likeCreate}
+              />
+            )}
           </AiFillHeartdiv>
-          <DetailPageLikep>9999</DetailPageLikep>
+          {/* likes의 수 */}
+          <DetailPageLikep>{data.data.length}</DetailPageLikep>
         </DetailPageLikediv>
       </DetailPageTextTitlediv>
 
@@ -56,17 +163,32 @@ export default function DetailPage() {
 }
 
 const DetailPageWrapdiv = styled.div`
-  width: 1600px;
-  height: 700px;
+  width: 1200px;
   margin: 0 auto;
+  @media screen and (max-width: 1350px) {
+    width: 1100px;
+  }
+  @media screen and (max-width: 1200px) {
+    width: 900px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 580px) {
+    width: 95%;
+  }
 `;
 const DetailPageVideodiv = styled.div`
-  width: 1600px;
-  height: 700px;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 56.25%;
   background: #ccc;
   font-size: 24px;
   text-align: center;
-  line-height: 700px;
+  margin-top: 40px;
+  border-radius: 15px;
+  overflow: hidden;
 `;
 const DetailPageTextTitlediv = styled.div`
   margin-top: 50px;
@@ -80,6 +202,12 @@ const DetailPageTItleh1 = styled.h1`
   margin: 0;
   letter-spacing: -1px;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 28px;
+  }
+  @media screen and (max-width: 667px) {
+    font-size: 24px;
+  }
 `;
 const DetailPageLikediv = styled.div`
   display: flex;
@@ -95,6 +223,12 @@ const DetailPageLikep = styled.p`
   font-size: 20px;
   font-weight: 400;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
 `;
 const DetailPageTextNamediv = styled.div`
   display: flex;
@@ -107,17 +241,36 @@ const DetailPageTextNamediv = styled.div`
 const DetailPageNamediv = styled.div`
   font-size: 20px;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 const DetailPageDatediv = styled.div`
   font-size: 20px;
   line-height: 100%;
+  @media screen and (max-width: 1024px) {
+    font-size: 18px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
 `;
 const DetailPageContentdiv = styled.div`
   margin-top: 40px;
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 1024px) {
+    font-size: 14px;
+  }
 `;
 const DetailPageButtondiv = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 40px;
   padding-bottom: 100px;
 `;
@@ -130,6 +283,16 @@ const DetailPageEditButton = styled.button`
   border-radius: 15px;
   cursor: pointer;
   border: 0;
+  line-height: 30px;
+  @media screen and (max-width: 1024px) {
+    width: 70px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+  @media screen and (max-width: 580px) {
+    margin-left: 0;
+  }
 `;
 const DetailPageDeleteButton = styled.button`
   margin-left: 10px;
@@ -140,4 +303,11 @@ const DetailPageDeleteButton = styled.button`
   border-radius: 15px;
   cursor: pointer;
   border: 0;
+  line-height: 30px;
+  @media screen and (max-width: 1024px) {
+    width: 70px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;

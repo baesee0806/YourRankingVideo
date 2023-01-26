@@ -9,11 +9,16 @@ import Footer from "../layout/Footer";
 import Login from "../page/Login";
 import SignUp from "../page/SignUp";
 import NewVideo from "../page/NewVideo";
+import PopularVideo from "../page/PopularVideo";
+
+import MenuModal from "../component/MenuModal";
+
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Header />
+      <MenuModal />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:id" element={<DetailPage />} />
@@ -23,6 +28,7 @@ const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/newvideo" element={<NewVideo />} />
+        <Route path="/popularVideo" element={<PopularVideo />} />
       </Routes>
       <Footer />
     </BrowserRouter>

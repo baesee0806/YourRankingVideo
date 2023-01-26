@@ -1,41 +1,80 @@
 import React from "react";
+import YouTube from "react-youtube";
 import { FcLike } from "react-icons/fc";
-import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
-function VideoBox({ style, bottomBar, iconSize, title }) {
+function VideoBox({ iconSize, style, videoId, item }) {
+  //상세페이지로 이동하는 네비게이터
+  const navigate = useNavigate();
+
+  const detailNavigate = () => {
+    navigate(`/${videoId}`);
+  };
+
   return (
-    <StyledVideo>
-      {/* 메인동영상 */}
-      <div style={style}></div>
-      {/* 비디오 밑에 흰색바 */}
-      <div style={bottomBar}>
+    <div
+      style={{
+        boxShadow: "10px 15px 15px #888",
+        marginBottom: "30px",
+        marginLeft: "20px",
+      }}
+    >
+      <YouTube
+        style={style}
+        videoId={videoId}
+        opts={{
+          height: "100%",
+          width: "100%",
+          playerVars: {
+            autoplay: 0,
+            rel: 0,
+            modestbranding: 1,
+          },
+        }}
+        //이벤트 리스너
+        onEnd={(e) => {
+          e.target.stopVideo(0);
+        }}
+      />
+      {/* BottomBar */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          backgroundColor: "#eee",
+          width: "100%",
+          padding: "2%",
+          boxSizing: "border-box",
+          //신정근 수정
+          cursor: "pointer",
+        }}
+        onClick={detailNavigate}
+      >
+        <div style={{ boxSizing: "border-box" }}>
+          <span>
+            {item?.snippet.title.slice(0, 15)}
+            {item?.snippet.title.length > 7 && "..."}
+          </span>
+        </div>
+        {/* 하트 + 좋아요수 */}
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            marginRight: "10px",
           }}
         >
-          <span style={title}>여기가 동영상Title</span>
-          {/* 하트 이모티콘 & 좋아요 수 */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <FcLike
-              onClick={() => {
-                alert("wow");
-              }}
-              style={{ fontSize: iconSize }}
-            />
-            <span style={{ fontSize: iconSize, marginLeft: "5px" }}>30</span>
-          </div>
+          <FcLike
+            onClick={() => {
+              alert("");
+            }}
+            style={{ fontSize: iconSize }}
+          />
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>30</span>
         </div>
       </div>
-    </StyledVideo>
+    </div>
   );
 }
-
-//전체 비디오 속성
-const StyledVideo = styled.div`
-  box-shadow: 10px 15px 15px #888;
-  margin-bottom: 40px;
-`;
 
 export default VideoBox;
