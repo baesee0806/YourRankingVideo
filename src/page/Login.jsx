@@ -47,8 +47,10 @@ const Login = () => {
     signInWithEmailAndPassword(authService, email, password)
       .then(() => {
         console.log("로그인 성공");
+        alert("로그인 성공");
         setEmail("");
         setPassword("");
+        sessionStorage.setItem("currentUser", "123");
         navigate("/");
       })
       .catch((err) => {
