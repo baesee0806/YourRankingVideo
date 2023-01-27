@@ -13,10 +13,9 @@ const Header = () => {
   console.log(loggedinuser);
 
   useEffect(() => {
-    if (loggedinuser == "no user") {
+    if (loggedinuser === "no user") {
       setShow(true);
     } else {
-      console.log("ddd");
       setShow(false);
     }
   }, []);
