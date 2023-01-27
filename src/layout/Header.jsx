@@ -13,20 +13,27 @@ const Header = () => {
   console.log(loggedinuser);
 
   useEffect(() => {
-    if (loggedinuser == "no user") {
+    if (loggedinuser === "no user") {
       setShow(true);
     } else {
-      console.log("ddd");
       setShow(false);
     }
   }, []);
   return (
     <StyledHeader>
       <HeaderContainer>
-        <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
+        <Logo
+          onClick={() => (window.location = "/")}
+          src={require("../assets/Logo.png")}
+        />
         <HeaderBtnBox>
-          <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} />
-          {show ? <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn> : null}
+          <MyLogo
+            onClick={() => navigate("/my")}
+            src={require("../assets/mylogo.png")}
+          />
+          {show ? (
+            <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
+          ) : null}
 
           <Tab
             onClick={() => {
