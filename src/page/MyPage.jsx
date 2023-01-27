@@ -7,11 +7,10 @@ import { UserLikePostState } from "../recoil/myPageAtom";
 import VideoBox from "../component/VideoBox";
 import { authService } from "../common/firebase";
 import { updateProfile } from "firebase/auth";
-export default function MyPage() {
+export default function MyPage(userObj) {
   // user img modal change
-  const [userImgModalState, setUserImgModalState] =
-    useRecoilState(UserImgModalState);
-  const [nickName, setNickName] = useState("");
+  const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
+  const [nickName, setNickName] = useState(userObj.displayName);
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);
 
