@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { authService } from "../common/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { emailRegex, pwRegex } from "../API/util";
+import uuid from "react-uuid";
 const Login = () => {
   const navigate = useNavigate();
   const emailRef = useRef(null);
@@ -47,8 +48,10 @@ const Login = () => {
     signInWithEmailAndPassword(authService, email, password)
       .then(() => {
         console.log("로그인 성공");
+        alert("로그인 성공");
         setEmail("");
         setPassword("");
+        sessionStorage.setItem("currentUser", JSON.stringify(uuid()));
         navigate("/");
       })
       .catch((err) => {

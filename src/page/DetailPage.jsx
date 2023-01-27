@@ -8,18 +8,42 @@ import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import YouTube from "react-youtube";
 import { useParams } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { fetchLists } from "../API/youtube";
+import { useState } from "react";
 
 export default function DetailPage() {
   const queryClient = useQueryClient();
+  //로그인 안했을때 해결필요
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   //useParams로 정보 받아오기
   const { id } = useParams();
   console.log(id);
+
+  //인기동영상 데이터
+  const youtubeData = useQuery("items", fetchLists);
+  //params로 갖고온 id를 find
+  const youtubeDataFind = youtubeData.data?.items.find((item) => {
+    return item.id === id;
+  });
+  console.log(youtubeDataFind?.snippet);
+
+  //게시글 데이터
+  const getVideos = async () => {
+    const response = await axios.get("http://localhost:3001/videos");
+    return response;
+  };
+  const videos = useQuery("videos", getVideos);
+  console.log(videos?.data?.data);
+
   // uuid생성
   const likeUUID = uuidv4();
   //영상ID
   const contentID = 2;
   //userID
-  const userID = 4;
+  const userID = getAuth().currentUser;
+  // console.log(userID?.uid);
 
   // like create
   const postMutation = useMutation(
@@ -48,7 +72,7 @@ export default function DetailPage() {
   const likeCreate = () => {
     const newLike = {
       contentID,
-      userID,
+      userID: userID?.uid,
       id: likeUUID,
     };
 
@@ -72,9 +96,8 @@ export default function DetailPage() {
 
   //userID와 contentID가 현재 페이지와 같은 것만 반환
   const likesData = data.data.filter((i) => {
-    return i.contentID === contentID && i.userID === userID;
+    return i.contentID === contentID && i.userID === userID?.uid;
   });
-  console.log(data.data.length);
 
   return (
     <DetailPageWrapdiv>
@@ -102,62 +125,73 @@ export default function DetailPage() {
 
       <DetailPageTextTitlediv>
         {/* 제목 */}
-        <DetailPageTItleh1>TitleTiTitleTitle</DetailPageTItleh1>
+        <DetailPageTItleh1>
+          {youtubeDataFind ? youtubeDataFind.snippet?.title : "게시물제목"}
+        </DetailPageTItleh1>
 
         {/* 좋아요 */}
-        <DetailPageLikediv>
-          <AiFillHeartdiv>
-            {/* likesData가 존재할때만 true */}
-            {likesData[0] ? (
-              <AiFillHeart
-                style={{ fontSize: 20, color: "red" }}
-                onClick={() => {
-                  // 현재 페이지 likes의 id를 넘겨줌
-                  DeleteMutation.mutate(likesData[0].id);
-                }}
-              />
-            ) : (
-              <AiOutlineHeart
-                style={{ fontSize: 20, color: "red" }}
-                onClick={likeCreate}
-              />
-            )}
-          </AiFillHeartdiv>
-          {/* likes의 수 */}
-          <DetailPageLikep>{data.data.length}</DetailPageLikep>
-        </DetailPageLikediv>
+        {/* 유튜브 인기동영상 데이터가 존재할 때는 좋아요 숨김 */}
+        {youtubeDataFind ? (
+          ""
+        ) : (
+          <DetailPageLikediv>
+            <AiFillHeartdiv>
+              {/* likesData가 존재할때만 true */}
+              {likesData[0] ? (
+                <AiFillHeart
+                  style={{ fontSize: 20, color: "red" }}
+                  onClick={() => {
+                    // 현재 페이지 likes의 id를 넘겨줌
+                    DeleteMutation.mutate(likesData[0].id);
+                  }}
+                />
+              ) : (
+                <AiOutlineHeart
+                  style={{ fontSize: 20, color: "red" }}
+                  onClick={likeCreate}
+                />
+              )}
+            </AiFillHeartdiv>
+            {/* likes의 수 */}
+            <DetailPageLikep>{data.data.length}</DetailPageLikep>
+          </DetailPageLikediv>
+        )}
       </DetailPageTextTitlediv>
 
       <DetailPageTextNamediv>
         {/* 닉네임 */}
-        <DetailPageNamediv>name</DetailPageNamediv>
+        <DetailPageNamediv>
+          {youtubeDataFind
+            ? youtubeDataFind.snippet?.channelTitle
+            : "게시물내용"}
+        </DetailPageNamediv>
         {/* 날짜 */}
-        <DetailPageDatediv>2023.01.21</DetailPageDatediv>
+        <DetailPageDatediv>
+          {/* T뒤의 문자 삭제 */}
+          {youtubeDataFind
+            ? youtubeDataFind?.snippet?.publishedAt.substring(
+                0,
+                youtubeDataFind?.snippet?.publishedAt.indexOf("T", 0)
+              )
+            : "게시물날짜"}
+        </DetailPageDatediv>
       </DetailPageTextNamediv>
 
       {/* 내용 */}
       <DetailPageContentdiv>
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
-        내용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용용내용
+        {youtubeDataFind ? youtubeDataFind.snippet?.description : "게시물내용"}
       </DetailPageContentdiv>
-
-      <DetailPageButtondiv>
-        {/* 수정버튼 */}
-        <DetailPageEditButton>수정</DetailPageEditButton>
-        {/* 삭제버튼 */}
-        <DetailPageDeleteButton>삭제</DetailPageDeleteButton>
-      </DetailPageButtondiv>
+      {youtubeDataFind ? (
+        ""
+      ) : (
+        //여기안에서 작성자 id와 로그인 id비교후 출력
+        <DetailPageButtondiv>
+          {/* 수정버튼 */}
+          <DetailPageEditButton>수정</DetailPageEditButton>
+          {/* 삭제버튼 */}
+          <DetailPageDeleteButton>삭제</DetailPageDeleteButton>
+        </DetailPageButtondiv>
+      )}
     </DetailPageWrapdiv>
   );
 }
@@ -197,13 +231,14 @@ const DetailPageTextTitlediv = styled.div`
   justify-content: space-between;
 `;
 const DetailPageTItleh1 = styled.h1`
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 400;
   margin: 0;
   letter-spacing: -1px;
-  line-height: 100%;
+  line-height: 130%;
   @media screen and (max-width: 1024px) {
     font-size: 28px;
+    line-height: 120%;
   }
   @media screen and (max-width: 667px) {
     font-size: 24px;
@@ -214,8 +249,7 @@ const DetailPageLikediv = styled.div`
   align-items: center;
 `;
 const AiFillHeartdiv = styled.div`
-  margin-top: 10px;
-  margin-right: 5px;
+  margin: 10px 5px 0 10px;
   cursor: pointer;
 `;
 const DetailPageLikep = styled.p`
@@ -234,32 +268,29 @@ const DetailPageTextNamediv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 25px;
+  margin-top: 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid #727272;
+  @media screen and (max-width: 1024px) {
+    margin-top: 25px;
+  }
 `;
 const DetailPageNamediv = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   line-height: 100%;
-  @media screen and (max-width: 1024px) {
-    font-size: 18px;
-  }
   @media screen and (max-width: 1024px) {
     font-size: 16px;
   }
 `;
 const DetailPageDatediv = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   line-height: 100%;
-  @media screen and (max-width: 1024px) {
-    font-size: 18px;
-  }
   @media screen and (max-width: 1024px) {
     font-size: 16px;
   }
 `;
 const DetailPageContentdiv = styled.div`
-  margin-top: 40px;
+  margin: 40px 0 100px;
   @media screen and (max-width: 1024px) {
     font-size: 16px;
   }
@@ -271,7 +302,6 @@ const DetailPageButtondiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 40px;
   padding-bottom: 100px;
 `;
 const DetailPageEditButton = styled.button`

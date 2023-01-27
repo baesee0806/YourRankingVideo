@@ -12,7 +12,6 @@ import NewVideo from "../page/NewVideo";
 import PopularVideo from "../page/PopularVideo";
 import MenuModal from "../component/MenuModal";
 
-
 const Router = () => {
   return (
     <BrowserRouter>
