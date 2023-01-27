@@ -4,7 +4,6 @@ import { BsFillArrowUpCircleFill } from "react-icons/bs";
 
 function ScrollTopBtn() {
   const [showBtn, setShowBtn] = useState(false);
-  console.log(showBtn);
 
   const toTop = () => {
     window.scrollTo({

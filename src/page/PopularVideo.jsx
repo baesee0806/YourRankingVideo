@@ -11,6 +11,7 @@ export default function PopularVideo() {
   }, []);
 
   const { isLoading, isError, data, error } = useQuery("items", fetchLists);
+  console.log(data);
 
   if (isLoading) {
     return <div>로딩중</div>;
@@ -28,7 +29,7 @@ export default function PopularVideo() {
 
         <div style={{ width: "70%", margin: "auto" }}>
           <div style={videoListDiv}>
-            {data.items.map((item) => (
+            {data?.items.map((item) => (
               <div key={item.id}>
                 <VideoBox
                   iconSize="17px"
@@ -38,6 +39,7 @@ export default function PopularVideo() {
                   }}
                   videoId={item.id}
                   item={item}
+                  title={item.snippet.title}
                 />
               </div>
             ))}
