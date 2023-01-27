@@ -8446,6 +8446,7 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
+
 react-uuid@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-uuid/-/react-uuid-2.0.0.tgz#e3c97e190db9eef53cb9dacfcc7314d913a411fa"
@@ -8454,6 +8455,7 @@ react-uuid@^2.0.0:
 react-youtube@^10.1.0:
   version "10.1.0"
   resolved "https://registry.npmjs.org/react-youtube/-/react-youtube-10.1.0.tgz"
+
   integrity sha512-ZfGtcVpk0SSZtWCSTYOQKhfx5/1cfyEW1JN/mugGNfAxT3rmVJeMbGpA9+e78yG21ls5nc/5uZJETE3cm3knBg==
   dependencies:
     fast-deep-equal "3.1.3"
