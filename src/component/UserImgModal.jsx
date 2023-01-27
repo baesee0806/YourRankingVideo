@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import { updateProfile } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { authService } from "../common/firebase";
 import { UserImgModalState } from "../recoil/userImgModalAtom";
 
 export const UserImgModal = () => {
   const setUserImgModalState = useSetRecoilState(UserImgModalState);
   const [imgUrl, setImgUrl] = useState("");
-
-  // img url 변경 json server
-  // 취소 완료 버튼 색
+  // img url 변경
+  // useEffect(() => {
+  //   userProfileChange();
+  // }, [imgUrl]);
+  const userProfileChange = () => {
+    updateProfile(authService.currentUser, {
+      photoURL: imgUrl,
+    })
+      .then(() => {
+        setUserImgModalState(false);
+      })
+      .catch((error) => {
+        // An error occurred
+        // ...
+      });
+  };
 
   return (
     <>
@@ -16,14 +31,9 @@ export const UserImgModal = () => {
       <UserImgModalLayoutDiv>
         <UserImgModalImgInputAreaDiv>
           <UserImgModalImg
-            src={
-              imgUrl === ""
-                ? "https://cdn-icons-png.flaticon.com/512/14/14660.png"
-                : imgUrl
-            }
+            src={imgUrl === "" ? authService.currentUser.photoURL : imgUrl}
             onError={(e) => {
-              e.target.src =
-                "https://cdn-icons-png.flaticon.com/512/14/14660.png";
+              e.target.src = authService.currentUser.photoURL;
             }}
           />
           <UserImgModalInputAreaDiv>
@@ -42,7 +52,14 @@ export const UserImgModal = () => {
           </UserImgModalInputAreaDiv>
         </UserImgModalImgInputAreaDiv>
         <UserImgModalBtnAreaDiv>
-          <UserImgModalBtn>완료</UserImgModalBtn>
+          <UserImgModalBtn
+            onClick={() => {
+              // setUserImgModalState(false);
+              userProfileChange();
+            }}
+          >
+            완료
+          </UserImgModalBtn>
           <UserImgModalBtn
             onClick={() => {
               setUserImgModalState(false);
