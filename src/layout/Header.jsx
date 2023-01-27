@@ -13,22 +13,24 @@ const Header = () => {
   console.log(loggedinuser);
 
   useEffect(() => {
+
     if (loggedinuser == null) {
+
       setShow(true);
     } else {
-      console.log("ddd");
       setShow(false);
     }
   }, [loggedinuser]);
   return (
     <StyledHeader>
-      <HeaderContainer>
+      <HeaderContainer>ut
         <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
 
         <HeaderBtnBox>
           {!show ? <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} /> : null}
           {!show ? <Towrite onClick={() => navigate("/postpage")} src={require("../assets/pencil.png")} /> : null}
           {show ? <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn> : null}
+
 
           <Tab
             onClick={() => {

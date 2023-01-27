@@ -47,5 +47,5 @@ const StyledButton = {
   display: "absolute",
   position: "fixed",
   right: "3%",
-  bottom: "15%",
+  bottom: "5%",
 };
