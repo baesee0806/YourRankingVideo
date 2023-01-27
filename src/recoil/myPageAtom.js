@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 const UserLikePostState = atom({
   key: 'UserLikePostState',
-  default:false
+  default:true
 })
 
 export {UserLikePostState}

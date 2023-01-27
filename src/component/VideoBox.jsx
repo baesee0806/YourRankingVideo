@@ -78,3 +78,5 @@ function VideoBox({ iconSize, style, videoId, item }) {
 }
 
 export default VideoBox;
+
+// 1. 비디오 크기 반응형으로 만들기
