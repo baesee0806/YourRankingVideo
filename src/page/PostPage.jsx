@@ -1,16 +1,15 @@
-
-import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { authService } from '../common/firebase';
-import { createVideo } from '../API/postApi';
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../common/firebase";
+import { createVideo } from "../API/postApi";
 
 export default function PostPage() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const addVideo = useMutation((video) => axios.post('http://localhost:3001/videos', video), {
   //   onSuccess: (data) => {
   //     console.log(data);
@@ -22,25 +21,29 @@ export default function PostPage() {
   // });
   const addVideo = useMutation((video) => createVideo(video), {
     onSuccess: (data) => {
-      console.log(data);
-      queryClient.invalidateQueries(['videos']);
+      console.log(data?.data?.id);
+      navigate(`/${data?.data?.id}`);
     },
     onError: (error) => {
       console.log(error);
     },
   });
-  const { register, handleSubmit, formState: { isSubmitting } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
   const onSubmit = (data) => {
     const Video = {
+      id: uuidv4(),
       contentId: uuidv4(),
       createAt: Date(),
       userId: authService.currentUser.uid,
-      nickName: authService.currentUser.displayName ?? '닉네임없음'  
+      nickName: authService.currentUser.displayName ?? "닉네임없음",
     };
     const newVideo = Object.assign(Video, data);
     addVideo.mutate(newVideo);
     alert("작성 완료");
-    navigate("/");
   };
   const onError = (error) => {
     console.log(error);
@@ -74,7 +77,11 @@ export default function PostPage() {
           <Button
             type="submit"
             style={{ marginRight: "20px" }}
-            disabled={isSubmitting}
+            // disabled={isSubmitting}
+            // onClick={() => {
+            //   isSubmitting();
+            //   navigate(`${uuid}`);
+            // }}
           >
             완료
           </Button>

@@ -16,7 +16,6 @@ const Header = () => {
     if (loggedinuser == null) {
       setShow(true);
     } else {
-      console.log("ddd");
       setShow(false);
     }
   }, [loggedinuser]);
