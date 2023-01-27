@@ -1,6 +1,25 @@
+import axios from 'axios';
+import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 
 export default function EditPostPage() {
+  const queryClient = useQueryClient();
+  
+  const deletePost = useMutation((id) => axios.delete(`http://localhost:3001/videos/${id}`), {
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries(['videos']);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const handleDelete = (id) => {
+    deletePost.mutate(id);
+  }
+
+
   return (
     <Container>
       <Text>게시물 수정</Text>

@@ -5,11 +5,21 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../common/firebase';
+import { createVideo } from '../API/postApi';
 
 export default function PostPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate()
-  const addVideo = useMutation((video) => axios.post('http://localhost:3001/videos', video), {
+  // const addVideo = useMutation((video) => axios.post('http://localhost:3001/videos', video), {
+  //   onSuccess: (data) => {
+  //     console.log(data);
+  //     queryClient.invalidateQueries(['videos']);
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //   },
+  // });
+  const addVideo = useMutation((video) => createVideo(video), {
     onSuccess: (data) => {
       console.log(data);
       queryClient.invalidateQueries(['videos']);
@@ -21,7 +31,7 @@ export default function PostPage() {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const onSubmit = (data) => {
     const Video = {
-      contetnId: '1',
+      contentId: uuidv4(),
       createAt: Date(),
       userId: authService.currentUser.uid,
       nickName: authService.currentUser.displayName ?? '닉네임없음'  
