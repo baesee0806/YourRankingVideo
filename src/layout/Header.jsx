@@ -1,25 +1,33 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+
 import { ModalBtnState } from "../recoil/menuAtoms";
 
 const Header = () => {
   const navigate = useNavigate();
   const modalSetHandlering = useSetRecoilState(ModalBtnState);
+  const [show, setShow] = useState(false);
+  var loggedinuser = JSON.parse(sessionStorage.getItem("currentUser"));
+  console.log(loggedinuser);
+
+  useEffect(() => {
+    if (loggedinuser == "no user") {
+      setShow(true);
+    } else {
+      console.log("ddd");
+      setShow(false);
+    }
+  }, []);
   return (
     <StyledHeader>
       <HeaderContainer>
-        <Logo
-          onClick={() => navigate("/")}
-          src={require("../assets/Logo.png")}
-        />
+        <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
         <HeaderBtnBox>
-          <MyLogo
-            onClick={() => navigate("/my")}
-            src={require("../assets/mylogo.png")}
-          />
+          <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} />
+          {show ? <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn> : null}
 
-          <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
           <Tab
             onClick={() => {
               modalSetHandlering(true);
