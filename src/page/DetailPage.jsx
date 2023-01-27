@@ -112,11 +112,11 @@ export default function DetailPage() {
     return <p>Error..!</p>;
   }
 
-  const likesData = data.data.filter((i) => {
-    return i.contentID === params.id && i.userID === userID?.uid;
+  const likesData = data?.data?.filter((i) => {
+    return i?.contentID === params?.id && i?.userID === userID?.uid;
   });
-  const likesDataLength = data.data.filter((i) => {
-    return params.id === i.contentID;
+  const likesDataLength = data?.data?.filter((i) => {
+    return params?.id === i?.contentID;
   });
   // console.log(likesDataLength);
 
@@ -126,7 +126,7 @@ export default function DetailPage() {
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
-          videoId={youtubeDataFind ? params.id : videosFindSplit}
+          videoId={youtubeDataFind ? params?.id : videosFindSplit}
           style={{
             width: "100%",
             height: "100%",
@@ -164,7 +164,7 @@ export default function DetailPage() {
                   style={{ fontSize: 20, color: "red" }}
                   onClick={() => {
                     // 현재 페이지 likes의 id를 넘겨줌
-                    DeleteMutation.mutate(likesData[0].id);
+                    DeleteMutation?.mutate(likesData[0].id);
                   }}
                 />
               ) : (
@@ -175,7 +175,7 @@ export default function DetailPage() {
               )}
             </AiFillHeartdiv>
             {/* likes의 수 */}
-            <DetailPageLikep>{likesDataLength.length}</DetailPageLikep>
+            <DetailPageLikep>{likesDataLength?.length}</DetailPageLikep>
           </DetailPageLikediv>
         )}
       </DetailPageTextTitlediv>

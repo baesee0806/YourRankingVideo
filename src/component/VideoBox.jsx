@@ -68,8 +68,8 @@ function VideoBox({ iconSize, style, videoId, item, title, contentID }) {
       >
         <div style={{ boxSizing: "border-box", fontSize: `${iconSize}` }}>
           <span>
-            {title.slice(0, 15)}
-            {title.length > 7 && "..."}
+            {title?.slice(0, 15)}
+            {title?.length > 7 && "..."}
           </span>
           {/* {data.map((i) =>
             i.contentID === item.contentID ? (
@@ -93,7 +93,7 @@ function VideoBox({ iconSize, style, videoId, item, title, contentID }) {
             style={{ fontSize: iconSize }}
           />
           <span style={{ fontSize: iconSize, marginLeft: "5px" }}>
-            {item.nickName}
+            {item?.nickName}
           </span>
         </div>
       </div>

@@ -19,10 +19,10 @@ export default function MyPage() {
   // 2. useEffect
   // 3. usestate
 
-  const user = authService.currentUser;
-  const usernickname = user.displayName;
-  const email = user.email;
-  const photoURL = user.photoURL;
+  const user = authService?.currentUser;
+  const usernickname = user?.displayName;
+  const email = user?.email;
+  const photoURL = user?.photoURL;
 
   const userNickNameChange = () => {
     updateProfile(authService.currentUser, {
