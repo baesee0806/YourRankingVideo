@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { ModalBtnState } from "../recoil/menuAtoms";
 import { useNavigate } from "react-router-dom";
 
+import { authService } from "../common/firebase";
+
 const MenuModal = () => {
   const [modalHandler, setModalHandler] = useRecoilState(ModalBtnState);
   const navigate = useNavigate();
@@ -22,6 +24,13 @@ const MenuModal = () => {
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     }
   }, [modalHandler]);
+  const logout = () => {
+    console.log("로그아웃 성공");
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("login");
+    window.alert("로그아웃 성공");
+  };
 
   return (
     <>
@@ -46,22 +55,10 @@ const MenuModal = () => {
             </MenuModalBtnAreaDiv>
             {/* 페이지 이동 */}
             <MenuModalMovePageAreaDiv>
-              <MenuModalMovePageDiv
-                onClick={() => {
-                  navigate("/login");
-                }}
-                style={{ cursor: "pointer" }}
-              >
+              <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
                 로그아웃
               </MenuModalMovePageDiv>
-              <MenuModalMovePageDiv
-                onClick={() => {
-                  navigate("/");
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                인기영상
-              </MenuModalMovePageDiv>
+              <MenuModalMovePageDiv style={{ cursor: "pointer" }}>인기영상</MenuModalMovePageDiv>
               <MenuModalMovePageDiv
                 onClick={() => {
                   navigate("/newVideo");

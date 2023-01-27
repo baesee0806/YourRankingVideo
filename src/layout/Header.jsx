@@ -9,31 +9,25 @@ const Header = () => {
   const navigate = useNavigate();
   const modalSetHandlering = useSetRecoilState(ModalBtnState);
   const [show, setShow] = useState(false);
-  var loggedinuser = JSON.parse(sessionStorage.getItem("currentUser"));
+  const loggedinuser = JSON.parse(sessionStorage.getItem("currentUser"));
   console.log(loggedinuser);
 
   useEffect(() => {
-    if (loggedinuser === "no user") {
+    if (loggedinuser == null) {
       setShow(true);
     } else {
       setShow(false);
     }
-  }, []);
+  }, [loggedinuser]);
   return (
     <StyledHeader>
       <HeaderContainer>
-        <Logo
-          onClick={() => (window.location = "/")}
-          src={require("../assets/Logo.png")}
-        />
+        <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
+
         <HeaderBtnBox>
-          <MyLogo
-            onClick={() => navigate("/my")}
-            src={require("../assets/mylogo.png")}
-          />
-          {show ? (
-            <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
-          ) : null}
+          {!show ? <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} /> : null}
+          {!show ? <Towrite onClick={() => navigate("/postpage")} src={require("../assets/pencil.png")} /> : null}
+          {show ? <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn> : null}
 
           <Tab
             onClick={() => {
@@ -81,6 +75,15 @@ export const MyLogo = styled.img`
   margin-top: 5px;
   margin-left: 5px;
 `;
+
+export const Towrite = styled.img`
+  height: 30px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 5px;
+`;
+
 export const HeaderBtnBox = styled.div`
   display: flex;
   flex-direction: row;
