@@ -3,12 +3,14 @@ import YouTube from "react-youtube";
 import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
-function VideoBox({ iconSize, style, videoId, item }) {
+function VideoBox({ iconSize, style, videoId, item, title }) {
   //상세페이지로 이동하는 네비게이터
+  //하트 state로 관리
+
   const navigate = useNavigate();
 
   const detailNavigate = () => {
-    navigate(`/${videoId}`);
+    navigate(`/${item?.id}`);
   };
 
   return (
@@ -21,7 +23,7 @@ function VideoBox({ iconSize, style, videoId, item }) {
     >
       <YouTube
         style={style}
-        videoId={videoId}
+        videoId={videoId.slice(-11)}
         opts={{
           height: "100%",
           width: "100%",
@@ -53,8 +55,8 @@ function VideoBox({ iconSize, style, videoId, item }) {
       >
         <div style={{ boxSizing: "border-box" }}>
           <span>
-            {item?.snippet.title.slice(0, 15)}
-            {item?.snippet.title.length > 7 && "..."}
+            {title.slice(0, 15)}
+            {title.length > 7 && "..."}
           </span>
         </div>
         {/* 하트 + 좋아요수 */}
