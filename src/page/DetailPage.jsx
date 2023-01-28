@@ -12,8 +12,24 @@ import { getAuth } from "firebase/auth";
 import { fetchLists } from "../API/youtube";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../common/firebase";
 
 export default function DetailPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    //로그인 정보
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
+
+  console.log(isLoggedIn);
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   //로그인 안했을때 해결필요
@@ -25,9 +41,11 @@ export default function DetailPage() {
   //인기동영상 데이터
   const youtubeData = useQuery("items", fetchLists);
   //params로 갖고온 id를 find
+  //youtubeDataFind 오류
   const youtubeDataFind = youtubeData.data?.items.find((item) => {
     return item.id === params.id;
   });
+  // console.log(youtubeDataFind);
 
   // uuid생성
   const likeUUID = uuidv4();
@@ -75,7 +93,8 @@ export default function DetailPage() {
 
   const videosFind = videos.data?.data?.find((data) => data?.id == params.id);
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
-  const dateSplit = videosFind?.createAt?.split(" ");
+  const dateSplit = videosFind?.time.slice(0, -1);
+  // split해야함
 
   //게시글 삭제
   const textDeleteMutation = useMutation(
@@ -99,8 +118,7 @@ export default function DetailPage() {
 
   //get likes
   const getLikes = async () => {
-    const response = await axios.get("http://localhost:3001/likes");
-    return response;
+    return await axios.get("http://localhost:3001/likes");
   };
 
   const { isLoading, isError, data, error } = useQuery("likes", getLikes);
@@ -112,15 +130,13 @@ export default function DetailPage() {
     return <p>Error..!</p>;
   }
 
-  const likesData = data.data.filter((i) => {
+  const likesData = data?.data?.filter((i) => {
     return i.contentID === params.id && i.userID === userID?.uid;
   });
-  const likesDataLength = data.data.filter((i) => {
+  const likesDataLength = data?.data?.filter((i) => {
     return params.id === i.contentID;
   });
-  // console.log(likesDataLength);
 
-  console.log(likesDataLength);
   return (
     <DetailPageWrapdiv>
       {/* 영상 */}
@@ -159,7 +175,7 @@ export default function DetailPage() {
           <DetailPageLikediv>
             <AiFillHeartdiv>
               {/* likesData가 존재할때만 true */}
-              {likesData[0] ? (
+              {likesData && likesData[0] ? (
                 <AiFillHeart
                   style={{ fontSize: 20, color: "red" }}
                   onClick={() => {
@@ -175,7 +191,7 @@ export default function DetailPage() {
               )}
             </AiFillHeartdiv>
             {/* likes의 수 */}
-            <DetailPageLikep>{likesDataLength.length}</DetailPageLikep>
+            <DetailPageLikep>{likesDataLength?.length}</DetailPageLikep>
           </DetailPageLikediv>
         )}
       </DetailPageTextTitlediv>
@@ -195,7 +211,7 @@ export default function DetailPage() {
                 0,
                 youtubeDataFind?.snippet?.publishedAt.indexOf("T", 0)
               )
-            : dateSplit[3] + "-" + dateSplit[1] + "-" + dateSplit[2]}
+            : dateSplit}
         </DetailPageDatediv>
       </DetailPageTextNamediv>
 
@@ -209,20 +225,26 @@ export default function DetailPage() {
         ""
       ) : (
         //여기안에서 작성자 id와 로그인 id비교후 출력
-        <DetailPageButtondiv>
-          {/* 수정버튼 */}
-          <DetailPageEditButton
-            onClick={() => {
-              navigate("/editpost");
-            }}
-          >
-            수정
-          </DetailPageEditButton>
-          {/* 삭제버튼 */}
-          <DetailPageDeleteButton onClick={textDeleteMutationOnClick}>
-            삭제
-          </DetailPageDeleteButton>
-        </DetailPageButtondiv>
+        <div>
+          {userID?.uid === videosFind?.userId ? (
+            <DetailPageButtondiv>
+              {/* 수정버튼 */}
+              <DetailPageEditButton
+                onClick={() => {
+                  navigate("/editpost");
+                }}
+              >
+                수정
+              </DetailPageEditButton>
+              {/* 삭제버튼 */}
+              <DetailPageDeleteButton onClick={textDeleteMutationOnClick}>
+                삭제
+              </DetailPageDeleteButton>
+            </DetailPageButtondiv>
+          ) : (
+            ""
+          )}
+        </div>
       )}
     </DetailPageWrapdiv>
   );
