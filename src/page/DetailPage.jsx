@@ -12,27 +12,22 @@ import { getAuth } from "firebase/auth";
 import { fetchLists } from "../API/youtube";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../common/firebase";
 
 export default function DetailPage() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  //로그인 안했을때 해결필요
-
-  //useParams로 정보 받아오기
-  const params = useParams();
-  console.log(params.id);
-
-  //인기동영상 데이터
-  const youtubeData = useQuery("items", fetchLists);
-  //params로 갖고온 id를 find
-  const youtubeDataFind = youtubeData.data?.items.find((item) => {
-    return item.id === params.id;
-  });
-
-  // uuid생성
-  const likeUUID = uuidv4();
-  //userID
-  const userID = getAuth().currentUser;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log(isLoggedIn);
+  useEffect(() => {
+    //로그인 정보
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, []);
+  //usemutation
   // like create
   const postMutation = useMutation(
     (newLike) => axios.post("http://localhost:3001/likes", newLike),
@@ -56,16 +51,39 @@ export default function DetailPage() {
     }
   );
 
-  //dbjson생성
-  const likeCreate = () => {
-    const newLike = {
-      contentID: params.id,
-      userID: userID?.uid,
-      id: likeUUID,
-    };
+  //likesCount 수정
+  const likesCountMutation = useMutation(
+    ({ id, likesCount }) =>
+      axios.patch(`http://localhost:3001/videos/${id}`, { likesCount }),
+    {
+      onSuccess: () => {
+        // window.location = "/";
+      },
+    }
+  );
 
-    postMutation.mutate(newLike);
-  };
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  //로그인 안했을때 해결필요
+
+  //useParams로 정보 받아오기
+  const params = useParams();
+  console.log(params.id);
+
+  //인기동영상 데이터
+  const youtubeData = useQuery("items", fetchLists);
+  //params로 갖고온 id를 find
+  //youtubeDataFind 오류
+  const youtubeDataFind = youtubeData.data?.items.find((item) => {
+    return item.id === params.id;
+  });
+  // console.log(youtubeDataFind);
+
+  // uuid생성
+  const likeUUID = uuidv4();
+  //userID
+  const userID = getAuth().currentUser;
+
   //게시글 데이터
   const getVideos = async () => {
     const response = await axios.get("http://localhost:3001/videos");
@@ -75,7 +93,7 @@ export default function DetailPage() {
 
   const videosFind = videos.data?.data?.find((data) => data?.id == params.id);
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
-  const dateSplit = videosFind?.createAt?.split(" ");
+  const dateSplit = videosFind?.time.slice(0, -1);
 
   //게시글 삭제
   const textDeleteMutation = useMutation(
@@ -99,8 +117,7 @@ export default function DetailPage() {
 
   //get likes
   const getLikes = async () => {
-    const response = await axios.get("http://localhost:3001/likes");
-    return response;
+    return await axios.get("http://localhost:3001/likes");
   };
 
   const { isLoading, isError, data, error } = useQuery("likes", getLikes);
@@ -112,15 +129,41 @@ export default function DetailPage() {
     return <p>Error..!</p>;
   }
 
-  const likesData = data.data.filter((i) => {
+  const likesData = data?.data?.filter((i) => {
     return i.contentID === params.id && i.userID === userID?.uid;
   });
-  const likesDataLength = data.data.filter((i) => {
+  const likesDataLength = data?.data?.filter((i) => {
     return params.id === i.contentID;
   });
-  // console.log(likesDataLength);
 
-  console.log(likesDataLength);
+  //좋아요 dbjson생성, 수정
+  const likeCreate = () => {
+    const newLike = {
+      contentID: params.id,
+      userID: userID?.uid,
+      id: likeUUID,
+    };
+
+    const newLikesCount = {
+      id: params.id,
+      likesCount: likesDataLength?.length + 1,
+    };
+
+    postMutation.mutate(newLike);
+    likesCountMutation.mutate(newLikesCount);
+  };
+  //좋아요 dbjson삭제, 수정
+  const likeDelete = () => {
+    const newLikesCount = {
+      id: params.id,
+      likesCount: likesDataLength?.length - 1,
+    };
+
+    // 현재 페이지 likes의 id를 넘겨줌
+    DeleteMutation.mutate(likesData[0].id);
+    likesCountMutation.mutate(newLikesCount);
+  };
+
   return (
     <DetailPageWrapdiv>
       {/* 영상 */}
@@ -159,13 +202,10 @@ export default function DetailPage() {
           <DetailPageLikediv>
             <AiFillHeartdiv>
               {/* likesData가 존재할때만 true */}
-              {likesData[0] ? (
+              {likesData && likesData[0] ? (
                 <AiFillHeart
                   style={{ fontSize: 20, color: "red" }}
-                  onClick={() => {
-                    // 현재 페이지 likes의 id를 넘겨줌
-                    DeleteMutation.mutate(likesData[0].id);
-                  }}
+                  onClick={likeDelete}
                 />
               ) : (
                 <AiOutlineHeart
@@ -175,7 +215,7 @@ export default function DetailPage() {
               )}
             </AiFillHeartdiv>
             {/* likes의 수 */}
-            <DetailPageLikep>{likesDataLength.length}</DetailPageLikep>
+            <DetailPageLikep>{likesDataLength?.length}</DetailPageLikep>
           </DetailPageLikediv>
         )}
       </DetailPageTextTitlediv>
@@ -195,7 +235,7 @@ export default function DetailPage() {
                 0,
                 youtubeDataFind?.snippet?.publishedAt.indexOf("T", 0)
               )
-            : dateSplit[3] + "-" + dateSplit[1] + "-" + dateSplit[2]}
+            : dateSplit}
         </DetailPageDatediv>
       </DetailPageTextNamediv>
 
@@ -209,20 +249,26 @@ export default function DetailPage() {
         ""
       ) : (
         //여기안에서 작성자 id와 로그인 id비교후 출력
-        <DetailPageButtondiv>
-          {/* 수정버튼 */}
-          <DetailPageEditButton
-            onClick={() => {
-              navigate("/editpost");
-            }}
-          >
-            수정
-          </DetailPageEditButton>
-          {/* 삭제버튼 */}
-          <DetailPageDeleteButton onClick={textDeleteMutationOnClick}>
-            삭제
-          </DetailPageDeleteButton>
-        </DetailPageButtondiv>
+        <div>
+          {userID?.uid === videosFind?.userId ? (
+            <DetailPageButtondiv>
+              {/* 수정버튼 */}
+              <DetailPageEditButton
+                onClick={() => {
+                  navigate("/editpost");
+                }}
+              >
+                수정
+              </DetailPageEditButton>
+              {/* 삭제버튼 */}
+              <DetailPageDeleteButton onClick={textDeleteMutationOnClick}>
+                삭제
+              </DetailPageDeleteButton>
+            </DetailPageButtondiv>
+          ) : (
+            ""
+          )}
+        </div>
       )}
     </DetailPageWrapdiv>
   );
