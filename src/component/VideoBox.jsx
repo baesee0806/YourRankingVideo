@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import YouTube from "react-youtube";
 import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { fetchLikes } from "../API/youtube";
+import { useQuery } from "react-query";
 
 function VideoBox({ iconSize, style, videoId, item, title }) {
-  //상세페이지로 이동하는 네비게이터
-  //하트 state로 관리
+  useEffect(() => {
+    fetchLikes();
+  }, []);
 
   const navigate = useNavigate();
 
   const detailNavigate = () => {
     navigate(`/${item?.id}`);
   };
+
+  const { isLoading, isError, data, error } = useQuery("likes", fetchLikes);
+
+  if (isLoading) <div>...Loading</div>;
+  if (isError) return alert("에러", error);
+
+  //좋아요갯수 가지고 오는 함수
+  const num = data?.filter((value) => {
+    return value.contentID === item.id;
+  }).length;
 
   return (
     <div
@@ -33,12 +46,10 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
             modestbranding: 1,
           },
         }}
-        //이벤트 리스너
         onEnd={(e) => {
           e.target.stopVideo(0);
         }}
       />
-      {/* BottomBar */}
       <div
         style={{
           display: "flex",
@@ -53,26 +64,30 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
         }}
         onClick={detailNavigate}
       >
-        <div style={{ boxSizing: "border-box" }}>
+        <div style={{ boxSizing: "border-box", fontSize: `${iconSize}` }}>
           <span>
-            {title.slice(0, 15)}
-            {title.length > 7 && "..."}
+            {title?.slice(0, 15)}
+            {title?.length > 7 && "..."}
           </span>
         </div>
-        {/* 하트 + 좋아요수 */}
         <div
           style={{
             display: "flex",
             marginRight: "10px",
           }}
         >
-          <FcLike
-            onClick={() => {
-              alert("");
-            }}
-            style={{ fontSize: iconSize }}
-          />
-          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>30</span>
+          {num <= 0 ? null : (
+            <FcLike
+              onClick={() => {
+                alert("");
+              }}
+              style={{ fontSize: iconSize }}
+            />
+          )}
+
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>
+            {num > 0 ? num : null}
+          </span>
         </div>
       </div>
     </div>

@@ -1,22 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import YouTube from "react-youtube";
 import { UserImgModal } from "../component/UserImgModal";
 import { useRecoilState } from "recoil";
 import { UserImgModalState } from "../recoil/userImgModalAtom";
 import { UserLikePostState } from "../recoil/myPageAtom";
-export default function MyPage() {
+import VideoBox from "../component/VideoBox";
+import { authService } from "../common/firebase";
+import { updateProfile } from "firebase/auth";
+export default function MyPage(userObj) {
   // user img modal change
-  const [userImgModalState, setUserImgModalState] =
-    useRecoilState(UserImgModalState);
-  const [text, setText] = useState("");
+  const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
+  const [nickName, setNickName] = useState(userObj.displayName);
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);
 
-  // 로그인한 유저 닉네임 수정 버튼 디자인
-  // 로그인한 유저 닉네임 수정 버튼 구현
-  // 로그인한 유저 좋아요한글 게시한글 비디오box 적용
-  // 유저의 해당글로 navigate
+  // 1.onAuthStateChanged
+  // 2. useEffect
+  // 3. usestate
+
+  const user = authService.currentUser;
+  const usernickname = user.displayName;
+  const email = user.email;
+  const photoURL = user.photoURL;
+
+  const userNickNameChange = () => {
+    updateProfile(authService.currentUser, {
+      displayName: nickName,
+    })
+      .then(() => {
+        setNickName("");
+      })
+      .catch((error) => {
+        // An error occurred
+        // ...
+      });
+  };
+
+  // useEffect(() => {
+  //   console.log("2");
+  // }, [userNickNameChange]);
 
   return (
     <MypageLayoutDiv>
@@ -29,31 +51,36 @@ export default function MyPage() {
             setUserImgModalState(true);
           }}
         >
-          <UserInfoImg src="https://cdn-icons-png.flaticon.com/512/14/14660.png" />
+          <UserInfoImg src={photoURL} />
         </UserInfoImgDiv>
         {/* 유저 이메일 */}
         <div>
-          <UserInfoEmailH3>test@test.com</UserInfoEmailH3>
+          <UserInfoEmailH3>{email}</UserInfoEmailH3>
         </div>
         {/* 유저 닉네임 */}
         <div>
-          <UserNickNameH4>닉네임</UserNickNameH4>
+          <UserNickNameH4>{usernickname}</UserNickNameH4>
         </div>
         {/* 유저 닉네임 input */}
         <UserEditNicknameAreaDiv>
           <UserEditNicknameInput
             type="text"
-            value={text}
+            value={nickName}
             onChange={(e) => {
-              setText(e.target.vlaue);
+              setNickName(e.target.value);
             }}
           />
-          <UserEditNicknameBtn type="button">수정</UserEditNicknameBtn>
+          <UserEditNicknameBtn
+            onClick={() => {
+              userNickNameChange();
+            }}
+          >
+            수정
+          </UserEditNicknameBtn>
         </UserEditNicknameAreaDiv>
       </UserInfoAreaDiv>
       {/* 유저 좋아요한글 게시한글 area */}
       <UserLikeWriteAreaDiv>
-        {/* 1. 게시글 상태 관리 해야함 */}
         {/* 메뉴 area */}
         <UserLikeWriteBtnDiv>
           <UserLikeBtn
@@ -73,105 +100,81 @@ export default function MyPage() {
             게시한 글
           </UserWriteBtn>
         </UserLikeWriteBtnDiv>
+
         {/* video box area */}
+
         {userList ? (
-          <div>
-            <div>
-              <YouTube
-                videoId="LgbkUZC6P8I"
-                opts={{
-                  width: "100%",
-                  height: "300px",
-                  playerVars: {
-                    autoplay: 0,
-                    rel: 0,
-                    modestbranding: 1,
-                  },
+          <VideoAreaWrapDiv>
+            <VideoAreaDiv>
+              <VideoBox
+                iconSize="17px"
+                style={{
+                  height: "200px",
+                  width: "350px",
                 }}
-                //이벤트 리스너
-                onEnd={(e) => {
-                  e.target.stopVideo(0);
-                }}
+                videoId="qQrD2BKPApo"
+                // item={item}
               />
-              <div>
-                <h3>제목</h3>
-                <div>❤️20</div>
-              </div>
-            </div>
-            <div>
-              <YouTube
-                videoId="LlnlpVf7Rpk"
-                opts={{
-                  width: "100%",
-                  height: "300px",
-                  playerVars: {
-                    autoplay: 0,
-                    rel: 0,
-                    modestbranding: 1,
-                  },
+            </VideoAreaDiv>
+            <VideoAreaDiv>
+              <VideoBox
+                iconSize="17px"
+                style={{
+                  height: "200px",
+                  width: "350px",
                 }}
-                //이벤트 리스너
-                onEnd={(e) => {
-                  e.target.stopVideo(0);
-                }}
+                videoId="qQrD2BKPApo"
+                // item={item}
               />
-              <div>
-                <h3>제목</h3>
-                <div>❤️20</div>
-              </div>
-            </div>
-            <div>
-              <YouTube
-                videoId="LlnlpVf7Rpk"
-                opts={{
-                  width: "100%",
-                  height: "300px",
-                  playerVars: {
-                    autoplay: 0,
-                    rel: 0,
-                    modestbranding: 1,
-                  },
+            </VideoAreaDiv>
+            <VideoAreaDiv>
+              <VideoBox
+                iconSize="17px"
+                style={{
+                  height: "200px",
+                  width: "350px",
                 }}
-                //이벤트 리스너
-                onEnd={(e) => {
-                  e.target.stopVideo(0);
-                }}
+                videoId="qQrD2BKPApo"
+                // item={item}
               />
-              <div>
-                <h3>제목</h3>
-                <div>❤️20</div>
-              </div>
-            </div>
-            <div>
-              <YouTube
-                videoId="LlnlpVf7Rpk"
-                opts={{
-                  width: "100%",
-                  height: "300px",
-                  playerVars: {
-                    autoplay: 0,
-                    rel: 0,
-                    modestbranding: 1,
-                  },
-                }}
-                //이벤트 리스너
-                onEnd={(e) => {
-                  e.target.stopVideo(0);
-                }}
-              />
-              <div>
-                <h3>제목</h3>
-                <div>❤️20</div>
-              </div>
-            </div>
-          </div>
+            </VideoAreaDiv>
+          </VideoAreaWrapDiv>
         ) : (
-          <div>
-            <div>내가 쓴글</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-          </div>
+          <VideoAreaWrapDiv>
+            <VideoAreaDiv>
+              <VideoBox
+                iconSize="17px"
+                style={{
+                  height: "200px",
+                  width: "350px",
+                }}
+                videoId="qQrD2BKPApo"
+                // item={item}
+              />
+            </VideoAreaDiv>
+            <VideoAreaDiv>
+              <VideoBox
+                iconSize="17px"
+                style={{
+                  height: "200px",
+                  width: "350px",
+                }}
+                videoId="qQrD2BKPApo"
+                // item={item}
+              />
+            </VideoAreaDiv>
+            <VideoAreaDiv>
+              <VideoBox
+                iconSize="17px"
+                style={{
+                  height: "200px",
+                  width: "350px",
+                }}
+                videoId="qQrD2BKPApo"
+                // item={item}
+              />
+            </VideoAreaDiv>
+          </VideoAreaWrapDiv>
         )}
       </UserLikeWriteAreaDiv>
     </MypageLayoutDiv>
@@ -280,4 +283,16 @@ const UserWriteBtn = styled.button`
   font-weight: 800;
   background: ${(props) => (props.userList ? "#fff" : "#555555")};
   border-radius: 3px;
+`;
+
+const VideoAreaWrapDiv = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+`;
+
+const VideoAreaDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
