@@ -92,9 +92,7 @@ function VideoBox({ iconSize, style, videoId, item, title, contentID }) {
             }}
             style={{ fontSize: iconSize }}
           />
-          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>
-            {item.nickName}
-          </span>
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>{item.nickname}</span>
         </div>
       </div>
     </div>

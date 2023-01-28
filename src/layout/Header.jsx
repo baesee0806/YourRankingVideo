@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-
 import { ModalBtnState } from "../recoil/menuAtoms";
 
 const Header = () => {
