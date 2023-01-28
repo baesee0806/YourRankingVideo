@@ -17,14 +17,20 @@ export default function EditPostPage() {
   // const videotitle = location.state.title;
   // const { videosId, videostitle, videoscontent } = location.state;
   // const videocontent = location.state.content;
-  const { videoData } = location.state;
-  const videoEditData = useQuery("videos", () =>
-        axios.get(`http://localhost:3001/videos/${videoData.id}`)
-        .then((a) => a.data)
-    );
-  console.log(videoData);
+  const { videoId } = location.state;
+  // const videoEditData = useQuery("videos", () =>
+  //       axios.get(`http://localhost:3001/videos/${videoData.id}`)
+  //       .then((a) => a.data)
+  //   );
+  // console.log(videoData);
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
+
+  const videoEditData = useQuery("videos", () =>
+    axios.get(`http://localhost:3001/videos/${videoId}`)
+    .then((a)=>a.data)
+  )
+  // console.log('내 작성글 데이터', videoEditData.data)
 
   const reviseVideo = useMutation((video) => editVideo(video), {
     onSuccess: (data) => {
@@ -39,28 +45,30 @@ export default function EditPostPage() {
   const handleEdit = (e) => {
     e.preventDefault();
     const editObj = {
-      id: videoData.id,
+      id: videoId,
       title: newTitle,
       content: newContent,
     };
     reviseVideo.mutate(editObj);
-    navigate(`/testHome`)
+    navigate(`/${videoId}`)
   };
 
   return (
     <Container>
       <Text>게시물 수정</Text>
+      {videoEditData.isLoading && 'Loading...'}
+      {videoEditData.error && 'error'}
         <Form>
         {/* {placeholder= 받아온 데이터} */}
         <Input 
           type={'text'} 
           maxLength={'120'}  
-          placeholder={videoEditData.title}
+          placeholder={videoEditData.data.title}
           onChange={(e) => setNewTitle(e.target.value)}
          />
         <Textarea 
           type={'text'} 
-          placeholder={videoEditData.content}
+          placeholder={videoEditData.data.content}
           onChange={(e) => setNewContent(e.target.value)}
           ></Textarea>
         <BtnBox>

@@ -11,7 +11,7 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
   }, []);
 
   const navigate = useNavigate();
-
+  
   const detailNavigate = () => {
     navigate(`/${item?.id}`);
   };

@@ -165,6 +165,14 @@ export default function DetailPage() {
     DeleteMutation.mutate(likesData[0].id);
     likesCountMutation.mutate(newLikesCount);
   };
+  //수정페이지로 가는 버튼
+  const goToEditPage = () => {
+    navigate(`/editpost/${params.id}`, {
+      state: {
+        videoId: params.id
+      }
+    })
+  }
 
   return (
     <DetailPageWrapdiv>
@@ -257,9 +265,7 @@ export default function DetailPage() {
             <DetailPageButtondiv>
               {/* 수정버튼 */}
               <DetailPageEditButton
-                onClick={() => {
-                  navigate("/editpost");
-                }}
+                onClick={goToEditPage}
               >
                 수정
               </DetailPageEditButton>
