@@ -17,7 +17,7 @@ export default function TestHome() {
     // )
     // console.log('resultId', resultId)
     // console.log('video', result.data[0])
-    
+    console.log('result', result.data)
     
 
     const goToDetail = (i) => {

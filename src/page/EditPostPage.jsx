@@ -1,18 +1,28 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { useLocation, useNavigate } from 'react-router';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
 import { editVideo } from '../API/postApi';
 
+// videos/각id 데이터 불러오기
 export default function EditPostPage() {
+  // const { id } = useParams();
   const location = useLocation();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  // console.log('state', location.state)
-  const { videoId, videotitle, videocontent } = location.state;
-  // const videotitle = location.state.title;
   
+  // console.log('state', location.state)
+  // const { videoId, videotitle, videocontent } = location.state;
+  // const videotitle = location.state.title;
+  // const { videosId, videostitle, videoscontent } = location.state;
   // const videocontent = location.state.content;
+  const { videoData } = location.state;
+  const videoEditData = useQuery("videos", () =>
+        axios.get(`http://localhost:3001/videos/${videoData.id}`)
+        .then((a) => a.data)
+    );
+  console.log(videoData);
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
 
@@ -29,7 +39,7 @@ export default function EditPostPage() {
   const handleEdit = (e) => {
     e.preventDefault();
     const editObj = {
-      id: videoId,
+      id: videoData.id,
       title: newTitle,
       content: newContent,
     };
@@ -45,12 +55,12 @@ export default function EditPostPage() {
         <Input 
           type={'text'} 
           maxLength={'120'}  
-          placeholder={videotitle}
+          placeholder={videoEditData.title}
           onChange={(e) => setNewTitle(e.target.value)}
          />
         <Textarea 
           type={'text'} 
-          placeholder={videocontent}
+          placeholder={videoEditData.content}
           onChange={(e) => setNewContent(e.target.value)}
           ></Textarea>
         <BtnBox>

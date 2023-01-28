@@ -35,6 +35,7 @@ export default function PostPage() {
   } = useForm();
   const onSubmit = (data) => {
     const Video = {
+      id: uuidv4(),
       contentId: uuidv4(),
       createAt: Date(),
       time: new Date().toLocaleDateString(),

@@ -76,44 +76,26 @@
   ],
   "videos": [
     {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 10:27:04 GMT+0900 (한국 표준시)",
-      "videoUrl": "http://localhost:3000/postpage",
-      "title": "aaaa",
-      "content": "aaaa",
-      "id": 1
+      "id": "28defad2-e7bc-4bf2-98c8-21596f77293a",
+      "contentId": "e24e4102-77e5-48a2-9db8-79b1e41964d9",
+      "createAt": "Sat Jan 28 2023 19:15:49 GMT+0900 (한국 표준시)",
+      "time": "2023. 1. 28.",
+      "userId": "1ki4lfX1qWPKOe1wAjzdAufWmxm2",
+      "nickName": "woowoowoowoo",
+      "videoUrl": "https://www.daum.net",
+      "title": "333qjs번째",
+      "content": "333333"
     },
     {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 10:58:20 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "ㅁㅁㅁ",
-      "content": "ㅇㅇㅇ",
-      "id": 2
-    },
-    {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 11:08:20 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "xx",
-      "content": "xxxx",
-      "id": 3
-    },
-    {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 11:11:03 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "asdf",
-      "content": "asdf",
-      "id": 4
-    },
-    {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 11:11:20 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "sdf",
-      "content": "sdf",
-      "id": 5
+      "id": "37a78ecc-3c8e-469f-97f7-97cfcbe4c396",
+      "contentId": "664e3cbd-c858-412b-a7d5-1fe49d6e7703",
+      "createAt": "Sat Jan 28 2023 19:38:21 GMT+0900 (한국 표준시)",
+      "time": "2023. 1. 28.",
+      "userId": "1ki4lfX1qWPKOe1wAjzdAufWmxm2",
+      "nickName": "woowoowoowoo",
+      "videoUrl": "https://www.daum.net",
+      "title": "2a2a2a2",
+      "content": "d22d222d22d"
     }
   ]
 }

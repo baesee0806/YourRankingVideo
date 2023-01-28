@@ -92,6 +92,7 @@ export default function DetailPage() {
   const videos = useQuery("videos", getVideos);
 
   const videosFind = videos.data?.data?.find((data) => data?.id == params.id);
+  // console.log(videosFind?.id)
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
   const dateSplit = videosFind?.time.slice(0, -1);
   // split해야함
@@ -115,6 +116,7 @@ export default function DetailPage() {
       alert("취소되었습니다");
     }
   };
+  
 
   //get likes
   const getLikes = async () => {
