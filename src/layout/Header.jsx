@@ -22,12 +22,27 @@ const Header = () => {
   return (
     <StyledHeader>
       <HeaderContainer>
-        <Logo onClick={() => navigate("/")} src={require("../assets/Logo.png")} />
+        <Logo
+          onClick={() => (window.location = "/")}
+          src={require("../assets/Logo.png")}
+        />
 
         <HeaderBtnBox>
-          {!show ? <MyLogo onClick={() => navigate("/my")} src={require("../assets/mylogo.png")} /> : null}
-          {!show ? <Towrite onClick={() => navigate("/postpage")} src={require("../assets/pencil.png")} /> : null}
-          {show ? <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn> : null}
+          {!show ? (
+            <MyLogo
+              onClick={() => navigate("/my")}
+              src={require("../assets/mylogo.png")}
+            />
+          ) : null}
+          {!show ? (
+            <Towrite
+              onClick={() => navigate("/postpage")}
+              src={require("../assets/pencil.png")}
+            />
+          ) : null}
+          {show ? (
+            <HeaderBtn onClick={() => navigate("login")}>LOGIN</HeaderBtn>
+          ) : null}
 
           <Tab
             onClick={() => {

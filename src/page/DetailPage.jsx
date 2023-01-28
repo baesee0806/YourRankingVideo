@@ -16,7 +16,7 @@ import { authService } from "../common/firebase";
 
 export default function DetailPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  console.log(isLoggedIn);
   useEffect(() => {
     //로그인 정보
     authService.onAuthStateChanged((user) => {
@@ -27,30 +27,7 @@ export default function DetailPage() {
       }
     });
   }, []);
-
-  console.log(isLoggedIn);
-
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  //로그인 안했을때 해결필요
-
-  //useParams로 정보 받아오기
-  const params = useParams();
-  console.log(params.id);
-
-  //인기동영상 데이터
-  const youtubeData = useQuery("items", fetchLists);
-  //params로 갖고온 id를 find
-  //youtubeDataFind 오류
-  const youtubeDataFind = youtubeData.data?.items.find((item) => {
-    return item.id === params.id;
-  });
-  // console.log(youtubeDataFind);
-
-  // uuid생성
-  const likeUUID = uuidv4();
-  //userID
-  const userID = getAuth().currentUser;
+  //usemutation
   // like create
   const postMutation = useMutation(
     (newLike) => axios.post("http://localhost:3001/likes", newLike),
@@ -74,16 +51,39 @@ export default function DetailPage() {
     }
   );
 
-  //dbjson생성
-  const likeCreate = () => {
-    const newLike = {
-      contentID: params.id,
-      userID: userID?.uid,
-      id: likeUUID,
-    };
+  //likesCount 수정
+  const likesCountMutation = useMutation(
+    ({ id, likesCount }) =>
+      axios.patch(`http://localhost:3001/videos/${id}`, { likesCount }),
+    {
+      onSuccess: () => {
+        // window.location = "/";
+      },
+    }
+  );
 
-    postMutation.mutate(newLike);
-  };
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  //로그인 안했을때 해결필요
+
+  //useParams로 정보 받아오기
+  const params = useParams();
+  console.log(params.id);
+
+  //인기동영상 데이터
+  const youtubeData = useQuery("items", fetchLists);
+  //params로 갖고온 id를 find
+  //youtubeDataFind 오류
+  const youtubeDataFind = youtubeData.data?.items.find((item) => {
+    return item.id === params.id;
+  });
+  // console.log(youtubeDataFind);
+
+  // uuid생성
+  const likeUUID = uuidv4();
+  //userID
+  const userID = getAuth().currentUser;
+
   //게시글 데이터
   const getVideos = async () => {
     const response = await axios.get("http://localhost:3001/videos");
@@ -95,7 +95,6 @@ export default function DetailPage() {
   // console.log(videosFind?.id)
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
   const dateSplit = videosFind?.time.slice(0, -1);
-  // split해야함
 
   //게시글 삭제
   const textDeleteMutation = useMutation(
@@ -139,7 +138,33 @@ export default function DetailPage() {
     return params.id === i.contentID;
   });
 
-  
+  //좋아요 dbjson생성, 수정
+  const likeCreate = () => {
+    const newLike = {
+      contentID: params.id,
+      userID: userID?.uid,
+      id: likeUUID,
+    };
+
+    const newLikesCount = {
+      id: params.id,
+      likesCount: likesDataLength?.length + 1,
+    };
+
+    postMutation.mutate(newLike);
+    likesCountMutation.mutate(newLikesCount);
+  };
+  //좋아요 dbjson삭제, 수정
+  const likeDelete = () => {
+    const newLikesCount = {
+      id: params.id,
+      likesCount: likesDataLength?.length - 1,
+    };
+
+    // 현재 페이지 likes의 id를 넘겨줌
+    DeleteMutation.mutate(likesData[0].id);
+    likesCountMutation.mutate(newLikesCount);
+  };
 
   return (
     <DetailPageWrapdiv>
@@ -183,10 +208,7 @@ export default function DetailPage() {
               {likesData && likesData[0] ? (
                 <AiFillHeart
                   style={{ fontSize: 20, color: "red" }}
-                  onClick={() => {
-                    // 현재 페이지 likes의 id를 넘겨줌
-                    DeleteMutation.mutate(likesData[0].id);
-                  }}
+                  onClick={likeDelete}
                 />
               ) : (
                 <AiOutlineHeart
