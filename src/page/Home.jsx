@@ -75,15 +75,15 @@ function Home() {
               paddingBottom: "10px",
               boxSizing: "border-box",
             }}
-            videoId={data[0].videoUrl}
+            videoId={data[0]?.videoUrl}
             item={data[0]}
-            title={data[0].title}
+            title={data[0]?.title}
           />
 
           <div style={{ marginTop: "10%" }}>
             <h2>인기동영상🦋</h2>
             <div style={videoListDiv}>
-              {data.map((v) => (
+              {data?.map((v) => (
                 <div key={v.id}>
                   <VideoBox
                     iconSize="17px"

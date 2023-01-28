@@ -41,6 +41,7 @@ export default function PostPage() {
       time: new Date().toLocaleDateString(),
       userId: authService.currentUser.uid,
       nickName: authService.currentUser.displayName ?? "닉네임없음",
+      likesCount: 0,
     };
     const newVideo = Object.assign(Video, data);
     addVideo.mutate(newVideo);
