@@ -15,10 +15,6 @@ export default function MyPage() {
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);
 
-  // 1.onAuthStateChanged
-  // 2. useEffect
-  // 3. usestate
-
   const user = authService?.currentUser;
   const usernickname = user?.displayName;
   const email = user?.email;
@@ -36,10 +32,20 @@ export default function MyPage() {
         // ...
       });
   };
+  // react qeury get
+  // const fetchLists = async() => {
+  //   const {data} = await axios.get("http://localhost:3001/")
+  //   return data
+  // react qeury
+  // const { isLoading, isError, data } = useQuery("", );
 
-  // useEffect(() => {
-  //   console.log("2");
-  // }, [userNickNameChange]);
+  // if (isLoading) {
+  //   return alert("로딩중");
+  // }
+
+  // if (isError) {
+  //   return alert("에러");
+  // }
 
   return (
     <MypageLayoutDiv>

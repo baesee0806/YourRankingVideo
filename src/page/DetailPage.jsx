@@ -164,7 +164,7 @@ export default function DetailPage() {
                   style={{ fontSize: 20, color: "red" }}
                   onClick={() => {
                     // 현재 페이지 likes의 id를 넘겨줌
-                    DeleteMutation?.mutate(likesData[0].id);
+                    DeleteMutation?.mutate(likesData[0]?.id);
                   }}
                 />
               ) : (
