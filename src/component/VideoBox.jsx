@@ -76,13 +76,16 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
             marginRight: "10px",
           }}
         >
-          <FcLike
-            onClick={() => {
-              alert("");
-            }}
-            style={{ fontSize: iconSize }}
-          />
-          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>{item.nickName}</span>
+          {num <= 0 ? null : (
+            <FcLike
+              onClick={() => {
+                alert("");
+              }}
+              style={{ fontSize: iconSize }}
+            />
+          )}
+
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>{num > 0 ? num : null}</span>
         </div>
       </div>
     </div>
