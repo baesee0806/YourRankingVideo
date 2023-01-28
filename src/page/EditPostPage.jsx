@@ -1,17 +1,65 @@
+import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
+import { editVideo } from '../API/postApi';
 
 export default function EditPostPage() {
+  const location = useLocation();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  // console.log('state', location.state)
+  const { videoId, videotitle, videocontent } = location.state;
+  // const videotitle = location.state.title;
+  
+  // const videocontent = location.state.content;
+  const [newTitle, setNewTitle] = useState('');
+  const [newContent, setNewContent] = useState('');
+
+  const reviseVideo = useMutation((video) => editVideo(video), {
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries(['videos']);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    const editObj = {
+      id: videoId,
+      title: newTitle,
+      content: newContent,
+    };
+    reviseVideo.mutate(editObj);
+    navigate(`/testHome`)
+  };
+
   return (
     <Container>
       <Text>게시물 수정</Text>
-      <Form>
-      <Input type={'text'} placeholder='제목' maxLength={'120'} />
-      <Textarea type={'text'} placeholder='내용'></Textarea>
-      <BtnBox>
-      <Button style={{marginRight:'20px'}}>수정</Button>
-      <Button>취소</Button>
-      </BtnBox>
-      </Form>
+        <Form>
+        {/* {placeholder= 받아온 데이터} */}
+        <Input 
+          type={'text'} 
+          maxLength={'120'}  
+          placeholder={videotitle}
+          onChange={(e) => setNewTitle(e.target.value)}
+         />
+        <Textarea 
+          type={'text'} 
+          placeholder={videocontent}
+          onChange={(e) => setNewContent(e.target.value)}
+          ></Textarea>
+        <BtnBox>
+        <Button onClick={handleEdit} style={{marginRight:'20px'}}>
+          수정
+        </Button>
+        <Button type='button' onClick={()=>navigate(-1)}>취소</Button>
+        </BtnBox>
+        </Form>
     </Container>
   )
 }

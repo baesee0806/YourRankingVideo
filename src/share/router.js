@@ -10,8 +10,10 @@ import Login from "../page/Login";
 import SignUp from "../page/SignUp";
 import NewVideo from "../page/NewVideo";
 import PopularVideo from "../page/PopularVideo";
-
 import MenuModal from "../component/MenuModal";
+
+import TestDetailPage from "../page/TestDetailPage";
+import TestHome from "../page/TestHome";
 
 const Router = () => {
   return (
@@ -28,6 +30,9 @@ const Router = () => {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/newvideo" element={<NewVideo />} />
         <Route path="/popularVideo" element={<PopularVideo />} />
+        {/* {테스트용} */}
+        <Route path="/testDetailPage/:path" element={<TestDetailPage />} />
+        <Route path="/testHome" element={<TestHome />} />
       </Routes>
       <Footer />
     </BrowserRouter>

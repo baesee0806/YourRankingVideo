@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
@@ -32,7 +31,7 @@ export default function PostPage() {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm();
   const onSubmit = (data) => {
     const Video = {
-      contentId: uuidv4(),
+      id: uuidv4(),
       createAt: Date(),
       userId: authService.currentUser.uid,
       nickName: authService.currentUser.displayName ?? '닉네임없음'  

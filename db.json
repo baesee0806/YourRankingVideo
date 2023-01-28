@@ -54,6 +54,11 @@
       "contentID": 2,
       "userID": 4,
       "id": "ba46f250-a9fa-4833-834f-374ed1c94f3d"
+    },
+    {
+      "contentID": 2,
+      "userID": "X9wj1qW46vYCJDpyxbL5NnXiaC92",
+      "id": "6bc42cbe-b355-427c-a1c5-73816802f132"
     }
   ],
   "User": [
@@ -76,44 +81,40 @@
   ],
   "videos": [
     {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 10:27:04 GMT+0900 (한국 표준시)",
-      "videoUrl": "http://localhost:3000/postpage",
-      "title": "aaaa",
-      "content": "aaaa",
-      "id": 1
+      "id": "a9edb26d-ad64-40a7-bf16-d3e2bebfbc59",
+      "createAt": "Fri Jan 27 2023 17:04:44 GMT+0900 (한국 표준시)",
+      "userId": "X9wj1qW46vYCJDpyxbL5NnXiaC92",
+      "nickName": "qweasdzxc",
+      "videoUrl": "https://www.naver.com/",
+      "title": "123123",
+      "content": "asdasdasdasd"
     },
     {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 10:58:20 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "ㅁㅁㅁ",
-      "content": "ㅇㅇㅇ",
-      "id": 2
+      "id": "9b2100bf-25a2-4f3c-a552-156b646b0a34",
+      "createAt": "Fri Jan 27 2023 19:00:13 GMT+0900 (한국 표준시)",
+      "userId": "X9wj1qW46vYCJDpyxbL5NnXiaC92",
+      "nickName": "qweasdzxc",
+      "videoUrl": "https://www.naver.com/",
+      "title": "asd과연",
+      "content": "제발"
     },
     {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 11:08:20 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "xx",
-      "content": "xxxx",
-      "id": 3
+      "id": "2b21d43c-3e0f-4428-9552-1706adc4effb",
+      "createAt": "Sat Jan 28 2023 17:19:24 GMT+0900 (한국 표준시)",
+      "userId": "X9wj1qW46vYCJDpyxbL5NnXiaC92",
+      "nickName": "qweasdzxc",
+      "videoUrl": "https://www.daum.net",
+      "title": "rmf글 수정",
+      "content": "수정됨"
     },
     {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 11:11:03 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "asdf",
-      "content": "asdf",
-      "id": 4
-    },
-    {
-      "userId": "1",
-      "createAt": "Fri Jan 27 2023 11:11:20 GMT+0900 (한국 표준시)",
-      "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
-      "title": "sdf",
-      "content": "sdf",
-      "id": 5
+      "id": "d56c5833-9e06-4948-a4fb-f6dfce50f71b",
+      "createAt": "Sat Jan 28 2023 17:36:54 GMT+0900 (한국 표준시)",
+      "userId": "X9wj1qW46vYCJDpyxbL5NnXiaC92",
+      "nickName": "qweasdzxc",
+      "videoUrl": "https://www.naver.com/",
+      "title": "asda",
+      "content": "23123123123"
     }
   ]
 }

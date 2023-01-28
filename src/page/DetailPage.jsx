@@ -7,13 +7,14 @@ import { useQueryClient } from "react-query";
 import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import YouTube from "react-youtube";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { fetchLists } from "../API/youtube";
 import { useState } from "react";
 
 export default function DetailPage() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate(); // 테스트용
   //로그인 안했을때 해결필요
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -99,8 +100,16 @@ export default function DetailPage() {
     return i.contentID === contentID && i.userID === userID?.uid;
   });
 
+  //테스트용
+  
+  // const goToeditPost = () => {
+  //   navigate(-1);
+  // }
+
   return (
     <DetailPageWrapdiv>
+      {/* {테스트용 버튼} */}
+      <button type="button" onClick={()=>navigate('/editpost')}>goToeditPost</button>
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
