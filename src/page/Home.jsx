@@ -2,28 +2,48 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import VideoBox from "../component/VideoBox";
 import ScrollTopBtn from "../component/ScrollTopBtn";
-import { fetchVideo } from "../API/youtube";
+import { fetchLikes, fetchPopVideo } from "../API/youtube";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   useEffect(() => {
-    fetchVideo();
+    fetchPopVideo();
   }, []);
 
   const navigate = useNavigate();
 
-  const { isLoading, isError, data, error } = useQuery("videos", fetchVideo);
+  //likedata배열에서 가장 많이 나온 contentID를 배열안에다가 정리하자.
+  //그 배열을 가지고 Map돌리면 끝이다.
 
-  //좋아요 수가 만들어서 들고온 데이터의 배열 첫번째 값을 가장 큰 값으로 주고
-  //가능하다면 첫번째 배열 짜르고 두번째 영상부터 map을돌리자
+  const { isLoading, isError, data, error } = useQuery("videos", fetchPopVideo);
+  console.log("video데이터", data);
+
+  const likeDatas = useQuery("likes", fetchLikes).data;
+  console.log("좋아요데이터", likeDatas);
 
   if (isLoading) {
-    return <div>로딩중</div>;
+    return <div>Loading...</div>;
   }
   if (isError) {
-    return alert("에러", error);
+    return alert("잠시 후 다시 시도", error);
   }
+  //contentID값 누적 가지고 옴
+  //누적값이 가장 많은 contentID를 들고오자.->배열로 가져오자
+  //******************************* */
+
+  // const answer = likeDatas.map((i) => i.contentID);
+  // console.log(answer);
+
+  // const answer2 = data?.map((i) => i);
+  // console.log("answer2", answer2);
+
+  // const number = likeDatas.filter((v) => {
+  //   for (let i = 0; i < likeDatas.length; i++) {
+  //     return v.contentID === answer2[i].id;
+  //   }
+  // }).length;
+  // console.log(number);
 
   return (
     <div style={containerDiv}>
@@ -47,7 +67,7 @@ function Home() {
 
       <div style={videoContainerDiv}>
         <div key={data[0].id}>
-          {/* <VideoBox
+          <VideoBox
             iconSize="23px"
             style={{
               height: "650px",
@@ -58,7 +78,7 @@ function Home() {
             videoId={data[0].videoUrl}
             item={data[0]}
             title={data[0].title}
-          /> */}
+          />
 
           <div style={{ marginTop: "10%" }}>
             <h2>인기동영상🦋</h2>
@@ -70,7 +90,6 @@ function Home() {
                     style={{ height: "200px", width: "370px" }}
                     videoId={v.videoUrl}
                     item={v}
-                    contentID={v.contentID}
                     title={v.title}
                   />
                 </div>

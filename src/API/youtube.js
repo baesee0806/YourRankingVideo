@@ -24,7 +24,12 @@ const fetchLikes = async ({ queryKey }) => {
   return data;
 };
 
-export { fetchLists, fetchVideo, fetchLikes };
+const fetchPopVideo = async ({ queryKey }) => {
+  const { data } = await axios.get(`http://localhost:3001/${queryKey}`);
+  return data;
+};
+
+export { fetchLists, fetchVideo, fetchLikes, fetchPopVideo };
 
 // import { fetchLists } from "../API/youtube";
 // import { useQuery } from "react-query";
