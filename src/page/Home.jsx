@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   useEffect(() => {
-    fetchPopVideo();
+    fetchVideo();
   }, []);
 
   const navigate = useNavigate();
+
 
   const { isLoading, isError, data, error } = useQuery("videos", fetchPopVideo);
   console.log(data);
@@ -23,11 +24,12 @@ function Home() {
     return lengthB - lengthA;
   });
 
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>로딩중</div>;
   }
   if (isError) {
-    return alert("잠시 후 다시 시도", error);
+    return alert("에러", error);
   }
   return (
     <div style={containerDiv}>
@@ -56,7 +58,6 @@ function Home() {
             item={iLike[0]}
             title={iLike[0]?.title}
           />
-
           <div style={{ marginTop: "10%" }}>
             <h2>인기동영상🦋</h2>
             <div style={videoListDiv}>

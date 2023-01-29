@@ -16,4 +16,12 @@ export const videoApi = axios.create({
 // }
 
 // export const createVideo = (id) => axios.post('http://localhost:3001/videos', id)
-export const createVideo = (id) => videoApi.post('/videos', id)
+
+export const createVideo = (id) => videoApi.post('/videos', id);
+
+export const editVideo = ({id, title, content}) => videoApi.patch(`/videos/${id}`, {
+  title,
+  content,
+});
+
+export const deleteVideo = (id) => videoApi.delete(`/videos/${id}`); 
