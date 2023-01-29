@@ -9,7 +9,8 @@ import { authService } from "../common/firebase";
 import { updateProfile } from "firebase/auth";
 export default function MyPage(userObj) {
   // user img modal change
-  const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
+  const [userImgModalState, setUserImgModalState] =
+    useRecoilState(UserImgModalState);
   const [nickName, setNickName] = useState(userObj.displayName);
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);
@@ -18,10 +19,10 @@ export default function MyPage(userObj) {
   // 2. useEffect
   // 3. usestate
 
-  const user = authService.currentUser;
-  const usernickname = user.displayName;
-  const email = user.email;
-  const photoURL = user.photoURL;
+  const user = authService?.currentUser;
+  const usernickname = user?.displayName;
+  const email = user?.email;
+  const photoURL = user?.photoURL;
 
   const userNickNameChange = () => {
     updateProfile(authService.currentUser, {
