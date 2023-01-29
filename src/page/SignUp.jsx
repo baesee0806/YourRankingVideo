@@ -147,7 +147,6 @@ export const NickName = styled.div`
 
 export const Input = styled.input`
   border: none;
-
   color: #555;
   box-sizing: border-box;
   font-size: 18px;
