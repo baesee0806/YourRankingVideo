@@ -53,6 +53,7 @@
     {
       "contentID": "79ad67d7-70f9-4245-a3ae-488bec8cd9ef",
       "userID": "bSunM5MN2ERYxB4JN1UQmwzaMAF3",
+
       "id": "b58dc98b-c283-44b8-9696-edc4a6f43117"
     },
     {
@@ -71,19 +72,15 @@
       "id": "c12816df-2b1a-4a62-bdc1-00637d9d6f6c"
     },
     {
-      "contentID": "79ad67d7-70f9-4245-a3ae-488bec8cd9ef",
-      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
-      "id": "c9b3cac2-f8ed-4ee6-97a0-f202e3b3627e"
-    },
-    {
       "contentID": "56df59be-0940-4cfb-9395-5d846c83c441",
-      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
-      "id": "bf5b1b92-c130-439d-8a23-0106debabd9c"
+      "userID": "0SeO3XEdSScRbhD4omnCVg4sq7L2",
+      "id": "23148d31-9796-4d18-9665-57cad13716d1"
     },
     {
-      "contentID": "ae85e3fc-2448-42d1-aba9-b3087c8d6905",
-      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
-      "id": "756c08fd-dd79-4ee7-bd4d-a572563ae916"
+      "contentID": "2e6da61c-de8f-4f1c-8b72-e57560153f1f",
+      "userID": "0SeO3XEdSScRbhD4omnCVg4sq7L2",
+      "id": "34337767-bda6-42d1-a174-44ee381e5f72"
+
     }
   ],
   "User": [
@@ -148,7 +145,7 @@
       "time": "2023. 1. 28.",
       "userId": "r7mJJovIMudpdoHcdif9K4AgRor1",
       "nickName": "888888",
-      "likesCount": 0,
+      "likesCount": 1,
       "videoUrl": "https://www.youtube.com/watch?v=1e79ltiuvco",
       "title": "아이디 888888",
       "content": "9888888"

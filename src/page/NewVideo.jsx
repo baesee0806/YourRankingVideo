@@ -53,6 +53,16 @@ const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 1500px) {
+    width: 1200px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 580px) {
+    width: 100%;
+  }
 `;
 
 const videoListDiv = {

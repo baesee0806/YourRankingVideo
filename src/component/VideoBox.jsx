@@ -4,6 +4,7 @@ import { FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { fetchLikes } from "../API/youtube";
 import { useQuery } from "react-query";
+import styled from "styled-components";
 
 function VideoBox({ iconSize, style, videoId, item, title }) {
   useEffect(() => {
@@ -11,7 +12,7 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
   }, []);
 
   const navigate = useNavigate();
-  
+
   const detailNavigate = () => {
     navigate(`/${item?.id}`);
   };
@@ -23,17 +24,11 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
 
   //좋아요갯수 가지고 오는 함수
   const num = data?.filter((value) => {
-    return value.contentID === item.id;
+    return value?.contentID === item?.id;
   }).length;
 
   return (
-    <div
-      style={{
-        boxShadow: "10px 15px 15px #888",
-        marginBottom: "30px",
-        marginLeft: "20px",
-      }}
-    >
+    <VideoBoxContainerDiv>
       <YouTube
         style={style}
         videoId={videoId.slice(-11)}
@@ -90,8 +85,14 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
           </span>
         </div>
       </div>
-    </div>
+    </VideoBoxContainerDiv>
   );
 }
+
+const VideoBoxContainerDiv = styled.div`
+  box-shadow: 10px 15px 15px #888;
+  margin-bottom: 30px;
+  margin-left: 20px;
+`;
 
 export default VideoBox;

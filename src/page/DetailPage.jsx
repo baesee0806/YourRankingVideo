@@ -73,11 +73,9 @@ export default function DetailPage() {
   //인기동영상 데이터
   const youtubeData = useQuery("items", fetchLists);
   //params로 갖고온 id를 find
-  //youtubeDataFind 오류
   const youtubeDataFind = youtubeData.data?.items.find((item) => {
     return item.id === params.id;
   });
-  // console.log(youtubeDataFind);
 
   // uuid생성
   const likeUUID = uuidv4();
@@ -140,19 +138,26 @@ export default function DetailPage() {
 
   //좋아요 dbjson생성, 수정
   const likeCreate = () => {
-    const newLike = {
-      contentID: params.id,
-      userID: userID?.uid,
-      id: likeUUID,
-    };
+    if (isLoggedIn === false) {
+      if (window.confirm("로그인 후 이용 가능합니다.")) {
+        navigate("/login");
+      } else {
+      }
+    } else {
+      const newLike = {
+        contentID: params.id,
+        userID: userID?.uid,
+        id: likeUUID,
+      };
 
-    const newLikesCount = {
-      id: params.id,
-      likesCount: likesDataLength?.length + 1,
-    };
+      const newLikesCount = {
+        id: params.id,
+        likesCount: likesDataLength?.length + 1,
+      };
 
-    postMutation.mutate(newLike);
-    likesCountMutation.mutate(newLikesCount);
+      postMutation.mutate(newLike);
+      likesCountMutation.mutate(newLikesCount);
+    }
   };
   //좋아요 dbjson삭제, 수정
   const likeDelete = () => {
@@ -180,7 +185,7 @@ export default function DetailPage() {
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
-          videoId={youtubeDataFind ? params.id : videosFindSplit}
+          videoId={youtubeDataFind ? params?.id : videosFindSplit}
           style={{
             width: "100%",
             height: "100%",
@@ -216,7 +221,9 @@ export default function DetailPage() {
               {likesData && likesData[0] ? (
                 <AiFillHeart
                   style={{ fontSize: 20, color: "red" }}
+
                   onClick={likeDelete}
+
                 />
               ) : (
                 <AiOutlineHeart
