@@ -157,6 +157,9 @@ const MenuModalBtnAreaDiv = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   margin-bottom: 15px;
+  &:hover {
+    opacity: 0.33;
+  }
 `;
 
 const MenuModalOutBtn = styled.div`
@@ -177,6 +180,9 @@ const MenuModalMovePageDiv = styled.div`
   font-size: 25px;
   color: white;
   margin: 0 0 15px 15px;
+  &:hover {
+    opacity: 0.33;
+  }
 `;
 
 const LogoImg = styled.img`
