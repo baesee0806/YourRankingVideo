@@ -10,10 +10,8 @@ import { updateProfile } from "firebase/auth";
 import { useQuery } from "react-query";
 import { fetchLikes, fetchVideo } from "../API/youtube";
 export default function MyPage(userObj) {
-
   // user img modal change
-  const [userImgModalState, setUserImgModalState] =
-    useRecoilState(UserImgModalState);
+  const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
   const [nickName, setNickName] = useState(userObj.displayName);
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);

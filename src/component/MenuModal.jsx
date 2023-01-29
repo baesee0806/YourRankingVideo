@@ -62,10 +62,7 @@ const MenuModal = () => {
             </MenuModalBtnAreaDiv>
             {/* 페이지 이동 */}
             <MenuModalMovePageAreaDiv>
-              <MenuModalMovePageDiv
-                onClick={logout}
-                style={{ cursor: "pointer" }}
-              >
+              <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
                 로그아웃
               </MenuModalMovePageDiv>
               <MenuModalMovePageDiv
