@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "react-query";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { authService } from "../common/firebase";
-import { createVideo } from "../API/postApi";
+import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../common/firebase';
+import { createVideo } from '../API/postApi';
 
 export default function PostPage() {
   const queryClient = useQueryClient();
@@ -144,4 +144,11 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 17px;
+  /* hover, active */
+  &:hover {
+    background-color: #472bc4;
+  }
+  &:active {
+    background-color: #2bc47d;
+  }
 `;

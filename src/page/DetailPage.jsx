@@ -90,6 +90,7 @@ export default function DetailPage() {
   const videos = useQuery("videos", getVideos);
 
   const videosFind = videos.data?.data?.find((data) => data?.id == params.id);
+  // console.log(videosFind?.id)
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
   const dateSplit = videosFind?.time.slice(0, -1);
 
@@ -112,6 +113,7 @@ export default function DetailPage() {
       alert("취소되었습니다");
     }
   };
+  
 
   //get likes
   const getLikes = async () => {
@@ -168,9 +170,18 @@ export default function DetailPage() {
     DeleteMutation.mutate(likesData[0].id);
     likesCountMutation.mutate(newLikesCount);
   };
+  //수정페이지로 가는 버튼
+  const goToEditPage = () => {
+    navigate(`/editpost/${params.id}`, {
+      state: {
+        videoId: params.id
+      }
+    })
+  }
 
   return (
     <DetailPageWrapdiv>
+      
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
@@ -259,9 +270,7 @@ export default function DetailPage() {
             <DetailPageButtondiv>
               {/* 수정버튼 */}
               <DetailPageEditButton
-                onClick={() => {
-                  navigate("/editpost");
-                }}
+                onClick={goToEditPage}
               >
                 수정
               </DetailPageEditButton>
