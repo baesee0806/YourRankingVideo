@@ -142,9 +142,12 @@ const UserImgModalBtnAreaDiv = styled.div`
 const UserImgModalBtn = styled.button`
   width: 30%;
   height: 40%;
-  background: blue;
+  background: #c4302b;
   color: white;
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  &:hover {
+    opacity: 0.33;
+  }
 `;

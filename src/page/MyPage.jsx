@@ -245,12 +245,16 @@ const UserEditNicknameInput = styled.input`
 `;
 
 const UserEditNicknameBtn = styled.button`
-  background: #fff;
-  border: 1px solid black;
+  background: #c4302b;
+  border: none;
+  color: white;
   border-radius: 10px;
   width: 50px;
   height: 30px;
   cursor: pointer;
+  &:hover {
+    opacity: 0.33;
+  }
 `;
 
 // User Like & post
@@ -271,9 +275,13 @@ const UserLikeWriteBtnDiv = styled.div`
 const UserLikeBtn = styled.button`
   border: none;
   background: ${(props) => (props.userList ? "#555555" : "#fff")};
+  color: ${(props) => (props.userList ? "#fff" : "black")};
   font-size: larger;
   font-weight: 800;
   border-radius: 3px;
+  &:hover {
+    opacity: 0.33;
+  }
 `;
 const UserWriteBtn = styled.button`
   border: none;
@@ -281,7 +289,11 @@ const UserWriteBtn = styled.button`
   font-size: larger;
   font-weight: 800;
   background: ${(props) => (props.userList ? "#fff" : "#555555")};
+  color: ${(props) => (props.userList ? "black" : "#fff")};
   border-radius: 3px;
+  &:hover {
+    opacity: 0.33;
+  }
 `;
 
 const VideoAreaWrapDiv = styled.div`
