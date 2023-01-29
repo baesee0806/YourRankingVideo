@@ -10,18 +10,18 @@ export default function EditPostPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   
-  const { videoId } = location.state; // Detailpage에서 params.id 받아옴
+  const { videoId } = location.state; // Detailpage에서 params.id 받아옴 : String
  
-  const [newTitle, setNewTitle] = useState('');
-  const [newContent, setNewContent] = useState('');
+  const [newTitle, setNewTitle] = useState(''); // : String
+  const [newContent, setNewContent] = useState(''); // : String
 
-  // videos/id(uuid) 데이터 받아오기
+  // videos/id(uuid) 데이터 받아오기 : Obj
   const videoEditData = useQuery("videos", () =>
-    axios.get(`http://localhost:3001/videos/${videoId}`)
+    axios.get(`https://darkened-tasty-airship.glitch.me/videos/${videoId}`)
     .then((a)=>a.data)
   )
 
-  // 게시글 수정
+  // 게시글 수정, data : Obj
   const reviseVideo = useMutation((video) => editVideo(video), {
     onSuccess: (data) => {
       console.log(data);
@@ -39,9 +39,9 @@ export default function EditPostPage() {
       return;
     }
     const editObj = {
-      id: videoId,
-      title: newTitle,
-      content: newContent,
+      id: videoId, // id : string
+      title: newTitle, // title : string
+      content: newContent, // content : string
     };
     reviseVideo.mutate(editObj);
     navigate(`/${videoId}`) // 글 작성 후 해당 상세페이지로 이동
