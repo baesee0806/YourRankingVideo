@@ -61,7 +61,9 @@ export default function EditPostPage() {
     <Container>
       {videoEditData.isLoading && 'Loading...'}
       {videoEditData.error && 'error'}
+      <TextBox>
       <Text>게시물 수정</Text>
+      </TextBox>
         <Form>
         {/* {placeholder= 받아온 데이터} */}
         <Input 
@@ -90,19 +92,31 @@ export default function EditPostPage() {
   )
 }
 const Container = styled.div`
-  margin-top: 50px;
-  margin-left: 160px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `
-const Text = styled.p`
+const TextBox = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto 0 auto;
+`
+const Text = styled.h2`
   font-size: 30px;
   font-weight: 600;
+  display: flex;
+  align-items: flex-end;
 `
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 55px;
 `
 const Input = styled.input`
-  width: 1600px;
+  width: 90%;
   height: 60px;
   margin-bottom: 30px;
   border-radius: 10px;
@@ -112,11 +126,11 @@ const Input = styled.input`
   outline: none;
 `
 const Textarea = styled.textarea`
-  width: 1600px;
+  width: 90%;
   height: 500px;
   border-radius: 10px;
   border: 1px solid;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
   resize: none;
   font-size: 25px;
   padding: 10px;
@@ -124,9 +138,31 @@ const Textarea = styled.textarea`
 `
 const BtnBox = styled.div`
   display: flex;
-  justify-content: end;
-  margin-right: 125px;
+  align-items: center;
+  /* margin-right: 125px; */
   margin-bottom: 10px;
+  position: absolute;
+  top: 100%;
+  left: 89%;
+  transform: translate(-50%, -50%);
+  @media screen and (max-width: 1700px){
+    position: absolute;
+    top: 100%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+  }
+  @media screen and (max-width: 1300px){
+    position: absolute;
+    top: 100%;
+    left: 84%;
+    transform: translate(-50%, -50%);
+  }
+  @media screen and (max-width: 1000px){
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `
 const Button = styled.button`
   width: 100px;
@@ -135,10 +171,7 @@ const Button = styled.button`
   background-color: #C4302B;
   /* hover, active */
   &:hover {
-    background-color: #472bc4;
-  }
-  &:active {
-    background-color: #2bc47d;
+    background-color: #e73a0fec;
   }
   border-radius: 20px;
   border: none;

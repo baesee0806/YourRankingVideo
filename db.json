@@ -69,6 +69,21 @@
       "contentID": "826c4e77-d01b-4523-90c5-b6066d51999f",
       "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
       "id": "c12816df-2b1a-4a62-bdc1-00637d9d6f6c"
+    },
+    {
+      "contentID": "79ad67d7-70f9-4245-a3ae-488bec8cd9ef",
+      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
+      "id": "c9b3cac2-f8ed-4ee6-97a0-f202e3b3627e"
+    },
+    {
+      "contentID": "56df59be-0940-4cfb-9395-5d846c83c441",
+      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
+      "id": "bf5b1b92-c130-439d-8a23-0106debabd9c"
+    },
+    {
+      "contentID": "ae85e3fc-2448-42d1-aba9-b3087c8d6905",
+      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
+      "id": "756c08fd-dd79-4ee7-bd4d-a572563ae916"
     }
   ],
   "User": [
@@ -97,7 +112,7 @@
       "time": "2023. 1. 28.",
       "userId": "bSunM5MN2ERYxB4JN1UQmwzaMAF3",
       "nickName": "999999",
-      "likesCount": 2,
+      "likesCount": 3,
       "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
       "title": "일등일등",
       "content": "일등일등"
@@ -109,7 +124,7 @@
       "time": "2023. 1. 28.",
       "userId": "bSunM5MN2ERYxB4JN1UQmwzaMAF3",
       "nickName": "999999",
-      "likesCount": 2,
+      "likesCount": 3,
       "videoUrl": "https://www.youtube.com/watch?v=1e79ltiuvco",
       "title": "이등이등",
       "content": "이등이등"
@@ -145,7 +160,7 @@
       "time": "2023. 1. 29.",
       "userId": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
       "nickName": "2AM",
-      "likesCount": 0,
+      "likesCount": 1,
       "videoUrl": "https://www.youtube.com/watch?v=jfKfPfyJRdk",
       "title": "lofi hiphop~",
       "content": "lofi hiphop playlist"
