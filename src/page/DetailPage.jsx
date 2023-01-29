@@ -170,7 +170,7 @@ export default function DetailPage() {
     DeleteMutation.mutate(likesData[0].id);
     likesCountMutation.mutate(newLikesCount);
   };
-  //수정페이지로 가는 버튼
+  //수정페이지로 가는 버튼, editpost/id(uuid)로 이동 + params.id state로 넘겨주기
   const goToEditPage = () => {
     navigate(`/editpost/${params.id}`, {
       state: {

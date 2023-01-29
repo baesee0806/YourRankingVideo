@@ -1,41 +1,31 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { editVideo } from '../API/postApi';
 
-// videos/각id 데이터 불러오기
 export default function EditPostPage() {
-  // const { id } = useParams();
   const location = useLocation();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   
-  // console.log('state', location.state)
-  // const { videoId, videotitle, videocontent } = location.state;
-  // const videotitle = location.state.title;
-  // const { videosId, videostitle, videoscontent } = location.state;
-  // const videocontent = location.state.content;
-  const { videoId } = location.state;
-  // const videoEditData = useQuery("videos", () =>
-  //       axios.get(`http://localhost:3001/videos/${videoData.id}`)
-  //       .then((a) => a.data)
-  //   );
-  // console.log(videoData);
+  const { videoId } = location.state; // Detailpage에서 params.id 받아옴
+ 
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
 
+  // videos/id(uuid) 데이터 받아오기
   const videoEditData = useQuery("videos", () =>
     axios.get(`http://localhost:3001/videos/${videoId}`)
     .then((a)=>a.data)
   )
-  // console.log('내 작성글 데이터', videoEditData.data)
 
+  // 게시글 수정
   const reviseVideo = useMutation((video) => editVideo(video), {
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries(['videos']);
+      queryClient.invalidateQueries(['videos']); // 쿼리 무효화
     },
     onError: (error) => {
       console.log(error);
@@ -54,7 +44,7 @@ export default function EditPostPage() {
       content: newContent,
     };
     reviseVideo.mutate(editObj);
-    navigate(`/${videoId}`)
+    navigate(`/${videoId}`) // 글 작성 후 해당 상세페이지로 이동
   };
 
   return (
@@ -79,8 +69,8 @@ export default function EditPostPage() {
           ></Textarea>
         <BtnBox>
         <Button 
+          // 버튼 비활성화에 따른 opacity 적용
           opacitybtn={!newTitle || !newContent}
-          // disabled={!newTitle || !newContent}
           onClick={handleEdit} style={{marginRight:'20px'}}
           >
           수정
@@ -145,6 +135,7 @@ const BtnBox = styled.div`
   top: 100%;
   left: 89%;
   transform: translate(-50%, -50%);
+  /* 화면크기에 따른 버튼 위치 */
   @media screen and (max-width: 1700px){
     position: absolute;
     top: 100%;
@@ -169,7 +160,7 @@ const Button = styled.button`
   height: 40px;
   color: white;
   background-color: #C4302B;
-  /* hover, active */
+  /* hover */
   &:hover {
     background-color: #e73a0fec;
   }
@@ -177,6 +168,6 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 17px;
-  /* 비활성화일 때 버튼 투명화 */
+  /* 비활성화일 때 버튼 opacity */
   opacity: ${props => (props.opacitybtn ? 0.1 : 1)};
 `

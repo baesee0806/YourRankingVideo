@@ -8,15 +8,19 @@ import { createVideo } from '../API/postApi';
 
 export default function PostPage() {
   const navigate = useNavigate();
+
+  //게시글 작성
   const addVideo = useMutation((video) => createVideo(video), {
     onSuccess: (data) => {
       console.log(data?.data?.id);
-      navigate(`/${data?.data?.id}`);
+      navigate(`/${data?.data?.id}`); // 글 작성 후 해당 상세페이지로 이동
     },
     onError: (error) => {
       console.log(error);
     },
   });
+
+  // 작성글 내용 전달
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     const Video = {
@@ -41,6 +45,8 @@ export default function PostPage() {
       <TextBox>
         <Text>게시물 작성</Text>
       </TextBox>
+      {/* required -> 유효성 검사 */}
+      {/* ...regiter -> 작성한 내용 등록 */}
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Input
           type={"url"}
@@ -66,11 +72,6 @@ export default function PostPage() {
           <Button
             type="submit"
             style={{ marginRight: "20px" }}
-            // disabled={isSubmitting}
-            // onClick={() => {
-            //   isSubmitting();
-            //   navigate(`${uuid}`);
-            // }}
           >
             완료
           </Button>
@@ -136,6 +137,7 @@ const BtnBox = styled.div`
   top: 100%;
   left: 89%;
   transform: translate(-50%, -50%);
+  /* 화면크기에 따른 버튼 위치 */
   @media screen and (max-width: 1700px){
     position: absolute;
     top: 100%;
