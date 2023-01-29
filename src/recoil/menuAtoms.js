@@ -1,7 +1,8 @@
-import React from 'react'
+import { atom } from "recoil";
+// 메뉴 모달창 전역 관리
+const ModalBtnState = atom({
+  key: 'ModalBtnState',
+  default:false
+})
 
-export default function atoms() {
-  return (
-    <div>atoms</div>
-  )
-}
+export {ModalBtnState}

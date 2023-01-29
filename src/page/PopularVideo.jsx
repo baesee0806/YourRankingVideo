@@ -1,12 +1,18 @@
+import React, { useEffect } from "react";
+import ScrollTopBtn from "../component/ScrollTopBtn";
 import VideoBox from "../component/VideoBox";
 import styled from "styled-components";
-import { fetchVideo } from "../API/youtube";
+import { fetchLists } from "../API/youtube";
 import { useQuery } from "react-query";
-import ScrollTopBtn from "../component/ScrollTopBtn";
 
-export default function NewVideo() {
-  //여기 최신 순 제이슨데이터 가져오기
-  const { isLoading, isError, data, error } = useQuery("videos", fetchVideo);
+export default function PopularVideo() {
+  useEffect(() => {
+    fetchLists();
+    sessionStorage.clear();
+  }, []);
+
+  const { isLoading, isError, data, error } = useQuery("items", fetchLists);
+  console.log(data);
 
   if (isLoading) {
     return <div>로딩중</div>;
@@ -18,13 +24,11 @@ export default function NewVideo() {
   return (
     <>
       <StyledMainContainer>
-        <div style={{ fontSize: 30, fontWeight: "bold", margin: "20px" }}>
-          최신동영상
-        </div>
+        <div style={{ fontSize: 30, fontWeight: "bold", margin: "20px 150px" }}>인기 동영상🔥</div>
 
         <div style={{ width: "70%", margin: "auto" }}>
           <div style={videoListDiv}>
-            {data.map((item) => (
+            {data?.items.map((item) => (
               <div key={item.id}>
                 <VideoBox
                   iconSize="17px"
@@ -32,9 +36,9 @@ export default function NewVideo() {
                     height: "200px",
                     width: "350px",
                   }}
-                  videoId={item.videoUrl}
+                  videoId={item.id}
                   item={item}
-                  title={item.title}
+                  title={item.snippet.title}
                 />
               </div>
             ))}
@@ -53,15 +57,17 @@ const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 1400px) {
     width: 1200px;
   }
-  @media screen and (max-width: 1024px) {
-    width: 100%;
+  @media screen and (max-width: 1300px) {
+    width: 1100px;
   }
-  @media screen and (max-width: 580px) {
-    width: 100%;
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 780px) {
+    width: 95%;
   }
 `;
 
