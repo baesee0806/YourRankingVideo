@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { UserImgModal } from "../component/UserImgModal";
 import { useRecoilState } from "recoil";
@@ -7,18 +7,16 @@ import { UserLikePostState } from "../recoil/myPageAtom";
 import VideoBox from "../component/VideoBox";
 import { authService } from "../common/firebase";
 import { updateProfile } from "firebase/auth";
+import { useQuery } from "react-query";
+import { fetchLikes, fetchVideo } from "../API/youtube";
 export default function MyPage(userObj) {
+
   // user img modal change
   const [userImgModalState, setUserImgModalState] =
     useRecoilState(UserImgModalState);
   const [nickName, setNickName] = useState(userObj.displayName);
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);
-
-  // 1.onAuthStateChanged
-  // 2. useEffect
-  // 3. usestate
-
   const user = authService?.currentUser;
   const usernickname = user?.displayName;
   const email = user?.email;
@@ -36,10 +34,20 @@ export default function MyPage(userObj) {
         // ...
       });
   };
+  // 모든 비디오
+  const { isLoading, isError, data, error } = useQuery("videos", fetchVideo);
+  // 좋아요 누른 비디오
 
-  // useEffect(() => {
-  //   console.log("2");
-  // }, [userNickNameChange]);
+  // my like
+
+  // my write
+
+  if (isLoading) {
+    return <div>로딩중</div>;
+  }
+  if (isError) {
+    return alert("에러", error);
+  }
 
   return (
     <MypageLayoutDiv>
@@ -107,73 +115,37 @@ export default function MyPage(userObj) {
         {userList ? (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
+              {data.map((el) => {
+                return (
+                  <VideoBox
+                    iconSize="17px"
+                    style={{
+                      height: "200px",
+                      width: "350px",
+                    }}
+                    videoId="qQrD2BKPApo"
+                    // item={item}
+                  />
+                );
+              })}
             </VideoAreaDiv>
           </VideoAreaWrapDiv>
         ) : (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
+              {data.map((el) => {
+                return (
+                  <VideoBox
+                    iconSize="17px"
+                    style={{
+                      height: "200px",
+                      width: "350px",
+                    }}
+                    videoId="qQrD2BKPApo"
+                    // item={item}
+                  />
+                );
+              })}
             </VideoAreaDiv>
           </VideoAreaWrapDiv>
         )}
@@ -295,4 +267,8 @@ const VideoAreaWrapDiv = styled.div`
 const VideoAreaDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
+  @media screen and (max-width: 1400px) {
+    flex-direction: column;
+    margin: 0 auto;
+  }
 `;

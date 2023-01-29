@@ -185,7 +185,7 @@ export default function DetailPage() {
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
-          videoId={youtubeDataFind ? params.id : videosFindSplit}
+          videoId={youtubeDataFind ? params?.id : videosFindSplit}
           style={{
             width: "100%",
             height: "100%",
@@ -221,7 +221,9 @@ export default function DetailPage() {
               {likesData && likesData[0] ? (
                 <AiFillHeart
                   style={{ fontSize: 20, color: "red" }}
+
                   onClick={likeDelete}
+
                 />
               ) : (
                 <AiOutlineHeart
