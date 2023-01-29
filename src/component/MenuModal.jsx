@@ -3,10 +3,17 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ModalBtnState } from "../recoil/menuAtoms";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { authService } from "../common/firebase";
 
 const MenuModal = () => {
   const [modalHandler, setModalHandler] = useRecoilState(ModalBtnState);
   const navigate = useNavigate();
+  const COOKIE_KEY = window.LOGIN_KEY;
+  const logoutURL = // 리다이렉트할 URL 을 상수화시켜서 넣어주었다.
+    window.LOGIN_SESSION_KEY_URL + `/logout?redirect_uri=${window.location.href}`;
+
+  const [, , removeCookie] = useCookies([COOKIE_KEY]); // 쓰지 않는 변수는 (공백),처리해주고 removeCookie 옵션만 사용한다
 
   useEffect(() => {
     if (modalHandler) {
@@ -22,6 +29,15 @@ const MenuModal = () => {
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     }
   }, [modalHandler]);
+  const logout = () => {
+    console.log("로그아웃 성공");
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.alert("로그아웃 성공");
+    removeCookie(COOKIE_KEY, { path: "login" }); // 쿠키삭제후
+    window.location.href = logoutURL;
+  };
 
   return (
     <>
@@ -47,24 +63,22 @@ const MenuModal = () => {
             {/* 페이지 이동 */}
             <MenuModalMovePageAreaDiv>
               <MenuModalMovePageDiv
-                onClick={() => {
-                  navigate("/login");
-                }}
+                onClick={logout}
                 style={{ cursor: "pointer" }}
               >
                 로그아웃
               </MenuModalMovePageDiv>
               <MenuModalMovePageDiv
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate("/");
                 }}
-                style={{ cursor: "pointer" }}
               >
                 인기영상
               </MenuModalMovePageDiv>
               <MenuModalMovePageDiv
                 onClick={() => {
-                  navigate("/newVideo");
+                  navigate("/newvideo");
                 }}
                 style={{ cursor: "pointer" }}
               >

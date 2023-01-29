@@ -19,12 +19,18 @@ const fetchVideo = async () => {
   return data;
 };
 
-const fetchLikes = async ({ queryKey }) => {
-  const { data } = await axios.get(`http://localhost:3001/${queryKey}`);
+const fetchLikes = async () => {
+  const { data } = await axios.get(`http://localhost:3001/likes`);
   return data;
 };
 
-export { fetchLists, fetchVideo, fetchLikes };
+const fetchPopVideo = async () => {
+  const { data } = await axios.get(`http://localhost:3001/videos`);
+  return data;
+};
+//인기순으로 안갖고와지면 http://localhost:3001/videos?_sort=likesCount&_order=desc사용
+
+export { fetchLists, fetchVideo, fetchLikes, fetchPopVideo };
 
 // import { fetchLists } from "../API/youtube";
 // import { useQuery } from "react-query";
