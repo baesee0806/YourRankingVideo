@@ -15,10 +15,13 @@ import { useNavigate } from "react-router-dom";
 import { authService } from "../common/firebase";
 
 export default function DetailPage() {
+  //로그인 상태 정보
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(isLoggedIn);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   useEffect(() => {
-    //로그인 정보
+    //로그인 상태 정보
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
@@ -27,10 +30,11 @@ export default function DetailPage() {
       }
     });
   }, []);
-  //usemutation
-  // like create
+
+  // like create (likes에 데이터 추가)
   const postMutation = useMutation(
-    (newLike) => axios.post("http://localhost:3001/likes", newLike),
+    (newLike) =>
+      axios.post("https://darkened-tasty-airship.glitch.me/likes", newLike),
     {
       onSuccess: () => {
         // 쿼리 무효화
@@ -39,10 +43,11 @@ export default function DetailPage() {
     }
   );
 
-  // like delete
+  // like delete (likes에 데이터 삭제)
   const DeleteMutation = useMutation(
     //넘겨받은 id를 삭제
-    (id) => axios.delete(`http://localhost:3001/likes/${id}`),
+    (id) =>
+      axios.delete(`https://darkened-tasty-airship.glitch.me/likes/${id}`),
     {
       onSuccess: () => {
         // 쿼리 무효화
@@ -51,10 +56,12 @@ export default function DetailPage() {
     }
   );
 
-  //likesCount 수정
+  //likesCount 수정 (videos의 likesCount 수정)
   const likesCountMutation = useMutation(
     ({ id, likesCount }) =>
-      axios.patch(`http://localhost:3001/videos/${id}`, { likesCount }),
+      axios.patch(`https://darkened-tasty-airship.glitch.me/videos/${id}`, {
+        likesCount,
+      }),
     {
       onSuccess: () => {
         // window.location = "/";
@@ -62,13 +69,8 @@ export default function DetailPage() {
     }
   );
 
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  //로그인 안했을때 해결필요
-
-  //useParams로 정보 받아오기
+  //useParams로 컨텐츠 정보 받아오기
   const params = useParams();
-  console.log(params.id);
 
   //인기동영상 데이터
   const youtubeData = useQuery("items", fetchLists);
@@ -82,22 +84,23 @@ export default function DetailPage() {
   //userID
   const userID = getAuth().currentUser;
 
-  //게시글 데이터
+  //게시글에 사용할 데이터 (videos데이터 가져오기)
   const getVideos = async () => {
-    const response = await axios.get("http://localhost:3001/videos");
+    const response = await axios.get(
+      "https://darkened-tasty-airship.glitch.me/videos"
+    );
     return response;
   };
   const videos = useQuery("videos", getVideos);
-
   const videosFind = videos.data?.data?.find((data) => data?.id == params.id);
-  // console.log(videosFind?.id)
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
   const dateSplit = videosFind?.time.slice(0, -1);
 
-  //게시글 삭제
+  //게시글 삭제 (videos데이터 삭제)
   const textDeleteMutation = useMutation(
     //넘겨받은 id를 삭제
-    (id) => axios.delete(`http://localhost:3001/videos/${id}`),
+    (id) =>
+      axios.delete(`https://darkened-tasty-airship.glitch.me/videos/${id}`),
     {
       onSuccess: () => {
         window.location = "/";
@@ -113,11 +116,10 @@ export default function DetailPage() {
       alert("취소되었습니다");
     }
   };
-  
 
-  //get likes
+  //get likes (likes데이터 가져오기)
   const getLikes = async () => {
-    return await axios.get("http://localhost:3001/likes");
+    return await axios.get("https://darkened-tasty-airship.glitch.me/likes");
   };
 
   const { isLoading, isError, data, error } = useQuery("likes", getLikes);
@@ -128,7 +130,6 @@ export default function DetailPage() {
     console.log("오류내용", error);
     return <p>Error..!</p>;
   }
-
   const likesData = data?.data?.filter((i) => {
     return i.contentID === params.id && i.userID === userID?.uid;
   });
@@ -136,7 +137,7 @@ export default function DetailPage() {
     return params.id === i.contentID;
   });
 
-  //좋아요 dbjson생성, 수정
+  //좋아요 Likes 생성, videos(likesCount)수정
   const likeCreate = () => {
     if (isLoggedIn === false) {
       if (window.confirm("로그인 후 이용 가능합니다.")) {
@@ -159,7 +160,7 @@ export default function DetailPage() {
       likesCountMutation.mutate(newLikesCount);
     }
   };
-  //좋아요 dbjson삭제, 수정
+  //좋아요 Likes 삭제, videos(likesCount)수정
   const likeDelete = () => {
     const newLikesCount = {
       id: params.id,
@@ -174,14 +175,13 @@ export default function DetailPage() {
   const goToEditPage = () => {
     navigate(`/editpost/${params.id}`, {
       state: {
-        videoId: params.id
-      }
-    })
-  }
+        videoId: params.id,
+      },
+    });
+  };
 
   return (
     <DetailPageWrapdiv>
-      
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
@@ -221,9 +221,7 @@ export default function DetailPage() {
               {likesData && likesData[0] ? (
                 <AiFillHeart
                   style={{ fontSize: 20, color: "red" }}
-
                   onClick={likeDelete}
-
                 />
               ) : (
                 <AiOutlineHeart
@@ -247,7 +245,6 @@ export default function DetailPage() {
         </DetailPageNamediv>
         {/* 날짜 */}
         <DetailPageDatediv>
-          {/* T뒤의 문자 삭제 */}
           {youtubeDataFind
             ? youtubeDataFind?.snippet?.publishedAt.substring(
                 0,
@@ -266,14 +263,11 @@ export default function DetailPage() {
       {youtubeDataFind ? (
         ""
       ) : (
-        //여기안에서 작성자 id와 로그인 id비교후 출력
         <div>
           {userID?.uid === videosFind?.userId ? (
             <DetailPageButtondiv>
               {/* 수정버튼 */}
-              <DetailPageEditButton
-                onClick={goToEditPage}
-              >
+              <DetailPageEditButton onClick={goToEditPage}>
                 수정
               </DetailPageEditButton>
               {/* 삭제버튼 */}
