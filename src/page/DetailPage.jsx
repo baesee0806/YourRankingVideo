@@ -73,11 +73,9 @@ export default function DetailPage() {
   //인기동영상 데이터
   const youtubeData = useQuery("items", fetchLists);
   //params로 갖고온 id를 find
-  //youtubeDataFind 오류
   const youtubeDataFind = youtubeData.data?.items.find((item) => {
     return item.id === params.id;
   });
-  // console.log(youtubeDataFind);
 
   // uuid생성
   const likeUUID = uuidv4();
@@ -92,6 +90,7 @@ export default function DetailPage() {
   const videos = useQuery("videos", getVideos);
 
   const videosFind = videos.data?.data?.find((data) => data?.id == params.id);
+  // console.log(videosFind?.id)
   const videosFindSplit = videosFind?.videoUrl?.split("=")[1];
   const dateSplit = videosFind?.time.slice(0, -1);
 
@@ -114,6 +113,7 @@ export default function DetailPage() {
       alert("취소되었습니다");
     }
   };
+  
 
   //get likes
   const getLikes = async () => {
@@ -138,19 +138,26 @@ export default function DetailPage() {
 
   //좋아요 dbjson생성, 수정
   const likeCreate = () => {
-    const newLike = {
-      contentID: params.id,
-      userID: userID?.uid,
-      id: likeUUID,
-    };
+    if (isLoggedIn === false) {
+      if (window.confirm("로그인 후 이용 가능합니다.")) {
+        navigate("/login");
+      } else {
+      }
+    } else {
+      const newLike = {
+        contentID: params.id,
+        userID: userID?.uid,
+        id: likeUUID,
+      };
 
-    const newLikesCount = {
-      id: params.id,
-      likesCount: likesDataLength?.length + 1,
-    };
+      const newLikesCount = {
+        id: params.id,
+        likesCount: likesDataLength?.length + 1,
+      };
 
-    postMutation.mutate(newLike);
-    likesCountMutation.mutate(newLikesCount);
+      postMutation.mutate(newLike);
+      likesCountMutation.mutate(newLikesCount);
+    }
   };
   //좋아요 dbjson삭제, 수정
   const likeDelete = () => {
@@ -163,9 +170,18 @@ export default function DetailPage() {
     DeleteMutation.mutate(likesData[0].id);
     likesCountMutation.mutate(newLikesCount);
   };
+  //수정페이지로 가는 버튼
+  const goToEditPage = () => {
+    navigate(`/editpost/${params.id}`, {
+      state: {
+        videoId: params.id
+      }
+    })
+  }
 
   return (
     <DetailPageWrapdiv>
+      
       {/* 영상 */}
       <DetailPageVideodiv>
         <YouTube
@@ -254,9 +270,7 @@ export default function DetailPage() {
             <DetailPageButtondiv>
               {/* 수정버튼 */}
               <DetailPageEditButton
-                onClick={() => {
-                  navigate("/editpost");
-                }}
+                onClick={goToEditPage}
               >
                 수정
               </DetailPageEditButton>

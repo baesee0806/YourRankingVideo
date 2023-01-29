@@ -80,7 +80,9 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
             />
           )}
 
-          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>{num > 0 ? num : null}</span>
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>
+            {num > 0 ? num : null}
+          </span>
         </div>
       </div>
     </VideoBoxContainerDiv>
