@@ -7,14 +7,18 @@ import { useCookies } from "react-cookie";
 import { authService } from "../common/firebase";
 
 const MenuModal = () => {
+  // 모달창 on off => :boolen
   const [modalHandler, setModalHandler] = useRecoilState(ModalBtnState);
   const navigate = useNavigate();
   const COOKIE_KEY = window.LOGIN_KEY;
   const logoutURL = // 리다이렉트할 URL 을 상수화시켜서 넣어주었다.
-    window.LOGIN_SESSION_KEY_URL + `/logout?redirect_uri=${window.location.href}`;
+    window.LOGIN_SESSION_KEY_URL +
+    `/logout?redirect_uri=${window.location.href}`;
 
   const [, , removeCookie] = useCookies([COOKIE_KEY]); // 쓰지 않는 변수는 (공백),처리해주고 removeCookie 옵션만 사용한다
 
+  // 메뉴 창이 열렸을때 화면을 고정하고 스크롤 못하게 만듬
+  // 메뉴창이 닫히면 document.body.style.cssText = ""; 으로 초기화
   useEffect(() => {
     if (modalHandler) {
       document.body.style.cssText = `
@@ -61,9 +65,12 @@ const MenuModal = () => {
             </MenuModalBtnAreaDiv>
             {/* 페이지 이동 */}
             <MenuModalMovePageAreaDiv>
-              {/*  */}
+              {/* 유저 정보가 있으면 로그아웃이 안보이게 만듬 */}
               {authService.currentUser !== null ? (
-                <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
+                <MenuModalMovePageDiv
+                  onClick={logout}
+                  style={{ cursor: "pointer" }}
+                >
                   로그아웃
                 </MenuModalMovePageDiv>
               ) : null}

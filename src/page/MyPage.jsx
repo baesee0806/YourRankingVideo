@@ -3,29 +3,37 @@ import styled from "styled-components";
 import { UserImgModal } from "../component/UserImgModal";
 import { useRecoilState } from "recoil";
 import { UserImgModalState } from "../recoil/userImgModalAtom";
-import { UserLikePostState } from "../recoil/myPageAtom";
+import { UserLikePostState, UserNinamechangeState } from "../recoil/myPageAtom";
 import VideoBox from "../component/VideoBox";
 import { authService } from "../common/firebase";
 import { updateProfile } from "firebase/auth";
 import { useQuery } from "react-query";
 import { fetchLikes, fetchPopVideo, fetchVideo } from "../API/youtube";
-import axios from "axios";
-export default function MyPage(userObj) {
-  // user img modal change
-  const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
-  const [nickName, setNickName] = useState(userObj.displayName);
-  // 내가쓴글 좋아요 누른글 리스트 change
+// import { userNickNameChange } from "../API/myPageApi";
+export default function MyPage() {
+  // 이미지 변경 모달창 on off => boolen
+  const [userImgModalState, setUserImgModalState] =
+    useRecoilState(UserImgModalState);
+  const [nickName, setNickName] = useRecoilState(UserNinamechangeState);
+  // 유저의 쓴글 좋아요한글 버튼 변경 => boolen
   const [userList, setUserList] = useRecoilState(UserLikePostState);
+  // 유저 정보
   const user = authService?.currentUser;
+  // 유저 닉네임 => : String
   const usernickname = user?.displayName;
+  // 유저 이메일 => : String
   const email = user?.email;
+  // 유저 프로필 사진 Url => : String
   const photoURL = user?.photoURL;
 
+  // 유저 닉네임 변경 함수
   const userNickNameChange = () => {
     updateProfile(authService.currentUser, {
+      // : String
       displayName: nickName,
     })
       .then(() => {
+        // : String
         setNickName("");
       })
       .catch((error) => {
@@ -36,9 +44,10 @@ export default function MyPage(userObj) {
 
   const { isLoading, isError, data, error } = useQuery("likes", fetchLikes);
 
-  // 좋아요 누른 비디오
+  // 좋아요 누른 비디오 => : arr
   const MyLikeVideo = data?.filter((el) => el?.userID === user?.uid);
 
+  // 내가 좋아요 누른 비디오 리스트 => : arr
   const LikesVideo = useQuery("videos", fetchPopVideo)?.data?.filter((el) => {
     for (let i = 0; i < MyLikeVideo.length; i++) {
       if (el?.id === MyLikeVideo[i]?.contentID) {
@@ -47,7 +56,7 @@ export default function MyPage(userObj) {
     }
   });
 
-  // 내가 쓴글
+  // 내가 작성한 글 리스트 => : arr
   const MyWrite = useQuery("videos", fetchPopVideo)?.data?.filter(
     (el) => el?.userId === user?.uid
   );
@@ -61,12 +70,14 @@ export default function MyPage(userObj) {
 
   return (
     <MypageLayoutDiv>
+      {/* 유저 이미지 변경 모달창 on off */}
       {userImgModalState ? <UserImgModal /> : null}
       {/* 마이페이지 유저 정보 area */}
       <UserInfoAreaDiv>
         {/* 유저 이미지 */}
         <UserInfoImgDiv
           onClick={() => {
+            //  이미지 클릭시 모달창 열림 => recoil로 관리
             setUserImgModalState(true);
           }}
         >
@@ -121,10 +132,11 @@ export default function MyPage(userObj) {
         </UserLikeWriteBtnDiv>
 
         {/* video box area */}
-
+        {/* 좋아요한 글과 내가쓴글 버튼 누를시 보여주는 부분 변경 */}
         {userList ? (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
+              {/* 내가 좋아요한 글 리스트 불러와서 VideoBox 컴포넌트안에 넣어줌 */}
               {LikesVideo?.map((el) => {
                 return (
                   <VideoBox
@@ -133,8 +145,11 @@ export default function MyPage(userObj) {
                       height: "200px",
                       width: "350px",
                     }}
+                    // 영상의 비디오 url
                     videoId={el?.videoUrl}
+                    // 영상의 정보
                     item={el}
+                    // 영상의 제목
                     title={el.title}
                   />
                 );

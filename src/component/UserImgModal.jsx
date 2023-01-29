@@ -6,17 +6,17 @@ import { authService } from "../common/firebase";
 import { UserImgModalState } from "../recoil/userImgModalAtom";
 
 export const UserImgModal = () => {
+  //  유저 이미지 변경 모달창 관리 => boolen
   const setUserImgModalState = useSetRecoilState(UserImgModalState);
+  // 유저 이미지 url state => String
   const [imgUrl, setImgUrl] = useState("");
-  // img url 변경
-  // useEffect(() => {
-  //   userProfileChange();
-  // }, [imgUrl]);
+  // 이미지 변경 함수
   const userProfileChange = () => {
     updateProfile(authService.currentUser, {
       photoURL: imgUrl,
     })
       .then(() => {
+        // 변경 완료시 모달창 닫힘
         setUserImgModalState(false);
       })
       .catch((error) => {
@@ -31,6 +31,7 @@ export const UserImgModal = () => {
       <UserImgModalLayoutDiv>
         <UserImgModalImgInputAreaDiv>
           <UserImgModalImg
+            // 이미지가 없으면 유저의 이미지로 img가 있으면 url 보여줌
             src={imgUrl === "" ? authService.currentUser.photoURL : imgUrl}
             onError={(e) => {
               e.target.src = authService.currentUser.photoURL;
@@ -46,7 +47,6 @@ export const UserImgModal = () => {
               }}
               onChange={(e) => {
                 setImgUrl(e.target.value);
-                console.log(imgUrl.substring(imgUrl.length - 3, imgUrl.length));
               }}
             />
           </UserImgModalInputAreaDiv>
@@ -62,6 +62,7 @@ export const UserImgModal = () => {
           </UserImgModalBtn>
           <UserImgModalBtn
             onClick={() => {
+              // 취소 누를시 모달창 닫힘
               setUserImgModalState(false);
             }}
           >
