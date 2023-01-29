@@ -64,6 +64,11 @@
       "contentID": "79ad67d7-70f9-4245-a3ae-488bec8cd9ef",
       "userID": "r7mJJovIMudpdoHcdif9K4AgRor1",
       "id": "14efa050-7f8b-4f44-bd6c-8118d502a738"
+    },
+    {
+      "contentID": "826c4e77-d01b-4523-90c5-b6066d51999f",
+      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
+      "id": "c12816df-2b1a-4a62-bdc1-00637d9d6f6c"
     }
   ],
   "User": [
@@ -142,8 +147,8 @@
       "nickName": "2AM",
       "likesCount": 0,
       "videoUrl": "https://www.youtube.com/watch?v=jfKfPfyJRdk",
-      "title": "로파이 힙합",
-      "content": "코딩할 때 듣기 좋은 음악"
+      "title": "lofi hiphop~",
+      "content": "lofi hiphop playlist"
     },
     {
       "id": "826c4e77-d01b-4523-90c5-b6066d51999f",
@@ -152,10 +157,10 @@
       "time": "2023. 1. 29.",
       "userId": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
       "nickName": "2AM",
-      "likesCount": 0,
+      "likesCount": 1,
       "videoUrl": "https://www.youtube.com/watch?v=cbuZfY2S2UQ",
-      "title": "Playlist",
-      "content": "코딩할 때 듣기 좋은 노래 플레이리스트"
+      "title": "코딩할 때 듣기 좋은 노래",
+      "content": "lofi type beat"
     }
   ]
 }

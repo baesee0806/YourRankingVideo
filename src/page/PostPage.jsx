@@ -144,4 +144,11 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 17px;
+  /* hover, active */
+  &:hover {
+    background-color: #472bc4;
+  }
+  &:active {
+    background-color: #2bc47d;
+  }
 `;

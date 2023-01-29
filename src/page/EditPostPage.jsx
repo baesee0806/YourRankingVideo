@@ -44,6 +44,10 @@ export default function EditPostPage() {
 
   const handleEdit = (e) => {
     e.preventDefault();
+    if (!newTitle || !newContent) {
+      alert('수정한 부분이 없습니다(제목, 내용).');
+      return;
+    }
     const editObj = {
       id: videoId,
       title: newTitle,
@@ -55,9 +59,9 @@ export default function EditPostPage() {
 
   return (
     <Container>
-      <Text>게시물 수정</Text>
       {videoEditData.isLoading && 'Loading...'}
       {videoEditData.error && 'error'}
+      <Text>게시물 수정</Text>
         <Form>
         {/* {placeholder= 받아온 데이터} */}
         <Input 
@@ -72,7 +76,11 @@ export default function EditPostPage() {
           onChange={(e) => setNewContent(e.target.value)}
           ></Textarea>
         <BtnBox>
-        <Button onClick={handleEdit} style={{marginRight:'20px'}}>
+        <Button 
+          opacitybtn={!newTitle || !newContent}
+          // disabled={!newTitle || !newContent}
+          onClick={handleEdit} style={{marginRight:'20px'}}
+          >
           수정
         </Button>
         <Button type='button' onClick={()=>navigate(-1)}>취소</Button>
@@ -125,8 +133,17 @@ const Button = styled.button`
   height: 40px;
   color: white;
   background-color: #C4302B;
+  /* hover, active */
+  &:hover {
+    background-color: #472bc4;
+  }
+  &:active {
+    background-color: #2bc47d;
+  }
   border-radius: 20px;
   border: none;
   cursor: pointer;
   font-size: 17px;
+  /* 비활성화일 때 버튼 투명화 */
+  opacity: ${props => (props.opacitybtn ? 0.1 : 1)};
 `
