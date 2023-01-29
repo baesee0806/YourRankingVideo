@@ -38,7 +38,7 @@ const MenuModal = () => {
     removeCookie(COOKIE_KEY, { path: "login" }); // 쿠키삭제후
     window.location.href = logoutURL;
   };
-
+  console.log(authService.currentUser);
   return (
     <>
       {modalHandler && (
@@ -89,6 +89,7 @@ const MenuModal = () => {
               >
                 유튜브 TOP 10
               </MenuModalMovePageDiv>
+              {/*  */}
               <LogoImg
                 src={require("../assets/Logo.png")}
                 onClick={() => {

@@ -1,41 +1,31 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { editVideo } from '../API/postApi';
 
-// videos/각id 데이터 불러오기
 export default function EditPostPage() {
-  // const { id } = useParams();
   const location = useLocation();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   
-  // console.log('state', location.state)
-  // const { videoId, videotitle, videocontent } = location.state;
-  // const videotitle = location.state.title;
-  // const { videosId, videostitle, videoscontent } = location.state;
-  // const videocontent = location.state.content;
-  const { videoId } = location.state;
-  // const videoEditData = useQuery("videos", () =>
-  //       axios.get(`http://localhost:3001/videos/${videoData.id}`)
-  //       .then((a) => a.data)
-  //   );
-  // console.log(videoData);
+  const { videoId } = location.state; // Detailpage에서 params.id 받아옴
+ 
   const [newTitle, setNewTitle] = useState('');
   const [newContent, setNewContent] = useState('');
 
+  // videos/id(uuid) 데이터 받아오기
   const videoEditData = useQuery("videos", () =>
     axios.get(`http://localhost:3001/videos/${videoId}`)
     .then((a)=>a.data)
   )
-  // console.log('내 작성글 데이터', videoEditData.data)
 
+  // 게시글 수정
   const reviseVideo = useMutation((video) => editVideo(video), {
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries(['videos']);
+      queryClient.invalidateQueries(['videos']); // 쿼리 무효화
     },
     onError: (error) => {
       console.log(error);
@@ -54,14 +44,16 @@ export default function EditPostPage() {
       content: newContent,
     };
     reviseVideo.mutate(editObj);
-    navigate(`/${videoId}`)
+    navigate(`/${videoId}`) // 글 작성 후 해당 상세페이지로 이동
   };
 
   return (
     <Container>
       {videoEditData.isLoading && 'Loading...'}
       {videoEditData.error && 'error'}
+      <TextBox>
       <Text>게시물 수정</Text>
+      </TextBox>
         <Form>
         {/* {placeholder= 받아온 데이터} */}
         <Input 
@@ -77,8 +69,8 @@ export default function EditPostPage() {
           ></Textarea>
         <BtnBox>
         <Button 
+          // 버튼 비활성화에 따른 opacity 적용
           opacitybtn={!newTitle || !newContent}
-          // disabled={!newTitle || !newContent}
           onClick={handleEdit} style={{marginRight:'20px'}}
           >
           수정
@@ -90,19 +82,31 @@ export default function EditPostPage() {
   )
 }
 const Container = styled.div`
-  margin-top: 50px;
-  margin-left: 160px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `
-const Text = styled.p`
+const TextBox = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto 0 auto;
+`
+const Text = styled.h2`
   font-size: 30px;
   font-weight: 600;
+  display: flex;
+  align-items: flex-end;
 `
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 55px;
 `
 const Input = styled.input`
-  width: 1600px;
+  width: 90%;
   height: 60px;
   margin-bottom: 30px;
   border-radius: 10px;
@@ -112,11 +116,11 @@ const Input = styled.input`
   outline: none;
 `
 const Textarea = styled.textarea`
-  width: 1600px;
+  width: 90%;
   height: 500px;
   border-radius: 10px;
   border: 1px solid;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
   resize: none;
   font-size: 25px;
   padding: 10px;
@@ -124,26 +128,46 @@ const Textarea = styled.textarea`
 `
 const BtnBox = styled.div`
   display: flex;
-  justify-content: end;
-  margin-right: 125px;
+  align-items: center;
+  /* margin-right: 125px; */
   margin-bottom: 10px;
+  position: absolute;
+  top: 100%;
+  left: 89%;
+  transform: translate(-50%, -50%);
+  /* 화면크기에 따른 버튼 위치 */
+  @media screen and (max-width: 1700px){
+    position: absolute;
+    top: 100%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+  }
+  @media screen and (max-width: 1300px){
+    position: absolute;
+    top: 100%;
+    left: 84%;
+    transform: translate(-50%, -50%);
+  }
+  @media screen and (max-width: 1000px){
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `
 const Button = styled.button`
   width: 100px;
   height: 40px;
   color: white;
   background-color: #C4302B;
-  /* hover, active */
+  /* hover */
   &:hover {
-    background-color: #472bc4;
-  }
-  &:active {
-    background-color: #2bc47d;
+    background-color: #e73a0fec;
   }
   border-radius: 20px;
   border: none;
   cursor: pointer;
   font-size: 17px;
-  /* 비활성화일 때 버튼 투명화 */
+  /* 비활성화일 때 버튼 opacity */
   opacity: ${props => (props.opacitybtn ? 0.1 : 1)};
 `

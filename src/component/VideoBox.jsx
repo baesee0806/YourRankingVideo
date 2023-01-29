@@ -32,7 +32,7 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
     <VideoBoxContainerDiv>
       <YouTube
         style={style}
-        videoId={videoId.slice(-11)}
+        videoId={videoId?.slice(-11)}
         opts={{
           height: "100%",
           width: "100%",

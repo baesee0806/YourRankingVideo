@@ -1,38 +1,27 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../common/firebase';
 import { createVideo } from '../API/postApi';
 
 export default function PostPage() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  // const addVideo = useMutation((video) => axios.post('http://localhost:3001/videos', video), {
-  //   onSuccess: (data) => {
-  //     console.log(data);
-  //     queryClient.invalidateQueries(['videos']);
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
+
+  //게시글 작성
   const addVideo = useMutation((video) => createVideo(video), {
     onSuccess: (data) => {
       console.log(data?.data?.id);
-      navigate(`/${data?.data?.id}`);
+      navigate(`/${data?.data?.id}`); // 글 작성 후 해당 상세페이지로 이동
     },
     onError: (error) => {
       console.log(error);
     },
   });
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm();
+
+  // 작성글 내용 전달
+  const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     const Video = {
       id: uuidv4(),
@@ -53,7 +42,11 @@ export default function PostPage() {
 
   return (
     <Container>
-      <Text>게시물 작성</Text>
+      <TextBox>
+        <Text>게시물 작성</Text>
+      </TextBox>
+      {/* required -> 유효성 검사 */}
+      {/* ...regiter -> 작성한 내용 등록 */}
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Input
           type={"url"}
@@ -79,11 +72,6 @@ export default function PostPage() {
           <Button
             type="submit"
             style={{ marginRight: "20px" }}
-            // disabled={isSubmitting}
-            // onClick={() => {
-            //   isSubmitting();
-            //   navigate(`${uuid}`);
-            // }}
           >
             완료
           </Button>
@@ -97,19 +85,31 @@ export default function PostPage() {
 }
 
 const Container = styled.div`
-  margin-top: 50px;
-  margin-left: 160px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
-const Text = styled.p`
+const TextBox = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto 0 auto;
+`
+const Text = styled.h2`
   font-size: 30px;
   font-weight: 600;
+  display: flex;
+  align-items: flex-end;
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 55px;
 `;
 const Input = styled.input`
-  width: 1600px;
+  width: 90%;
   height: 60px;
   margin-bottom: 30px;
   border-radius: 10px;
@@ -119,11 +119,11 @@ const Input = styled.input`
   outline: none;
 `;
 const Textarea = styled.textarea`
-  width: 1600px;
+  width: 90%;
   height: 500px;
   border-radius: 10px;
   border: 1px solid;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
   resize: none;
   font-size: 25px;
   padding: 10px;
@@ -131,9 +131,31 @@ const Textarea = styled.textarea`
 `;
 const BtnBox = styled.div`
   display: flex;
-  justify-content: end;
-  margin-right: 125px;
+  align-items: center;
   margin-bottom: 10px;
+  position: absolute;
+  top: 100%;
+  left: 89%;
+  transform: translate(-50%, -50%);
+  /* 화면크기에 따른 버튼 위치 */
+  @media screen and (max-width: 1700px){
+    position: absolute;
+    top: 100%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+  }
+  @media screen and (max-width: 1300px){
+    position: absolute;
+    top: 100%;
+    left: 84%;
+    transform: translate(-50%, -50%);
+  }
+  @media screen and (max-width: 1000px){
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 const Button = styled.button`
   width: 100px;
@@ -144,11 +166,8 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 17px;
-  /* hover, active */
+  /* hover */
   &:hover {
-    background-color: #472bc4;
-  }
-  &:active {
-    background-color: #2bc47d;
+    background-color: #e73a0fec;
   }
 `;

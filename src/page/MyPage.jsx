@@ -8,7 +8,8 @@ import VideoBox from "../component/VideoBox";
 import { authService } from "../common/firebase";
 import { updateProfile } from "firebase/auth";
 import { useQuery } from "react-query";
-import { fetchLikes, fetchVideo } from "../API/youtube";
+import { fetchLikes, fetchPopVideo, fetchVideo } from "../API/youtube";
+import axios from "axios";
 export default function MyPage(userObj) {
   // user img modal change
   const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
@@ -32,13 +33,24 @@ export default function MyPage(userObj) {
         // ...
       });
   };
-  // 모든 비디오
-  const { isLoading, isError, data, error } = useQuery("videos", fetchVideo);
+
+  const { isLoading, isError, data, error } = useQuery("likes", fetchLikes);
+
   // 좋아요 누른 비디오
+  const MyLikeVideo = data?.filter((el) => el?.userID === user?.uid);
 
-  // my like
+  const LikesVideo = useQuery("videos", fetchPopVideo)?.data?.filter((el) => {
+    for (let i = 0; i < MyLikeVideo.length; i++) {
+      if (el?.id === MyLikeVideo[i]?.contentID) {
+        return el;
+      }
+    }
+  });
 
-  // my write
+  // 내가 쓴글
+  const MyWrite = useQuery("videos", fetchPopVideo)?.data?.filter(
+    (el) => el?.userId === user?.uid
+  );
 
   if (isLoading) {
     return <div>로딩중</div>;
@@ -113,7 +125,7 @@ export default function MyPage(userObj) {
         {userList ? (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
-              {data.map((el) => {
+              {LikesVideo?.map((el) => {
                 return (
                   <VideoBox
                     iconSize="17px"
@@ -121,8 +133,9 @@ export default function MyPage(userObj) {
                       height: "200px",
                       width: "350px",
                     }}
-                    videoId="qQrD2BKPApo"
-                    // item={item}
+                    videoId={el?.videoUrl}
+                    item={el}
+                    title={el.title}
                   />
                 );
               })}
@@ -131,7 +144,7 @@ export default function MyPage(userObj) {
         ) : (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
-              {data.map((el) => {
+              {MyWrite?.map((el) => {
                 return (
                   <VideoBox
                     iconSize="17px"
@@ -139,8 +152,9 @@ export default function MyPage(userObj) {
                       height: "200px",
                       width: "350px",
                     }}
-                    videoId="qQrD2BKPApo"
-                    // item={item}
+                    videoId={el?.videoUrl}
+                    item={el}
+                    title={el.title}
                   />
                 );
               })}
