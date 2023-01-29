@@ -9,7 +9,7 @@ import { createVideo } from '../API/postApi';
 export default function PostPage() {
   const navigate = useNavigate();
 
-  //게시글 작성
+  //게시글 작성 data.data : Obj
   const addVideo = useMutation((video) => createVideo(video), {
     onSuccess: (data) => {
       console.log(data?.data?.id);
@@ -24,13 +24,13 @@ export default function PostPage() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     const Video = {
-      id: uuidv4(),
-      contentId: uuidv4(),
-      createAt: Date(),
-      time: new Date().toLocaleDateString(),
-      userId: authService.currentUser.uid,
-      nickName: authService.currentUser.displayName ?? "닉네임없음",
-      likesCount: 0,
+      id: uuidv4(), // : String
+      contentId: uuidv4(), // : String
+      createAt: Date(), // : String
+      time: new Date().toLocaleDateString(), // : String
+      userId: authService.currentUser.uid, // : String
+      nickName: authService.currentUser.displayName ?? "닉네임없음", // : String
+      likesCount: 0, // : Number
     };
     const newVideo = Object.assign(Video, data);
     addVideo.mutate(newVideo);
