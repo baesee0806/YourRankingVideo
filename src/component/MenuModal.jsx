@@ -62,13 +62,23 @@ const MenuModal = () => {
             </MenuModalBtnAreaDiv>
             {/* 페이지 이동 */}
             <MenuModalMovePageAreaDiv>
-              <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
+              <MenuModalMovePageDiv
+                onClick={logout}
+                style={{ cursor: "pointer" }}
+              >
                 로그아웃
               </MenuModalMovePageDiv>
-              <MenuModalMovePageDiv style={{ cursor: "pointer" }}>인기영상</MenuModalMovePageDiv>
+              <MenuModalMovePageDiv
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                인기영상
+              </MenuModalMovePageDiv>
               <MenuModalMovePageDiv
                 onClick={() => {
-                  navigate("/newVideo");
+                  navigate("/newvideo");
                 }}
                 style={{ cursor: "pointer" }}
               >
