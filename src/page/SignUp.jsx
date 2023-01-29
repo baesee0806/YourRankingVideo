@@ -42,11 +42,13 @@ const SignUp = () => {
   };
 
   const SignUpSubmit = async () => {
+    //유효성검사
     if (validateInputs()) {
       return;
     }
+
+    //회원가입
     createUserWithEmailAndPassword(authService, email, password, nickName).then(() => {
-      console.log("회원가입 성공!");
       updateProfile(authService.currentUser, {
         displayName: nickName,
       })
@@ -57,9 +59,7 @@ const SignUp = () => {
           setPassword("");
           navigate("/");
         })
-        .catch((err) => {
-          console.log(err.message);
-        });
+        .catch((err) => {});
     });
   };
   return (

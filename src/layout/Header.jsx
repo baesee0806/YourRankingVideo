@@ -9,7 +9,6 @@ const Header = () => {
   const modalSetHandlering = useSetRecoilState(ModalBtnState);
   const [show, setShow] = useState(false);
   const loggedinuser = JSON.parse(sessionStorage.getItem("currentUser"));
-  console.log(loggedinuser);
 
   useEffect(() => {
     if (loggedinuser == null) {

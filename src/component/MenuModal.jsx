@@ -30,7 +30,6 @@ const MenuModal = () => {
     }
   }, [modalHandler]);
   const logout = () => {
-    console.log("로그아웃 성공");
     localStorage.clear();
     sessionStorage.clear();
 
@@ -38,7 +37,7 @@ const MenuModal = () => {
     removeCookie(COOKIE_KEY, { path: "login" }); // 쿠키삭제후
     window.location.href = logoutURL;
   };
-  console.log(authService.currentUser);
+
   return (
     <>
       {modalHandler && (
@@ -62,9 +61,13 @@ const MenuModal = () => {
             </MenuModalBtnAreaDiv>
             {/* 페이지 이동 */}
             <MenuModalMovePageAreaDiv>
-              <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
-                로그아웃
-              </MenuModalMovePageDiv>
+              {/*  */}
+              {authService.currentUser !== null ? (
+                <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
+                  로그아웃
+                </MenuModalMovePageDiv>
+              ) : null}
+
               <MenuModalMovePageDiv
                 style={{ cursor: "pointer" }}
                 onClick={() => {
