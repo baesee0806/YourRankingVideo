@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { authService } from "../common/firebase";
@@ -9,9 +9,12 @@ const Login = () => {
   const navigate = useNavigate();
   const emailRef = useRef(null);
   const pwRef = useRef(null);
+
+  //user 등록
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  //유효성검사
   const validateInputs = () => {
     if (!email) {
       alert("email을 입력해주세요.");
@@ -47,7 +50,6 @@ const Login = () => {
     // 로그인 요청
     signInWithEmailAndPassword(authService, email, password)
       .then(() => {
-        console.log("로그인 성공");
         alert("로그인 성공");
         setEmail("");
         setPassword("");
@@ -55,7 +57,6 @@ const Login = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log("err.message:", err.message);
         if (err.message.includes("user-not-found")) {
           alert("회원이 아닙니다. 회원가입을 먼저 진행해 주세요.");
           navigate("signUp");

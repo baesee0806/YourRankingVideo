@@ -12,8 +12,7 @@ import { fetchLikes, fetchPopVideo, fetchVideo } from "../API/youtube";
 import axios from "axios";
 export default function MyPage(userObj) {
   // user img modal change
-  const [userImgModalState, setUserImgModalState] =
-    useRecoilState(UserImgModalState);
+  const [userImgModalState, setUserImgModalState] = useRecoilState(UserImgModalState);
   const [nickName, setNickName] = useState(userObj.displayName);
   // 내가쓴글 좋아요 누른글 리스트 change
   const [userList, setUserList] = useRecoilState(UserLikePostState);
@@ -183,7 +182,6 @@ const UserInfoAreaDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   border-radius: 50px;
   box-shadow: 10px 15px 15px #888;
 `;

@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchLikes } from "../API/youtube";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-
+import { useCookies } from "react-cookie";
+// 쓰지 않는 변수는 (공백),처리해주고 removeCookie 옵션만 사용한다
 function VideoBox({ iconSize, style, videoId, item, title }) {
   useEffect(() => {
     fetchLikes();
@@ -80,9 +81,7 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
             />
           )}
 
-          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>
-            {num > 0 ? num : null}
-          </span>
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>{num > 0 ? num : null}</span>
         </div>
       </div>
     </VideoBoxContainerDiv>

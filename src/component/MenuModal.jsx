@@ -11,8 +11,7 @@ const MenuModal = () => {
   const navigate = useNavigate();
   const COOKIE_KEY = window.LOGIN_KEY;
   const logoutURL = // 리다이렉트할 URL 을 상수화시켜서 넣어주었다.
-    window.LOGIN_SESSION_KEY_URL +
-    `/logout?redirect_uri=${window.location.href}`;
+    window.LOGIN_SESSION_KEY_URL + `/logout?redirect_uri=${window.location.href}`;
 
   const [, , removeCookie] = useCookies([COOKIE_KEY]); // 쓰지 않는 변수는 (공백),처리해주고 removeCookie 옵션만 사용한다
 
@@ -31,7 +30,6 @@ const MenuModal = () => {
     }
   }, [modalHandler]);
   const logout = () => {
-    console.log("로그아웃 성공");
     localStorage.clear();
     sessionStorage.clear();
 
@@ -39,7 +37,7 @@ const MenuModal = () => {
     removeCookie(COOKIE_KEY, { path: "login" }); // 쿠키삭제후
     window.location.href = logoutURL;
   };
-  console.log(authService.currentUser);
+
   return (
     <>
       {modalHandler && (
@@ -65,10 +63,7 @@ const MenuModal = () => {
             <MenuModalMovePageAreaDiv>
               {/*  */}
               {authService.currentUser !== null ? (
-                <MenuModalMovePageDiv
-                  onClick={logout}
-                  style={{ cursor: "pointer" }}
-                >
+                <MenuModalMovePageDiv onClick={logout} style={{ cursor: "pointer" }}>
                   로그아웃
                 </MenuModalMovePageDiv>
               ) : null}

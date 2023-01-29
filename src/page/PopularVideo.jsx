@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 export default function PopularVideo() {
   useEffect(() => {
     fetchLists();
+    sessionStorage.clear();
   }, []);
 
   const { isLoading, isError, data, error } = useQuery("items", fetchLists);
@@ -23,9 +24,7 @@ export default function PopularVideo() {
   return (
     <>
       <StyledMainContainer>
-        <div style={{ fontSize: 30, fontWeight: "bold", margin: "20px 150px" }}>
-          인기 동영상🔥
-        </div>
+        <div style={{ fontSize: 30, fontWeight: "bold", margin: "20px 150px" }}>인기 동영상🔥</div>
 
         <div style={{ width: "70%", margin: "auto" }}>
           <div style={videoListDiv}>

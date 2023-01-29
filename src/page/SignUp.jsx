@@ -42,11 +42,13 @@ const SignUp = () => {
   };
 
   const SignUpSubmit = async () => {
+    //유효성검사
     if (validateInputs()) {
       return;
     }
+
+    //회원가입 firebase api를 이용하여 등록
     createUserWithEmailAndPassword(authService, email, password, nickName).then(() => {
-      console.log("회원가입 성공!");
       updateProfile(authService.currentUser, {
         displayName: nickName,
       })
@@ -55,11 +57,9 @@ const SignUp = () => {
           setEmail("");
           setNickName("");
           setPassword("");
-          navigate("/");
+          navigate("login");
         })
-        .catch((err) => {
-          console.log(err.message);
-        });
+        .catch((err) => {});
     });
   };
   return (
@@ -147,7 +147,6 @@ export const NickName = styled.div`
 
 export const Input = styled.input`
   border: none;
-
   color: #555;
   box-sizing: border-box;
   font-size: 18px;
