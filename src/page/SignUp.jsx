@@ -47,7 +47,7 @@ const SignUp = () => {
       return;
     }
 
-    //회원가입
+    //회원가입 firebase api를 이용하여 등록
     createUserWithEmailAndPassword(authService, email, password, nickName).then(() => {
       updateProfile(authService.currentUser, {
         displayName: nickName,
@@ -57,7 +57,7 @@ const SignUp = () => {
           setEmail("");
           setNickName("");
           setPassword("");
-          navigate("/");
+          navigate("login");
         })
         .catch((err) => {});
     });
