@@ -79,16 +79,7 @@
       "contentID": "2e6da61c-de8f-4f1c-8b72-e57560153f1f",
       "userID": "0SeO3XEdSScRbhD4omnCVg4sq7L2",
       "id": "34337767-bda6-42d1-a174-44ee381e5f72"
-    },
-    {
-      "contentID": "ae85e3fc-2448-42d1-aba9-b3087c8d6905",
-      "userID": "1FAAVj3EPLSR7bm6XMnVD9RyXYB2",
-      "id": "5db2d9a1-00a8-4c03-a7bd-f78605cb0831"
-    },
-    {
-      "contentID": "4b6856bb-e3ed-4052-8c9a-08c35c5319d3",
-      "userID": "fZGWyijk6lWENEycWNp4yuagL0S2",
-      "id": "76954628-2938-4d1b-8a70-600b3bf2899e"
+
     }
   ],
   "User": [
@@ -117,7 +108,7 @@
       "time": "2023. 1. 28.",
       "userId": "bSunM5MN2ERYxB4JN1UQmwzaMAF3",
       "nickName": "999999",
-      "likesCount": 3,
+      "likesCount": 4,
       "videoUrl": "https://www.youtube.com/watch?v=TKFNs0z_ShE",
       "title": "일등일등",
       "content": "일등일등"
@@ -153,7 +144,7 @@
       "time": "2023. 1. 28.",
       "userId": "r7mJJovIMudpdoHcdif9K4AgRor1",
       "nickName": "888888",
-      "likesCount": 1,
+      "likesCount": 2,
       "videoUrl": "https://www.youtube.com/watch?v=1e79ltiuvco",
       "title": "아이디 888888",
       "content": "9888888"
@@ -169,18 +160,6 @@
       "videoUrl": "https://www.youtube.com/watch?v=cbuZfY2S2UQ",
       "title": "코딩할 때 듣기 좋은 노래",
       "content": "lofi type beat"
-    },
-    {
-      "id": "4b6856bb-e3ed-4052-8c9a-08c35c5319d3",
-      "contentId": "4c7435bc-0a15-40d4-958b-1e488c70b810",
-      "createAt": "Sun Jan 29 2023 20:59:23 GMT+0900 (한국 표준시)",
-      "time": "2023. 1. 29.",
-      "userId": "fZGWyijk6lWENEycWNp4yuagL0S2",
-      "nickName": "Kim SW",
-      "likesCount": 1,
-      "videoUrl": "https://www.youtube.com/watch?v=eqVl03Df57E",
-      "title": "유퀴즈",
-      "content": "이성민 편"
     }
   ]
 }
