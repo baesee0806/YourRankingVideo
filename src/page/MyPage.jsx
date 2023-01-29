@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { UserImgModal } from "../component/UserImgModal";
 import { useRecoilState } from "recoil";
@@ -7,6 +7,8 @@ import { UserLikePostState } from "../recoil/myPageAtom";
 import VideoBox from "../component/VideoBox";
 import { authService } from "../common/firebase";
 import { updateProfile } from "firebase/auth";
+import { useQuery } from "react-query";
+import { fetchLikes, fetchVideo } from "../API/youtube";
 export default function MyPage() {
   // user img modal change
   const [userImgModalState, setUserImgModalState] =
@@ -32,20 +34,20 @@ export default function MyPage() {
         // ...
       });
   };
-  // react qeury get
-  // const fetchLists = async() => {
-  //   const {data} = await axios.get("http://localhost:3001/")
-  //   return data
-  // react qeury
-  // const { isLoading, isError, data } = useQuery("", );
+  // 모든 비디오
+  const { isLoading, isError, data, error } = useQuery("videos", fetchVideo);
+  // 좋아요 누른 비디오
 
-  // if (isLoading) {
-  //   return alert("로딩중");
-  // }
+  // my like
 
-  // if (isError) {
-  //   return alert("에러");
-  // }
+  // my write
+
+  if (isLoading) {
+    return <div>로딩중</div>;
+  }
+  if (isError) {
+    return alert("에러", error);
+  }
 
   return (
     <MypageLayoutDiv>
@@ -113,73 +115,37 @@ export default function MyPage() {
         {userList ? (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
+              {data.map((el) => {
+                return (
+                  <VideoBox
+                    iconSize="17px"
+                    style={{
+                      height: "200px",
+                      width: "350px",
+                    }}
+                    videoId="qQrD2BKPApo"
+                    // item={item}
+                  />
+                );
+              })}
             </VideoAreaDiv>
           </VideoAreaWrapDiv>
         ) : (
           <VideoAreaWrapDiv>
             <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
-            </VideoAreaDiv>
-            <VideoAreaDiv>
-              <VideoBox
-                iconSize="17px"
-                style={{
-                  height: "200px",
-                  width: "350px",
-                }}
-                videoId="qQrD2BKPApo"
-                // item={item}
-              />
+              {data.map((el) => {
+                return (
+                  <VideoBox
+                    iconSize="17px"
+                    style={{
+                      height: "200px",
+                      width: "350px",
+                    }}
+                    videoId="qQrD2BKPApo"
+                    // item={item}
+                  />
+                );
+              })}
             </VideoAreaDiv>
           </VideoAreaWrapDiv>
         )}
@@ -302,4 +268,8 @@ const VideoAreaWrapDiv = styled.div`
 const VideoAreaDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
+  @media screen and (max-width: 1400px) {
+    flex-direction: column;
+    margin: 0 auto;
+  }
 `;
