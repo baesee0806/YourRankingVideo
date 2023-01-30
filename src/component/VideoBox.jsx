@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useCookies } from "react-cookie";
 // 쓰지 않는 변수는 (공백),처리해주고 removeCookie 옵션만 사용한다
 function VideoBox({ iconSize, style, videoId, item, title }) {
+  //iconSize:number , style: object , videoId:string , item:object , title:string
   useEffect(() => {
     fetchLikes();
   }, []);
@@ -17,13 +18,15 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
   const detailNavigate = () => {
     navigate(`/${item?.id}`);
   };
-
+  //data: array [{...}]
   const { isLoading, isError, data, error } = useQuery("likes", fetchLikes);
 
   if (isLoading) <div>...Loading</div>;
   if (isError) return alert("에러", error);
 
   //좋아요갯수 가지고 오는 함수
+  //num:number
+  //value:object
   const num = data?.filter((value) => {
     return value?.contentID === item?.id;
   }).length;
@@ -81,7 +84,9 @@ function VideoBox({ iconSize, style, videoId, item, title }) {
             />
           )}
 
-          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>{num > 0 ? num : null}</span>
+          <span style={{ fontSize: iconSize, marginLeft: "5px" }}>
+            {num > 0 ? num : null}
+          </span>
         </div>
       </div>
     </VideoBoxContainerDiv>

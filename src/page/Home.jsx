@@ -13,10 +13,12 @@ function Home() {
 
   const navigate = useNavigate();
 
+  //data : array [{...}],[{...}],[{...}]
   const { isLoading, isError, data, error } = useQuery("videos", fetchPopVideo);
-  console.log(data);
 
   //좋아요순으로 만든 데이터 순서
+  //a:object , data에서 가져온 객체 하나하나를 얘기함 ,b도 동일
+  //iLike : array
   const iLike = data?.sort(function (a, b) {
     let lengthB = b.likesCount;
     let lengthA = a.likesCount;
@@ -26,6 +28,7 @@ function Home() {
   if (isLoading) {
     return <div>로딩중</div>;
   }
+  //데이터를 잘 가져오면 error: null
   if (isError) {
     return alert("에러", error);
   }

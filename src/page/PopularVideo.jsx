@@ -10,9 +10,8 @@ export default function PopularVideo() {
     fetchLists();
     sessionStorage.clear();
   }, []);
-
+  //data:array
   const { isLoading, isError, data, error } = useQuery("items", fetchLists);
-  console.log(data);
 
   if (isLoading) {
     return <div>로딩중</div>;
@@ -24,7 +23,9 @@ export default function PopularVideo() {
   return (
     <>
       <StyledMainContainer>
-        <div style={{ fontSize: 30, fontWeight: "bold", margin: "20px 150px" }}>인기 동영상🔥</div>
+        <div style={{ fontSize: 30, fontWeight: "bold", margin: "20px 150px" }}>
+          인기 동영상🔥
+        </div>
 
         <div style={{ width: "70%", margin: "auto" }}>
           <div style={videoListDiv}>
@@ -36,8 +37,11 @@ export default function PopularVideo() {
                     height: "200px",
                     width: "350px",
                   }}
+                  //videoId:string
                   videoId={item.id}
+                  // item:array [{...}]
                   item={item}
+                  //title:string
                   title={item.snippet.title}
                 />
               </div>

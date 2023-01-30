@@ -6,6 +6,7 @@ import ScrollTopBtn from "../component/ScrollTopBtn";
 
 export default function NewVideo() {
   //여기 최신 순 제이슨데이터 가져오기
+  //data:array
   const { isLoading, isError, data, error } = useQuery("videos", fetchVideo);
 
   if (isLoading) {
