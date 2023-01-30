@@ -1,44 +1,4 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": [
-    {
-      "name": "typicode"
-    }
-  ],
-  "user": [
-    {
-      "id": "uuid4()",
-      "email": "email",
-      "password": "password",
-      "nickName": "nickName",
-      "imgurl": "imgurl"
-    },
-    {
-      "id": "UBvSkuK"
-    },
-    {
-      "id": "CDanhRd"
-    },
-    {
-      "id": "C3Yp7ag"
-    },
-    {
-      "id": "4w4kuyu"
-    }
-  ],
   "likes": [
     {
       "contentID": "a9cb2175-df85-4fca-9fa6-3d29dd98638f",
@@ -81,24 +41,7 @@
       "id": "34337767-bda6-42d1-a174-44ee381e5f72"
     }
   ],
-  "User": [
-    {
-      "id": "1",
-      "email": "test.test.com",
-      "password": "123",
-      "nickName": "baesee",
-      "imgurl": ""
-    },
-    {
-      "id": "CDanhRd"
-    },
-    {
-      "id": "C3Yp7ag"
-    },
-    {
-      "id": "4w4kuyu"
-    }
-  ],
+
   "videos": [
     {
       "id": "56df59be-0940-4cfb-9395-5d846c83c441",

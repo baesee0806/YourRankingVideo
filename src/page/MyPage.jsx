@@ -25,7 +25,7 @@ export default function MyPage() {
   const email = user?.email;
   // 유저 프로필 사진 Url => : String
   const photoURL = user?.photoURL;
-
+  console.log(typeof email);
   // 유저 닉네임 변경 함수
   const userNickNameChange = () => {
     updateProfile(authService.currentUser, {
