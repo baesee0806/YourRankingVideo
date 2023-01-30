@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
-import { authService } from '../common/firebase';
-import { createVideo } from '../API/postApi';
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../common/firebase";
+import { createVideo } from "../API/postApi";
 
 export default function PostPage() {
   const navigate = useNavigate();
@@ -12,12 +12,9 @@ export default function PostPage() {
   //게시글 작성
   const addVideo = useMutation((video) => createVideo(video), {
     onSuccess: (data) => {
-      console.log(data?.data?.id);
       navigate(`/${data?.data?.id}`); // 글 작성 후 해당 상세페이지로 이동
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
 
   // 작성글 내용 전달
@@ -36,9 +33,7 @@ export default function PostPage() {
     addVideo.mutate(newVideo);
     alert("작성 완료");
   };
-  const onError = (error) => {
-    console.log(error);
-  };
+  const onError = (error) => {};
 
   return (
     <Container>
@@ -48,31 +43,11 @@ export default function PostPage() {
       {/* required -> 유효성 검사 */}
       {/* ...regiter -> 작성한 내용 등록 */}
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Input
-          type={"url"}
-          maxLength={"120"}
-          placeholder="url"
-          required
-          {...register("videoUrl")}
-        />
-        <Input
-          type={"text"}
-          maxLength={"120"}
-          placeholder="제목"
-          required
-          {...register("title")}
-        />
-        <Textarea
-          type={"text"}
-          placeholder="내용"
-          required
-          {...register("content")}
-        ></Textarea>
+        <Input type={"url"} maxLength={"120"} placeholder="url" required {...register("videoUrl")} />
+        <Input type={"text"} maxLength={"120"} placeholder="제목" required {...register("title")} />
+        <Textarea type={"text"} placeholder="내용" required {...register("content")}></Textarea>
         <BtnBox>
-          <Button
-            type="submit"
-            style={{ marginRight: "20px" }}
-          >
+          <Button type="submit" style={{ marginRight: "20px" }}>
             완료
           </Button>
           <Button type="button" onClick={() => navigate(-1)}>
@@ -94,7 +69,7 @@ const TextBox = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0 auto 0 auto;
-`
+`;
 const Text = styled.h2`
   font-size: 30px;
   font-weight: 600;
@@ -138,19 +113,19 @@ const BtnBox = styled.div`
   left: 89%;
   transform: translate(-50%, -50%);
   /* 화면크기에 따른 버튼 위치 */
-  @media screen and (max-width: 1700px){
+  @media screen and (max-width: 1700px) {
     position: absolute;
     top: 100%;
     left: 87%;
     transform: translate(-50%, -50%);
   }
-  @media screen and (max-width: 1300px){
+  @media screen and (max-width: 1300px) {
     position: absolute;
     top: 100%;
     left: 84%;
     transform: translate(-50%, -50%);
   }
-  @media screen and (max-width: 1000px){
+  @media screen and (max-width: 1000px) {
     position: absolute;
     top: 100%;
     left: 50%;
